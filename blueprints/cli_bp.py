@@ -4,6 +4,7 @@ from models.user import User
 from models.trip import Trip
 from models.destination import Destination
 from models.activity import Activity
+from models.comment import Comment
 from datetime import timedelta
 
 dbcli_bp = Blueprint('db',__name__ )
@@ -162,21 +163,24 @@ def seed_db():
             activity_name = 'Snowboarding Niseko resort',
             activity_desc = 'Explore the resort and riding from the peak to the bottom',
             activity_location_URL = 'https://maps.app.goo.gl/WN9YHnqVA7MSowBT8',
-            budget = 2000
+            budget = 2000,
+            date_available = "December to April"
         ),
 
         Activity(
             activity_name = 'Hike Mt Yotei',
             activity_desc = 'Rent snowshoes/poles and and a guide to take us to the top to ride down',
             activity_location_URL = 'https://maps.app.goo.gl/WN9YHnqVA7MSowBT8',
-            budget = 500
+            budget = 500,
+            date_available = "Late January, Early February (best time)"
         ),
 
         Activity(
             activity_name = 'Snowboarding Nozawa Onsen Resort',
             activity_desc = 'Explore the resort and ride the backcountry',
             activity_location_URL = 'https://maps.app.goo.gl/xkqVSWxRvw1zS85W9',
-            budget = 1700
+            budget = 1700,
+            date_available = "December to March"
         ),
 
         Activity(
@@ -204,28 +208,32 @@ def seed_db():
             activity_name = 'Joining La Tomatina Festival',
             activity_desc = 'Throw tomatoes at everyone',
             activity_location_URL = 'https://maps.app.goo.gl/gkoE1mjfwye2wAjF8',
-            budget = 200
+            budget = 200,
+            date_available = "Late August"
         ),
 
         Activity(
             activity_name = 'Run with Bulls',
             activity_desc = 'Join one of the daily bull runs and run around in the stadium with bulls',
             activity_location_URL = 'https://maps.app.goo.gl/ECajwSUKBF1Bq9zY7',
-            budget = 150
+            budget = 150,
+            date_available = "July 7th - 14th"
         ),
 
         Activity(
             activity_name = 'The San Fermin Festival opening ceremony',
             activity_desc = 'Join the festival and get amognst the festivities',
             activity_location_URL = 'https://maps.app.goo.gl/uFgp5LcguFTFnM1f7',
-            budget = 120
+            budget = 120,
+            date_available = "July 6th"
         ),
 
         Activity(
             activity_name = 'Chamonix Jazz Music Festival',
             activity_desc = 'Try a lot of wines, foods and watch live music',
             activity_location_URL = 'https://maps.app.goo.gl/X9yzp921LR7uMCuV8',
-            budget = 300
+            budget = 300,
+            date_available = "22nd July to 29th July"
         ),
 
         Activity(
@@ -239,7 +247,8 @@ def seed_db():
             activity_name = 'Join the Oktoberfest Beer Festival',
             activity_desc = 'Buy and wear traditional clothes, try at least three different beer tents',
             activity_location_URL = 'https://maps.app.goo.gl/qUGNxXha6GBBifM88',
-            budget = 450
+            budget = 450,
+            date_available = "Mid September until the first Sunday of October"
         ),
 
         Activity(
@@ -273,7 +282,7 @@ def seed_db():
         Activity(
             activity_name = 'Visit the Beach and Swim',
             activity_desc = 'Stop off and spend some time relaxing',
-            activity_location_URL = 'https://maps.app.goo.gl/aU7EqmGowErTeKpL7',
+            activity_location_URL = 'https://maps.app.goo.gl/XdfBCrXYfUKgvGyy8',
             budget = 20
         ),
         
@@ -295,11 +304,115 @@ def seed_db():
             activity_name = 'Camp and watch the Aurora Borealis',
             activity_desc = 'Make a campfire everynight and wait for the Northern lights',
             activity_location_URL = 'https://maps.app.goo.gl/ZKrMLLTLNWz99WET6',
-            budget = 50
+            budget = 50,
+            date_available = "Late August to mid April"
         )
     ]
-    
-    
+
     db.session.add_all(activities)
+
+    comments = [
+
+        Comment(
+            message = 'This resoort is so crowded \U0001F62E'
+        ),
+
+        Comment(
+            message = 'Its not as crowded in late January.'
+        ),
+
+        Comment(
+            message = 'Seems fun, Can you recommmend a guide?'
+        ),
+
+        Comment(
+            message = 'My favorite onsen was Ogama, its the oldest and biggest?'
+        ),
+
+        Comment(
+            message = 'Im going Golden Gai tomorrow night , Whats the best bar for sake? \U0001F376'
+        ),
+
+        Comment(
+            message = 'Try this one ...https://maps.app.goo.gl/2RfcE5WScpHyqWMq8'
+        ),
+
+        Comment(
+            message = 'Thanks! \U0001F64F'
+        ),
+
+        Comment(
+            message = 'Cant miss this , Its a must-do in Tokyo'
+        ),
+
+        Comment(
+            message = 'Dont wear anything valuable and wear goggles \U0001F345'
+        ),
+
+        Comment(
+            message = 'If your not into running and danger, the bars and parties after the run are great!'
+        ),
+
+        Comment(
+            message = 'Best atmoshphere Ive been in. Try the sangria !!'
+        ),
+
+        Comment(
+            message = 'Wheres a good place to stay for the festival?'
+        ),
+
+        Comment(
+            message = 'You should stay around Cham Sud, theres a lot of good hotels there!'
+        ),
+
+        Comment(
+            message = 'Dont ride the rollercoaster after beer \U0001F92E'
+        ),
+
+        Comment(
+            message = 'Do you need to make a reservation?'
+        ),
+
+        Comment(
+            message = 'On the weekend, you might have to. Enjoy! \U0001F356 \U0001F37B?'
+        ),
+
+        Comment(
+            message = 'Pretty Boring, Doest even look like the Disney Castle! \U0001F641'
+        ),
+
+        Comment(
+            message = 'Amazing Shows, You have to do this in Hanoi'
+        ),
+
+        Comment(
+            message = 'Dont eat the fruit, it will make you sick'
+        ),
+
+        Comment(
+            message = 'Where did you buy the motorbike and around How much?'
+        ),
+
+        Comment(
+            message = 'Water is not so clean, but a great spot for lunch'
+        ),
+
+        Comment(
+            message = 'A real hidden gem'
+        ),
+
+        Comment(
+            message = 'Be careful after the rain, some of the structures are really slippery'
+        ),
+
+        Comment(
+            message = 'Its so beautiful , you need a real clear sky to see it'
+        ),
+    ]
+
+    db.session.add_all(comments)
+
+    
+
     db.session.commit()
     print('Tables seeded without error')

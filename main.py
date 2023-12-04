@@ -1,7 +1,8 @@
 from flask import Flask, jsonify
 from init import db, ma, jwt, bcrypt
 from os import environ
-from blueprints.cli_bp import dbcli_bp
+from blueprints.cli_bp import bp_DBCli
+from blueprints.users_bp import bp_users
 
 def run_app():
 
@@ -25,7 +26,8 @@ def run_app():
     bcrypt.init_app(app)
 
 
-    app.register_blueprint(dbcli_bp)
+    app.register_blueprint(bp_DBCli)
+    app.register_blueprint(bp_users)
 
     return app
 

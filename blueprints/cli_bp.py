@@ -5,42 +5,49 @@ from models.trip import Trip
 from models.destination import Destination
 from models.activity import Activity
 from models.comment import Comment
-from datetime import timedelta
 
-dbcli_bp = Blueprint('db',__name__ )
+bp_DBCli = Blueprint('db',__name__ )
 
-@dbcli_bp.cli.command('create')
+@bp_DBCli.cli.command('create')
 def db_drop_and_create():
     db.drop_all()
     db.create_all()
     print('Tables dropped and new tables created without error')
 
-@dbcli_bp.cli.command('seed')
+@bp_DBCli.cli.command('seed')
 def seed_db():
     users = [
         User(
             username = "JohnnyAdmin",
+            f_name = "John",
+            l_name = "Administrator",
             email = "Johnny@admin.com",
-            password = "testpassword",
+            password=bcrypt.generate_password_hash('Iloveadmin1234').decode('utf-8'),
             admin_acc = True
         ),
 
         User(
-            username = "WandaWanderer",
+            username = "WandaWanderer42",
+            f_name = "Wanda",
+            l_name = "Williams",
             email = "wanda@gmail.com",
-            password = "testpassword"
+            password=bcrypt.generate_password_hash('Iwannago2Antartica').decode('utf-8')
         ),
 
         User(
             username = "GaryGlobal",
             email = "gazza@email.com",
-            password = "testpassword"
+            f_name = "Gary",
+            l_name = "Geofferies",
+            password= bcrypt.generate_password_hash('LetsgototoSpain22').decode('utf-8')
         ),
 
         User(
             username = "NickyNomad45",
+            f_name = "Nicholas",
+            l_name = "Niland",
             email = "nicholas@nomadtravelco.com",
-            password = "testpassword",
+            password=bcrypt.generate_password_hash('Japanismyfavoritecountry88').decode('utf-8'),
         )
     ]
 

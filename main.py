@@ -4,7 +4,8 @@ from os import environ
 from blueprints.cli_bp import bp_DBCli
 from blueprints.auth_bp import bp_users
 from blueprints.trips_bp import bp_trips
-from blueprints.destinations_bp import bp_destination
+from blueprints.destinations_bp import bp_destinations
+from blueprints.activities_bp import bp_activities
 from sqlalchemy.exc import IntegrityError
 
 def run_app():
@@ -23,9 +24,9 @@ def run_app():
     # def unauthorized(err):
     #     return {'error': 'You are not authorized to access this resource'}
 
-    @app.errorhandler(IntegrityError)
-    def integrity_error(err):
-        return {'Error': "This entry already exists in database"}, 400
+    # @app.errorhandler(IntegrityError)
+    # def integrity_error(err):
+    #     return {'Error': "This entry already exists in database"}, 400
 
 
     db.init_app(app)
@@ -37,7 +38,8 @@ def run_app():
     app.register_blueprint(bp_DBCli)
     app.register_blueprint(bp_users)
     app.register_blueprint(bp_trips)
-    app.register_blueprint(bp_destination)
+    app.register_blueprint(bp_destinations)
+    app.register_blueprint(bp_activities)
 
     return app
 

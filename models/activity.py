@@ -10,8 +10,8 @@ class Activity(db.Model):
     activity_name = db.Column(db.String, nullable=False)
     activity_location_URL = db.Column(db.Text, nullable=False)
     budget = db.Column(db.Integer, nullable=False)
-    date_available = db.Column(db.String)
-    activity_desc = db.Column(db.String(100), nullable=False, default= 'Anytime')
+    date_available = db.Column(db.String, default= 'Anytime')
+    activity_desc = db.Column(db.String(100), nullable=False)
 
  
 

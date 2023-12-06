@@ -3,17 +3,17 @@ from flask_jwt_extended import jwt_required
 from flask import request, Blueprint
 from init import db
 
-bp_destination = Blueprint("bp_destination",__name__, url_prefix='/destinations')
+bp_destinations = Blueprint("bp_destinations",__name__, url_prefix='/destinations')
 
 
-@bp_destination.route('/')
+@bp_destinations.route('/')
 @jwt_required()
 def read_all_destination():
     stmt = db.select(Destination)
     destinations = db.session.scalars(stmt).all()
     return DestinationSchema(many=True).dump(destinations)
 
-@bp_destination.route('/<int:id>')
+@bp_destinations.route('/<int:id>')
 @jwt_required()
 def read_one_destination(id):
     stmt = db.select(Destination).filter_by(id=id)
@@ -24,7 +24,7 @@ def read_one_destination(id):
         return {'Error': 'Destination not found'}, 404
 
 
-@bp_destination.route('/', methods=['POST'])
+@bp_destinations.route('/', methods=['POST'])
 @jwt_required()
 def create_destination():
     dest_info = DestinationSchema(exclude=['id']).load(request.json)
@@ -41,7 +41,7 @@ def create_destination():
 
 
 
-@bp_destination.route('/<int:id>', methods=['PUT','PATCH'])
+@bp_destinations.route('/<int:id>', methods=['PUT','PATCH'])
 @jwt_required()
 def edit_destination(id):
     dest_info = DestinationSchema(exclude=['id']).load(request.json)
@@ -59,7 +59,7 @@ def edit_destination(id):
         return {'Error': 'Destination not found'}, 404
 
 #Delete a destination
-@bp_destination.route('/<int:id>', methods=['DELETE'])
+@bp_destinations.route('/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_destination(id):
     stmt= db.select(Destination).filter_by(id = id)

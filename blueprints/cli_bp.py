@@ -12,7 +12,7 @@ bp_DBCli = Blueprint('db',__name__ )
 def db_drop_and_create():
     db.drop_all()
     db.create_all()
-    print('Tables dropped and new tables created without error')
+    print('Tables dropped + created successfully')
 
 @bp_DBCli.cli.command('seed')
 def seed_db():
@@ -60,7 +60,8 @@ def seed_db():
             start_date = '2024/01/15',
             finish_date = '2024/1/29',
             estimated_budget = 7000,
-            trip_desc = "Snowboarding in two resorts on the northern island of Hokkaido + a few days in Tokyo"
+            trip_desc = "Snowboarding in two resorts on the northern island of Hokkaido + a few days in Tokyo",
+            user_id = users[1].id
         ),
 
         Trip(
@@ -68,7 +69,8 @@ def seed_db():
             start_date = '2023/07/15',
             finish_date = '2023/9/15',
             estimated_budget = 15000,
-            trip_desc = "Spain, France, Italy and Germany - Festivals"
+            trip_desc = "Spain, France, Italy and Germany - Festivals",
+            user_id = users[1].id
         ),
 
         Trip(
@@ -76,7 +78,8 @@ def seed_db():
             start_date = '2023/08/10',
             finish_date = '2024/08/15',
             estimated_budget = 2000,
-            trip_desc = "Riding from Hanoi to Hoi"
+            trip_desc = "Riding from Hanoi to Hoi An",
+            user_id = users[2].id
         ),
 
         Trip(
@@ -84,7 +87,8 @@ def seed_db():
             start_date = '2024/02/4',
             finish_date = '2024/3/11',
             estimated_budget = 6500,
-            trip_desc = "Camping in the wilderness and hoping to see the Aurora Borealis"
+            trip_desc = "Camping in the wilderness and hoping to see the Aurora Borealis",
+            user_id = users[3].id
         )
     ]
 
@@ -422,4 +426,4 @@ def seed_db():
     
 
     db.session.commit()
-    print('Tables seeded without error')
+    print('Tables seeded Successfully')

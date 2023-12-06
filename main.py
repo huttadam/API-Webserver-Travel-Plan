@@ -2,7 +2,9 @@ from flask import Flask, jsonify
 from init import db, ma, jwt, bcrypt
 from os import environ
 from blueprints.cli_bp import bp_DBCli
-from blueprints.users_bp import bp_users
+from blueprints.auth_bp import bp_users
+from blueprints.trip_bp import bp_trips
+from sqlalchemy.exc import IntegrityError
 
 def run_app():
 
@@ -16,9 +18,14 @@ def run_app():
     def hello_world():
         return "Hello, World!"
 
-    @app.errorhandler(401)
-    def unauthorized(err):
-        return {'error': 'You are not authorized to access this resource'}
+    # @app.errorhandler(401)
+    # def unauthorized(err):
+    #     return {'error': 'You are not authorized to access this resource'}
+
+    # @app.errorhandler(IntegrityError)
+    # def integrity_error(err):
+    #     return {'Error': "This entry already exists in database"}, 400
+
 
     db.init_app(app)
     ma.init_app(app)
@@ -28,6 +35,7 @@ def run_app():
 
     app.register_blueprint(bp_DBCli)
     app.register_blueprint(bp_users)
+    app.register_blueprint(bp_trips)
 
     return app
 

@@ -15,6 +15,10 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     admin_acc = db.Column(db.Boolean, default=False)
 
+    trips = db.relationship('Trip', back_populates='user')
+
+
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ("id", "username", "email", "password", "admin_acc", "f_name", "l_name")

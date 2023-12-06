@@ -8,6 +8,41 @@ from datetime import timedelta
 
 bp_users = Blueprint("bp_users",__name__, url_prefix='/users')
 
+# Admin Searches all users (NEED JWT)
+@bp_users.route('/all')
+def get_all():
+    # Add admin Reqd 
+    stmt = db.select(User)
+    users = db.session.scalars(stmt).all()
+
+    return UserSchema(many = True, exclude = ['password']).dump(users)
+
+# Admin Searches for specific user ---(NEEDS AUTHORIZING-ADMIN ONLY ) + JWT
+@bp_users.route('/<int:user_id>')
+def get_single_user(user_id):
+    stmt = db.select(User).filter_by(id = user_id)
+    user = db.session.scalar(stmt)
+    if user:
+        #Add Admin Reqd here
+        return UserSchema(exclude = ['password']).dump(user)
+    else:
+        return {'Error': f'User ID {user_id} not found'}
+
+
+@bp_users.route('/<int:user_id>', methods = ['DELETE'])
+def admin_delete_user(user_id):
+    stmt =db.select(User).filter_by(id = user_id)
+    user =db.session.scalar(stmt)
+
+    if user:
+        # Add Admin Reqd HERE
+        db.session.delete(user)
+        db.session.commit()
+        return {'Success': f'User ID {user_id} and all related content deleted'}
+
+
+
+# User Creates Acc --NO AUTH
 @bp_users.route('/register', methods=['POST'])
 def register_user():
 
@@ -39,20 +74,24 @@ def register_user():
 
         return UserSchema(exclude=['password']).dump(new_user),201
 
-@bp_users.route('/login')
+
+# User Log in - NO AUTH -- NEED
+@bp_users.route('/login', methods=['POST'])
 def login():
     try:
-        user_info = db.session.query(User.email == user_info['email'])
-        stmt = db.session.scalar(stmt)
+        user_info = UserSchema(exclude=['id', 'f_name', 'l_name', 'admin_acc','username']).load(request.json)
+        user = User.query.filter_by(email=user_info['email']).first()
 
-        if user and bcrypt.verify_password(user.password, user_info['password']):
+        if user and bcrypt.check_password_hash(user.password, user_info['password']):
             token = create_access_token(identity=user.id, expires_delta=timedelta(hours = 4))
             
             return {
-                'token': token,
-                'user': UserSchema(exclude=['password']).dump(user),
+                'user': UserSchema(exclude=['password', 'admin_acc', 'id']).dump(user),
+                'token': token
                 }
-                
+        else:
+            return { 'Error': 'Incorrect email address or password , Please try again'},401
+
     except KeyError:
-        return {"error": "Check what was entered"}
+        return {"Error": "Email and Password need to be provided."},400
 

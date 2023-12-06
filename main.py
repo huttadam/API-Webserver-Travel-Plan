@@ -3,7 +3,8 @@ from init import db, ma, jwt, bcrypt
 from os import environ
 from blueprints.cli_bp import bp_DBCli
 from blueprints.auth_bp import bp_users
-from blueprints.trip_bp import bp_trips
+from blueprints.trips_bp import bp_trips
+from blueprints.destinations_bp import bp_destination
 from sqlalchemy.exc import IntegrityError
 
 def run_app():
@@ -36,6 +37,7 @@ def run_app():
     app.register_blueprint(bp_DBCli)
     app.register_blueprint(bp_users)
     app.register_blueprint(bp_trips)
+    app.register_blueprint(bp_destination)
 
     return app
 

@@ -1,8 +1,8 @@
 from models.trip import Trip, TripSchema
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required
 from flask import request, Blueprint
 from init import db
-from sqlalchemy import and_
+
 
 bp_trips = Blueprint("bp_trips",__name__, url_prefix='/trips')
 
@@ -11,8 +11,8 @@ bp_trips = Blueprint("bp_trips",__name__, url_prefix='/trips')
 @jwt_required()
 def read_all_trips():
     stmt = db.select(Trip)
-    users_trips = db.session.scalars(stmt).all()
-    return TripSchema(many=True).dump(users_trips)
+    trips = db.session.scalars(stmt).all()
+    return TripSchema(many=True).dump(trips)
 
 
 # Users read there own personal trips - Individually - NEED TO ADD OWNER TO VIEW

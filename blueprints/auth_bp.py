@@ -67,7 +67,7 @@ def delete_user(id):
         return {'Success': f'User ID {id} and all related content deleted'}
 
 
-# User Creates Acc --NO AUTH
+# User Creates Acc
 @bp_users.route('/register', methods=['POST'])
 def register_user():
 

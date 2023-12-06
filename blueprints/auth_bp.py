@@ -1,16 +1,16 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, abort, jsonify
 from models.user import User, UserSchema
 from init import bcrypt, db
 from sqlalchemy.exc import IntegrityError
-from flask_jwt_extended import create_access_token, jwt_required
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from datetime import timedelta
 
 
 bp_users = Blueprint("bp_users",__name__, url_prefix='/users')
 
 # Admin Searches all users (NEED JWT)
-@bp_users.route('/all')
-def get_all():
+@bp_users.route('/')
+def read_all_users():
     # Add admin Reqd 
     stmt = db.select(User)
     users = db.session.scalars(stmt).all()
@@ -18,9 +18,9 @@ def get_all():
     return UserSchema(many = True, exclude = ['password']).dump(users)
 
 # Admin Searches for specific user ---(NEEDS AUTHORIZING-ADMIN ONLY ) + JWT
-@bp_users.route('/<int:user_id>')
-def get_single_user(user_id):
-    stmt = db.select(User).filter_by(id = user_id)
+@bp_users.route('/<int:id>')
+def read_single_user(id):
+    stmt = db.select(User).filter_by(id = id)
     user = db.session.scalar(stmt)
     if user:
         #Add Admin Reqd here
@@ -29,17 +29,42 @@ def get_single_user(user_id):
         return {'Error': f'User ID {user_id} not found'}
 
 
-@bp_users.route('/<int:user_id>', methods = ['DELETE'])
-def admin_delete_user(user_id):
-    stmt =db.select(User).filter_by(id = user_id)
-    user =db.session.scalar(stmt)
+@bp_users.route('/<int:id>', methods = ['PUT'])
+@jwt_required()
+def update_user(id):
+    user_info = UserSchema(exclude=['id', 'admin_acc']).load(request.json)
+    
+    user = db.session.query(User).filter_by(id=id).first()
+
+    if user:
+        user.f_name = user_info.get('f_name', user.f_name)
+        user.l_name = user_info.get('l_name', user.l_name)
+        user.username = user_info.get('username', user.username)
+        user.email = user_info.get('email', user.email)
+        
+        if 'password' in user_info:
+            new_password = user_info['password']
+            hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+            user.password = hashed_password
+        
+
+        db.session.commit()
+
+        return UserSchema(exclude=['password']).dump(user),200
+
+
+
+@bp_users.route('/<int:id>', methods = ['DELETE'])
+@jwt_required()
+def delete_user(id):
+    stmt= db.select(User).filter_by(id = id)
+    user= db.session.scalar(stmt)
 
     if user:
         # Add Admin Reqd HERE
         db.session.delete(user)
         db.session.commit()
-        return {'Success': f'User ID {user_id} and all related content deleted'}
-
+        return {'Success': f'User ID {id} and all related content deleted'}
 
 
 # User Creates Acc --NO AUTH
@@ -94,4 +119,12 @@ def login():
 
     except KeyError:
         return {"Error": "Email and Password need to be provided."},400
+
+
+# def owner_admin_authorize(owner_id):
+#     user_id = get_jwt_identity()
+#     stmt = db.select(User).filter_by(id=user_id)
+#     user = db.session.scalar(stmt)
+#     if not (user and (user.admin_acc or user_id == owner_id)):
+#         abort(401, description="You must be an admin or user")
 

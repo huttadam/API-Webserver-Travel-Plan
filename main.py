@@ -22,9 +22,9 @@ def run_app():
     # def unauthorized(err):
     #     return {'error': 'You are not authorized to access this resource'}
 
-    # @app.errorhandler(IntegrityError)
-    # def integrity_error(err):
-    #     return {'Error': "This entry already exists in database"}, 400
+    @app.errorhandler(IntegrityError)
+    def integrity_error(err):
+        return {'Error': "This entry already exists in database"}, 400
 
 
     db.init_app(app)

@@ -14,8 +14,8 @@ class Trip(db.Model):
     estimated_budget = db.Column(db.Integer, nullable=False)
     trip_desc = db.Column(db.Text, nullable=False)
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    user = db.relationship('User', back_populates='trips')
+    # user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    # user = db.relationship('User', back_populates='trips')
 
 class TripSchema(ma.Schema):
 

@@ -61,7 +61,7 @@ def seed_db():
             finish_date = '2024/1/29',
             estimated_budget = 7000,
             trip_desc = "Snowboarding in two resorts on the northern island of Hokkaido + a few days in Tokyo",
-            # user_id = users[1].id
+            user_id = users[1].id
         ),
 
         Trip(
@@ -70,7 +70,7 @@ def seed_db():
             finish_date = '2023/9/15',
             estimated_budget = 15000,
             trip_desc = "Spain, France, Italy and Germany - Festivals",
-            # user_id = users[1].id
+            user_id = users[1].id
         ),
 
         Trip(
@@ -79,7 +79,7 @@ def seed_db():
             finish_date = '2024/08/15',
             estimated_budget = 2000,
             trip_desc = "Riding from Hanoi to Hoi An",
-            # user_id = users[2].id
+            user_id = users[2].id
         ),
 
         Trip(
@@ -88,7 +88,7 @@ def seed_db():
             finish_date = '2024/3/11',
             estimated_budget = 6500,
             trip_desc = "Camping in the wilderness and hoping to see the Aurora Borealis",
-            # user_id = users[3].id
+            user_id = users[3].id
         )
     ]
 

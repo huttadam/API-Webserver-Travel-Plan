@@ -1,5 +1,5 @@
 from models.trip import Trip, TripSchema
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, Blueprint
 from init import db
 
@@ -39,7 +39,7 @@ def create_trip():
         estimated_budget = trip_info.get('estimated_budget'),
         trip_desc = trip_info.get('trip_desc'),
 
-        # user_id = get_jwt_identity()
+        user_id = get_jwt_identity()
     )
 
     db.session.add(trip)

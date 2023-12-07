@@ -121,10 +121,10 @@ def login():
         return {"Error": "Email and Password need to be provided."},400
 
 
-# def owner_admin_authorize(owner_id):
-#     user_id = get_jwt_identity()
-#     stmt = db.select(User).filter_by(id=user_id)
-#     user = db.session.scalar(stmt)
-#     if not (user and (user.admin_acc or user_id == owner_id)):
-#         abort(401, description="You must be an admin or user")
+def owner_admin_authorize(owner_id):
+    user_id = get_jwt_identity()
+    stmt = db.select(User).filter_by(id=user_id)
+    user = db.session.scalar(stmt)
+    if not (user and (user.admin_acc or user_id == owner_id)):
+        abort(401, description="You must be an admin or user")
 

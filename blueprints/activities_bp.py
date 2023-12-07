@@ -39,7 +39,6 @@ def create_activity():
         date_available = activity_info.get('date_available'),
         activity_desc = activity_info.get('activity_desc')
 
-        # user_id = get_jwt_identity()
     )
 
     db.session.add(activity)

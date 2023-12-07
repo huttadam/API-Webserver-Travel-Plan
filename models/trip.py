@@ -17,10 +17,14 @@ class Trip(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     user = db.relationship('User', back_populates='trips')
 
+    destinations = db.relationship('Destination', back_populates='trip')
+
+
+
 class TripSchema(ma.Schema):
 
     user = fields.Nested('UserSchema', only=['username','id'])
+    destination = fields.Nested('DestinationSchema', many=True)
     
     class Meta:
-        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc",'user')
-   
+        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc",'destination')

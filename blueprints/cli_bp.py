@@ -8,6 +8,12 @@ from models.comment import Comment
 
 bp_DBCli = Blueprint('db',__name__ )
 
+@bp_DBCli.cli.command('drop')
+def drop():
+    db.drop_all()
+    print('All dropped')
+
+
 @bp_DBCli.cli.command('create')
 def db_drop_and_create():
     db.drop_all()
@@ -98,71 +104,85 @@ def seed_db():
     destinations = [
         Destination(
             dest_country = 'Japan',
-            dest_name = 'Niseko Ski Resort'
+            dest_name = 'Niseko Ski Resort',
+            trip_id = trips[0].id
         ),
 
         Destination(
             dest_country = 'Japan',
-            dest_name = 'Nozawa Onsen Ski Resort'
+            dest_name = 'Nozawa Onsen Ski Resort',
+            trip_id = trips[0].id
         ),
 
         Destination(
             dest_country = 'Japan',
-            dest_name = 'Tokyo'
+            dest_name = 'Tokyo',
+            trip_id = trips[0].id
         ),
 
         Destination(
             dest_country = 'Spain',
-            dest_name = 'Bunol'
+            dest_name = 'Bunol',
+            trip_id = trips[1].id
         ),
 
         Destination(
             dest_country = 'Spain',
-            dest_name = 'Pamplona'
+            dest_name = 'Pamplona',
+            trip_id = trips[1].id
         ),
         Destination(
             dest_country = 'France',
-            dest_name = 'Chamonix'
+            dest_name = 'Chamonix',
+            trip_id = trips[1].id
         ),
 
         Destination(
             dest_country = 'Italy',
-            dest_name = 'Rome'
+            dest_name = 'Rome',
+            trip_id = trips[1].id
         ),
 
         Destination(
             dest_country = 'Germany',
-            dest_name = 'Munich'
+            dest_name = 'Munich',
+            trip_id = trips[1].id
         ),
 
         Destination(
             dest_country = 'Germany',
-            dest_name = 'Hohenschwangau'
+            dest_name = 'Hohenschwangau',
+            trip_id = trips[1].id
         ),
 
         Destination(
             dest_country = 'Vietnam',
-            dest_name = 'Hanoi'
+            dest_name = 'Hanoi',
+            trip_id = trips[2].id
         ),
 
         Destination(
             dest_country = 'Vietnam',
-            dest_name = 'Bai Bien Vinh Thai beach'
+            dest_name = 'Bai Bien Vinh Thai beach',
+            trip_id = trips[2].id
         ),
 
         Destination(
             dest_country = 'Vietnam',
-            dest_name = 'Hue'
+            dest_name = 'Hue',
+            trip_id = trips[2].id
         ),
 
         Destination(
             dest_country = 'Vietnam',
-            dest_name = 'Hoi An'
+            dest_name = 'Hoi An',
+            trip_id = trips[2].id
         ),
 
         Destination(
             dest_country = 'Canada',
-            dest_name = 'La Crete'
+            dest_name = 'La Crete',
+            trip_id = trips[3].id
         )
     ]
 
@@ -170,6 +190,7 @@ def seed_db():
     db.session.commit()
     
     activities = [
+
         Activity(
             activity_name = 'Snowboarding Niseko resort',
             activity_desc = 'Explore the resort and riding from the peak to the bottom',
@@ -321,6 +342,7 @@ def seed_db():
     ]
 
     db.session.add_all(activities)
+    db.session.commit()
 
     comments = [
 

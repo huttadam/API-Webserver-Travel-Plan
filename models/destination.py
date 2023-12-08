@@ -13,12 +13,16 @@ class Destination(db.Model):
 
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'), nullable=False)
     trip = db.relationship('Trip', back_populates='destinations')
+
+    activities = db.relationship('Activity', back_populates='destination')
     
 
 
 
 class DestinationSchema(ma.Schema):
-    trip = fields.Nested('TripSchema')
+    trips = fields.Nested('TripSchema', many = True, exclude = ['users',"destinations"])
+    activities = fields.Nested('ActivitySchema', exclude = ['id', 'budget'], many= True)
 
     class Meta:
-        fields = ("id", "dest_country", "dest_name")
+        fields = ("id", "dest_country", "dest_name", 'activities')
+        ordered =True

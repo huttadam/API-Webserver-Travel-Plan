@@ -28,4 +28,5 @@ class TripSchema(ma.Schema):
     destinations = fields.Nested('DestinationSchema', exclude=['id'], many= True)
     
     class Meta:
-        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc", 'destinations')
+        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc", "destinations", "user")
+        ordered = True

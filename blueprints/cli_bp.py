@@ -204,7 +204,8 @@ def seed_db():
             activity_desc = 'Explore the resort and riding from the peak to the bottom',
             activity_location_URL = 'https://maps.app.goo.gl/WN9YHnqVA7MSowBT8',
             budget = 2000,
-            date_available = "December to April"
+            date_available = "December to April",
+            destination_id = destinations[0].id
         ),
 
         Activity(
@@ -212,7 +213,8 @@ def seed_db():
             activity_desc = 'Rent snowshoes/poles and and a guide to take us to the top to ride down',
             activity_location_URL = 'https://maps.app.goo.gl/WN9YHnqVA7MSowBT8',
             budget = 500,
-            date_available = "Late January, Early February (best time)"
+            date_available = "Late January, Early February (best time)",
+            destination_id = destinations[0].id
         ),
 
         Activity(
@@ -220,28 +222,32 @@ def seed_db():
             activity_desc = 'Explore the resort and ride the backcountry',
             activity_location_URL = 'https://maps.app.goo.gl/xkqVSWxRvw1zS85W9',
             budget = 1700,
-            date_available = "December to March"
+            date_available = "December to March",
+            destination_id = destinations[1].id
         ),
 
         Activity(
             activity_name = 'Have an onsen in a Soto-yu',
             activity_desc = 'Use of the many free public baths to relax , post snowboarding',
             activity_location_URL = 'https://maps.app.goo.gl/xkqVSWxRvw1zS85W9',
-            budget = 0
+            budget = 0,
+            destination_id = destinations[1].id
         ),
 
         Activity(
             activity_name = 'Drinking in Golden Gai, Shinjuku',
             activity_desc = 'Go to as many bars as possible and meet new people',
             activity_location_URL = 'https://maps.app.goo.gl/xsZhtKfEp6vQx9LcA',
-            budget = 200
+            budget = 200,
+            destination_id = destinations[2].id
         ),
 
         Activity(
             activity_name = 'Shopping in Harajuku',
             activity_desc = 'Walk around and look for some crazy fashion to buy',
             activity_location_URL = 'https://maps.app.goo.gl/K4uuJJYzsR9ek8Fh9',
-            budget = 500
+            budget = 500,
+            destination_id = destinations[2].id
         ),
 
         Activity(
@@ -249,7 +255,8 @@ def seed_db():
             activity_desc = 'Throw tomatoes at everyone',
             activity_location_URL = 'https://maps.app.goo.gl/gkoE1mjfwye2wAjF8',
             budget = 200,
-            date_available = "Late August"
+            date_available = "Late August",
+            destination_id = destinations[3].id
         ),
 
         Activity(
@@ -257,7 +264,8 @@ def seed_db():
             activity_desc = 'Join one of the daily bull runs and run around in the stadium with bulls',
             activity_location_URL = 'https://maps.app.goo.gl/ECajwSUKBF1Bq9zY7',
             budget = 150,
-            date_available = "July 7th - 14th"
+            date_available = "July 7th - 14th",
+            destination_id = destinations[4].id
         ),
 
         Activity(
@@ -265,7 +273,8 @@ def seed_db():
             activity_desc = 'Join the festival and get amognst the festivities',
             activity_location_URL = 'https://maps.app.goo.gl/uFgp5LcguFTFnM1f7',
             budget = 120,
-            date_available = "July 6th"
+            date_available = "July 6th",
+            destination_id = destinations[4].id
         ),
 
         Activity(
@@ -273,14 +282,16 @@ def seed_db():
             activity_desc = 'Try a lot of wines, foods and watch live music',
             activity_location_URL = 'https://maps.app.goo.gl/X9yzp921LR7uMCuV8',
             budget = 300,
-            date_available = "22nd July to 29th July"
+            date_available = "22nd July to 29th July",
+            destination_id = destinations[5].id
         ),
 
         Activity(
             activity_name = 'Visit the coleseum',
             activity_desc = 'Do the coleseum tour and eat and drink afterwards',
             activity_location_URL = 'https://maps.app.goo.gl/ajUedXi4puh2fGeT7',
-            budget = 330
+            budget = 330,
+            destination_id = destinations[6].id
         ),
 
         Activity(
@@ -288,56 +299,64 @@ def seed_db():
             activity_desc = 'Buy and wear traditional clothes, try at least three different beer tents',
             activity_location_URL = 'https://maps.app.goo.gl/qUGNxXha6GBBifM88',
             budget = 450,
-            date_available = "Mid September until the first Sunday of October"
+            date_available = "Mid September until the first Sunday of October",
+            destination_id = destinations[7].id
         ),
 
         Activity(
             activity_name = 'Visit original Hof Brau Haus',
             activity_desc = 'Go to the original location for the festival, drink beer and try the pork-knuckle',
             activity_location_URL = 'https://maps.app.goo.gl/t1WUTGm58fXPG22D9',
-            budget = 70
+            budget = 70,
+            destination_id = destinations[7].id
         ),
 
         Activity(
             activity_name = 'Visit the inspiration for the Disney Castle',
             activity_desc = 'Go on a tour of the Neuscwanstein Castle' ,
             activity_location_URL = 'https://maps.app.goo.gl/XPuQrZLhW1rdUyZz8',
-            budget = 120
+            budget = 120,
+            destination_id = destinations[8].id
         ),
 
         Activity(
             activity_name = 'See water puppet show',
             activity_desc = 'Buy tickets for the show in central Hanoi',
             activity_location_URL = 'https://maps.app.goo.gl/57rr6wfoyJTuk98x8',
-            budget = 20
+            budget = 20,
+            destination_id = destinations[9].id
         ),
 
         Activity(
             activity_name = 'Wander around Hanoi city',
             activity_desc = 'Walk around the markets, bars and restaurants around central Hanoi',
             activity_location_URL = 'https://maps.app.goo.gl/oWWij22p9awGZZQe8',
-            budget = 60
+            budget = 60,
+            destination_id = destinations[9].id
         ),
         
         Activity(
             activity_name = 'Visit the Beach and Swim',
             activity_desc = 'Stop off and spend some time relaxing',
             activity_location_URL = 'https://maps.app.goo.gl/XdfBCrXYfUKgvGyy8',
-            budget = 20
+            budget = 20,
+            destination_id = destinations[10].id
         ),
         
         Activity(
             activity_name = 'Hue abondoned Water Park',
             activity_desc = 'Walk around the park, climb on the attractions, take some cool photos',
             activity_location_URL = 'https://maps.app.goo.gl/u4cmPtRF4C2nqHv6A',
-            budget = 10
+            budget = 10,
+            destination_id = destinations[11].id
         ),
         
         Activity(
             activity_name = 'Watch the lanterns being lit on the river at the night market',
             activity_desc = 'Stroll through Hoi an, take in the atmosphere and eat Banh Mi',
             activity_location_URL = 'https://maps.app.goo.gl/ayM4FLZUnqoseNjE6',
-            budget = 50
+            budget = 50,
+            destination_id = destinations[12].id
         ),
 
         Activity(
@@ -345,7 +364,8 @@ def seed_db():
             activity_desc = 'Make a campfire everynight and wait for the Northern lights',
             activity_location_URL = 'https://maps.app.goo.gl/ZKrMLLTLNWz99WET6',
             budget = 50,
-            date_available = "Late August to mid April"
+            date_available = "Late August to mid April",
+            destination_id = destinations[13].id
         )
     ]
 

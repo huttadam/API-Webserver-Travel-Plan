@@ -1,5 +1,6 @@
 from init import db, ma
 from datetime import datetime
+from marshmallow import fields
 
 
 class Activity(db.Model):
@@ -15,8 +16,13 @@ class Activity(db.Model):
 
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'), nullable=False)
     destination = db.relationship('Destination', back_populates='activities')
+
+    comments = db.relationship('Comment', back_populates='activity')
  
 
 class ActivitySchema(ma.Schema):
+    destination = fields.Nested('DestinationSchema')
+    comments = fields.Nested('CommentSchema', many= True, exclude= ['id'])
+
     class Meta:
-        fields = ("id","activity_name", "activity_location_URL", "budget","activity_desc")
+        fields = ("id","activity_name", "activity_location_URL", "budget", "activity_desc", "comments" )

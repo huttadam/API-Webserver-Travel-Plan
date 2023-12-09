@@ -6,12 +6,14 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from datetime import timedelta
 
 
+
 bp_users = Blueprint("bp_users",__name__, url_prefix='/users')
 
 # Admin Searches all users (NEED JWT)
 @bp_users.route('/')
+@jwt_required()
 def read_all_users():
-    # Add admin Reqd 
+    # Need Admin Reqd
     stmt = db.select(User)
     users = db.session.scalars(stmt).all()
 
@@ -19,11 +21,12 @@ def read_all_users():
 
 # Admin Searches for specific user ---(NEEDS AUTHORIZING-ADMIN ONLY ) + JWT
 @bp_users.route('/<int:id>')
+@jwt_required()
 def read_single_user(id):
     stmt = db.select(User).filter_by(id = id)
     user = db.session.scalar(stmt)
     if user:
-        #Add Admin Reqd here
+        owner_admin_authorize(user.id)
         return UserSchema(exclude = ['password']).dump(user)
     else:
         return {'Error': f'User ID {user_id} not found'}
@@ -37,6 +40,7 @@ def update_user(id):
     user = db.session.query(User).filter_by(id=id).first()
 
     if user:
+        owner_admin_authorize(user.id)
         user.f_name = user_info.get('f_name', user.f_name)
         user.l_name = user_info.get('l_name', user.l_name)
         user.username = user_info.get('username', user.username)
@@ -61,7 +65,7 @@ def delete_user(id):
     user= db.session.scalar(stmt)
 
     if user:
-        # Add Admin Reqd HERE
+        owner_admin_authorize(user.id)
         db.session.delete(user)
         db.session.commit()
         return {'Success': f'User ID {id} and all related content deleted'}
@@ -70,7 +74,6 @@ def delete_user(id):
 # User Creates Acc
 @bp_users.route('/register', methods=['POST'])
 def register_user():
-
     user_info = UserSchema().load(request.json)
 
     double_email = db.session.query(User.email).filter_by(email=user_info["email"]).scalar()
@@ -122,9 +125,8 @@ def login():
 
 
 def owner_admin_authorize(owner_id):
-    user_id = get_jwt_identity()
-    stmt = db.select(User).filter_by(id=user_id)
+    current_user_id = get_jwt_identity()
+    stmt = db.select(User).filter_by(id=current_user_id)
     user = db.session.scalar(stmt)
-    if not (user and (user.admin_acc or user_id == owner_id)):
+    if not (user and (user.admin_acc or current_user_id == owner_id)):
         abort(401, description="You must be an admin or user")
-

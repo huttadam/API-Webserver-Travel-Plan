@@ -54,7 +54,17 @@ def seed_db():
             l_name = "Niland",
             email = "nicholas@nomadtravelco.com",
             password=bcrypt.generate_password_hash('Japanismyfavoritecountry88').decode('utf-8'),
+        ),
+
+        User(
+            username = "CommentKing",
+            f_name = "Jimmy",
+            l_name = "Commentalot",
+            email = "justbrowsing@gmail.com",
+            password=bcrypt.generate_password_hash('Ilovecommenting45').decode('utf-8'),
         )
+
+
     ]
 
     db.session.add_all(users)
@@ -376,123 +386,147 @@ def seed_db():
 
         Comment(
             message = 'This resoort is so crowded \U0001F62E',
-            activity_id = activities[0].id
+            activity_id = activities[0].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'Its not as crowded in late January.',
-            activity_id = activities[0].id
+            activity_id = activities[0].id,
+            user_username = users[1].username
         ),
 
         Comment(
             message = 'Seems fun, Can you recommmend a guide?',
-            activity_id = activities[1].id
+            activity_id = activities[1].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'My favorite onsen was Ogama, its the oldest and biggest?',
-            activity_id = activities[3].id
+            activity_id = activities[3].id,
+            user_username = users[1].username
         ),
 
         Comment(
             message = 'Im going Golden Gai tomorrow night , Whats the best bar for sake? \U0001F376',
-            activity_id = activities[4].id
+            activity_id = activities[4].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'Try this one ...https://maps.app.goo.gl/2RfcE5WScpHyqWMq8',
-            activity_id = activities[4].id
+            activity_id = activities[4].id,
+            user_username = users[1].username
         ),
 
         Comment(
             message = 'Thanks! \U0001F64F',
-            activity_id = activities[4].id
+            activity_id = activities[4].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'Cant miss this , Its a must-do in Tokyo',
-            activity_id = activities[5].id
+            activity_id = activities[5].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'Dont wear anything valuable and wear goggles \U0001F345',
-            activity_id = activities[6].id
+            activity_id = activities[6].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'If your not into running and danger, the bars and parties after the run are great!',
-            activity_id = activities[7].id
+            activity_id = activities[7].id,
+            user_username = users[1].username
         ),
 
         Comment(
             message = 'Best atmoshphere Ive been in. Try the sangria !!',
-            activity_id = activities[8].id
+            activity_id = activities[8].id,
+            user_username = users[1].username
         ),
 
         Comment(
             message = 'Wheres a good place to stay for the festival?',
-            activity_id = activities[9].id
+            activity_id = activities[9].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'You should stay around Cham Sud, theres a lot of good hotels there!',
-            activity_id = activities[9].id
+            activity_id = activities[9].id,
+            user_username = users[1].username
         ),
 
         Comment(
             message = 'Dont ride the rollercoaster after beer \U0001F92E',
-            activity_id = activities[11].id
+            activity_id = activities[11].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'Do you need to make a reservation?',
-            activity_id = activities[12].id
+            activity_id = activities[12].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'On the weekend, you might have to. Enjoy! \U0001F356 \U0001F37B?',
-            activity_id = activities[12].id
+            activity_id = activities[12].id,
+            user_username = users[1].username
         ),
 
         Comment(
             message = 'Pretty Boring, Doest even look like the Disney Castle! \U0001F641',   
-            activity_id = activities[13].id
+            activity_id = activities[13].id,
+            user_username = users[4].username,
         ),
 
         Comment(
             message = 'Amazing Show, You have to do this in Hanoi',
-            activity_id = activities[14].id
+            activity_id = activities[14].id,
+            user_username = users[2].username
         ),
 
         Comment(
             message = 'Dont eat the fruit, it will make you sick',
-            activity_id = activities[15].id
+            activity_id = activities[15].id,
+            user_username = users[2].username
         ),
 
         Comment(
             message = 'Where did you buy the motorbike and around How much?',
-            activity_id = activities[15].id
+            activity_id = activities[15].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'Water is not so clean, but a great spot for lunch',
-            activity_id = activities[16].id
+            activity_id = activities[16].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'A real hidden gem',
-            activity_id = activities[17].id
+            activity_id = activities[17].id,
+            user_username = users[4].username
         ),
 
         Comment(
             message = 'Be careful after the rain, some of the structures are really slippery',
-            activity_id = activities[17].id
+            activity_id = activities[17].id,
+            user_username = users[2].username
         ),
 
         Comment(
 
             message = 'Its so beautiful , you need a real clear sky to see it',
-            activity_id = activities[19].id
+            activity_id = activities[19].id,
+            user_username = users[3].username
         )
     ]
 

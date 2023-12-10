@@ -2,6 +2,7 @@ from models.comment import Comment, CommentSchema
 from flask_jwt_extended import jwt_required
 from flask import request, Blueprint
 from init import db
+from blueprints.auth_bp import owner_admin_authorize
 
 bp_comments = Blueprint("bp_comments",__name__, url_prefix='/comments')
 
@@ -19,6 +20,7 @@ def read_one_comment(id):
     stmt = db.select(Comment).filter_by(id=id)
     comment = db.session.scalar(stmt)
     if comment:
+        owner_admin_authorize(comment.id)
         return CommentSchema().dump(comment)
     else:
         return {'Error': 'Comment not found'}, 404
@@ -48,6 +50,7 @@ def edit_comments(id):
     stmt = db.select(Comment).filter_by(id=id)
     comment = db.session.scalar(stmt)
     if comment:
+        owner_admin_authorize(comment.id)
         comment.message = comment_info.get('message', comment.message)
         comment.activity_id = comment_info.get('activity_id', comment.activity_id)
 
@@ -65,6 +68,7 @@ def delete_comments(id):
     stmt= db.select(Comment).filter_by(id = id)
     comment= db.session.scalar(stmt)
     if comment:
+        owner_admin_authorize(comment.id)
         db.session.delete(comment)
         db.session.commit()
         return {'Success': f'Comment ID: {id} and all related content deleted'}

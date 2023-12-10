@@ -2,6 +2,7 @@ from models.activity import Activity, ActivitySchema
 from flask_jwt_extended import jwt_required
 from flask import request, Blueprint
 from init import db
+from blueprints.auth_bp import owner_admin_authorize
 
 
 bp_activities = Blueprint("bp_activities",__name__, url_prefix='/activities')
@@ -22,6 +23,7 @@ def read_single_activity(id):
     stmt = db.select(Activity).filter_by(id=id)
     activity = db.session.scalar(stmt)
     if activity:
+        owner_admin_authorize(activity.id)
         return ActivitySchema().dump(activity)
     else:
         return {'error': 'Card not found'}, 404
@@ -54,6 +56,7 @@ def edit_activity(id):
     stmt = db.select(Activity).filter_by(id=id)
     act = db.session.scalar(stmt)
     if act:
+        owner_admin_authorize(activity.id)
         act.activity_name = act_info.get('activity_name', act.activity_name),
         act.activity_location_URL = act_info.get('activity_location_URL', act.activity_location_URL),
         act.budget = act_info.get('budget',act.budget),
@@ -74,9 +77,10 @@ def delete_activity(id):
     stmt= db.select(Activity).filter_by(id = id)
     activity= db.session.scalar(stmt)
     if activity:
+        owner_admin_authorize(activity.id)
         db.session.delete(activity)
         db.session.commit()
-        return {'Success': f'activity ID: {id} and all related content deleted'}
+        return {'Success': f'activity ID: {id} and all related Comments deleted'}
 
 
 

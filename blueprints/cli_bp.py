@@ -24,36 +24,36 @@ def db_drop_and_create():
 def seed_db():
     users = [
         User(
-            username = "JohnnyAdmin",
-            f_name = "John",
+            username = "SuperAdmin",
+            f_name = "Admin",
             l_name = "Administrator",
-            email = "Johnny@admin.com",
+            email = "undeleteable@admin.com",
             password=bcrypt.generate_password_hash('Iloveadmin1234').decode('utf-8'),
             admin_acc = True
         ),
 
         User(
-            username = "WandaWanderer42",
-            f_name = "Wanda",
-            l_name = "Williams",
-            email = "wanda@gmail.com",
-            password=bcrypt.generate_password_hash('Iwannago2Antartica').decode('utf-8')
+            username = "OyukiDaisuki",
+            f_name = "Sally",
+            l_name = "Snowboarder",
+            email = "sally@japantravel.com",
+            password=bcrypt.generate_password_hash('Iwannago2Japan').decode('utf-8')
         ),
 
         User(
-            username = "GaryGlobal",
-            email = "gazza@email.com",
-            f_name = "Gary",
-            l_name = "Geofferies",
+            username = "EuroStar",
+            email = "Bazza@email.com",
+            f_name = "Barry",
+            l_name = "Backpacker",
             password= bcrypt.generate_password_hash('LetsgototoSpain22').decode('utf-8')
         ),
 
         User(
-            username = "NickyNomad45",
-            f_name = "Nicholas",
-            l_name = "Niland",
-            email = "nicholas@nomadtravelco.com",
-            password=bcrypt.generate_password_hash('Japanismyfavoritecountry88').decode('utf-8'),
+            username = "MotoManiac",
+            f_name = "Victor",
+            l_name = "Vietnam",
+            email = "vic@motobike.com",
+            password=bcrypt.generate_password_hash('HaybaiXiao3').decode('utf-8'),
         ),
 
         User(
@@ -73,8 +73,8 @@ def seed_db():
     trips = [
         Trip(
             trip_name ="Winter Snowboarding + Tokyo",
-            start_date = '2024/01/15',
-            finish_date = '2024/1/29',
+            start_date = '2023/01/15',
+            finish_date = '2023/1/29',
             estimated_budget = 7000,
             trip_desc = "Snowboarding in two resorts on the northern island of Hokkaido + a few days in Tokyo",
             user_id = users[1].id,
@@ -86,26 +86,36 @@ def seed_db():
             finish_date = '2023/9/15',
             estimated_budget = 15000,
             trip_desc = "Spain, France, Italy and Germany - Festivals",
-            user_id = users[1].id,
+            user_id = users[2].id,
         ),
 
         Trip(
             trip_name ="Vietnam on Motorbike",
             start_date = '2023/08/10',
-            finish_date = '2024/08/15',
+            finish_date = '2023/08/15',
             estimated_budget = 2000,
             trip_desc = "Riding from Hanoi to Hoi An",
-            user_id = users[2].id,
+            user_id = users[3].id,
         ),
 
         Trip(
             trip_name ="Nothern Lights Trip",
-            start_date = '2024/02/4',
-            finish_date = '2024/3/11',
+            start_date = '2023/02/4',
+            finish_date = '2023/3/11',
             estimated_budget = 6500,
             trip_desc = "Camping in the wilderness and hoping to see the Aurora Borealis",
-            user_id = users[3].id,
+            user_id = users[1].id,
+        ),
+
+        Trip(
+            trip_name ="Paris Olympics",
+            start_date = '2024/07/26',
+            finish_date = '2024/8/11',
+            estimated_budget = 20000,
+            trip_desc = "Moving around Paris and seeing Many Olympic Games",
+            user_id = users[4].id,
         )
+
     ]
 
     db.session.add_all(trips)

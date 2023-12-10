@@ -2,6 +2,7 @@ from models.destination import Destination, DestinationSchema
 from flask_jwt_extended import jwt_required
 from flask import request, Blueprint
 from init import db
+from blueprints.auth_bp import owner_admin_authorize
 
 bp_destinations = Blueprint("bp_destinations",__name__, url_prefix='/destinations')
 
@@ -19,6 +20,7 @@ def read_one_destination(id):
     stmt = db.select(Destination).filter_by(id=id)
     dest = db.session.scalar(stmt)
     if dest:
+        owner_admin_authorize(dest.id)
         return DestinationSchema().dump(dest)
     else:
         return {'Error': 'Destination not found'}, 404
@@ -48,6 +50,7 @@ def edit_destination(id):
     stmt = db.select(Destination).filter_by(id=id)
     dest = db.session.scalar(stmt)
     if dest:
+        owner_admin_authorize(dest.id)
         dest.dest_name = dest_info.get('dest_name', dest.dest_name)
         dest.dest_country = dest_info.get('dest_country', dest.dest_country)
 
@@ -65,6 +68,7 @@ def delete_destination(id):
     stmt= db.select(Destination).filter_by(id = id)
     dest= db.session.scalar(stmt)
     if dest:
+        owner_admin_authorize(dest.id)
         db.session.delete(dest)
         db.session.commit()
-        return {'Success': f'Destination ID: {id} and all related content deleted'}
+        return {'Success': f'Destination ID: {id} and all related Activities deleted'}

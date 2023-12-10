@@ -82,4 +82,4 @@ def delete_trip(id):
         owner_admin_authorize(trip.id)
         db.session.delete(trip)
         db.session.commit()
-        return {'Success': f'Trip ID: {id} and all related content deleted'}
+        return {'Success': f'Trip ID: {id} and all related content Destination/Activities deleted'}

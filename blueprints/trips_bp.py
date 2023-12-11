@@ -26,6 +26,7 @@ def read_all_users_trips(user_id):
 
 
 
+
 #Create a Trip
 @bp_trips.route('/', methods=['POST'])
 @jwt_required()

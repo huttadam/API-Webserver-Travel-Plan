@@ -17,14 +17,15 @@ def read_all_destination():
 
 @bp_destinations.route('/<int:trip_id>')
 @jwt_required()
-def read_users_destinations(id):
-    stmt = db.select(Destination).filter_by(id=id)
-    dest = db.session.scalar(stmt)
-    if dest:
-        owner_admin_authorize(dest.id)
-        return DestinationSchema().dump(dest)
+def read_users_destinations(trip_id):
+    owner_admin_authorize(trip_id)
+    stmt = db.select(Destination).filter_by(trip_id=trip_id)
+    dests = db.session.scalars(stmt)
+    if dests:
+        return DestinationSchema(many = True).dump(dests)
     else:
         return {'Error': 'Destination not found'}, 404
+
 
 
 @bp_destinations.route('/', methods=['POST'])

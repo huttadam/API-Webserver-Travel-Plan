@@ -19,9 +19,10 @@ class Destination(db.Model):
 
 
 class DestinationSchema(ma.Schema):
-    # trips = fields.Nested('TripSchema', many = True, exclude = ['users',"destinations"])
-    # activities = fields.Nested('ActivitySchema', exclude = ['id', 'budget'], many= True)
+    trip = fields.Nested('TripSchema', only= ['trip_name', 'trip_desc', 'start_date', 'id'])
+    activities1 = fields.Nested('ActivitySchema', only= ['activity_name', 'date_available'], many= True)
 
     class Meta:
-        fields = ("id", "dest_country", "dest_name")
+        fields = ( "dest_country", "dest_name","trip", "activities1")
         ordered =True
+

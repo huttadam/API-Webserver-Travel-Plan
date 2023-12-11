@@ -43,4 +43,3 @@ def run_app():
     app.register_blueprint(bp_activities)
 
     return app
-

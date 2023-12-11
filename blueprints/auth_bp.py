@@ -20,10 +20,10 @@ def read_all_users():
     return UserSchema(many = True, exclude = ['password']).dump(users)
 
 # User can look at their own account details only
-@bp_users.route('/<int:id>')
+@bp_users.route('/<int:user_id>')
 @jwt_required()
-def read_single_user(id):
-    stmt = db.select(User).filter_by(id = id)
+def read_single_user(user_id):
+    stmt = db.select(User).filter_by(id = user_id)
     user = db.session.scalar(stmt)
     if user:
         owner_admin_authorize(user.id)
@@ -32,43 +32,55 @@ def read_single_user(id):
         return {'Error': f'User ID {user_id} not found'}
 
 # User can edit at their own account including password
-@bp_users.route('/<int:id>', methods = ['PUT'])
+@bp_users.route('/<int:user_id>', methods = ['PUT','PATCH'])
 @jwt_required()
-def update_user(id):
+def update_user(user_id):
     user_info = UserSchema(exclude=['id', 'admin_acc']).load(request.json)
-    user = db.session.query(User).filter_by(id=id).first()
+    user = db.session.query(User).filter_by(id=user_id).first()
 
     if user:
-        owner_admin_authorize(user.id)
-        user.f_name = user_info.get('f_name', user.f_name)
-        user.l_name = user_info.get('l_name', user.l_name)
-        user.username = user_info.get('username', user.username)
-        user.email = user_info.get('email', user.email)
+        if user.admin_acc == False:
+            owner_admin_authorize(user.id)
+            user.f_name = user_info.get('f_name', user.f_name)
+            user.l_name = user_info.get('l_name', user.l_name)
+            user.username = user_info.get('username', user.username)
+            user.email = user_info.get('email', user.email)
+            
+            if 'password' in user_info:
+                new_password = user_info['password']
+                hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+                user.password = hashed_password
+            
+
+            db.session.commit()
+
+            return UserSchema(exclude=['password']).dump(user),200
         
-        if 'password' in user_info:
-            new_password = user_info['password']
-            hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
-            user.password = hashed_password
-        
+        else:
+            return {'Error': 'An admin cannot be edited.'}
 
-        db.session.commit()
-
-        return UserSchema(exclude=['password']).dump(user),200
-
-
-
-@bp_users.route('/<int:id>', methods = ['DELETE'])
-@jwt_required()
-def delete_user(id):
-    stmt= db.select(User).filter_by(id = id)
-    user= db.session.scalar(stmt)
-    if user and user.admin_acc == False:
-        admin_only()
-        db.session.delete(user)
-        db.session.commit()
-        return {'Success': f'User ID {id} and all related Trips deleted'}
+    
     else:
-        return {'Error': 'You cannot delete an Admin'}
+        return {'Error': 'User not found, please check ID'}
+
+
+
+@bp_users.route('/<int:user_id>', methods = ['DELETE'])
+@jwt_required()
+def delete_user(user_id):
+    stmt= db.select(User).filter_by(id = user_id)
+    user= db.session.scalar(stmt)
+    if user:
+        if user.admin_acc == False:
+            admin_only()
+            db.session.delete(user)
+            db.session.commit()
+            return {'Success': f'User ID {user_id} and all related Trips deleted'}
+
+        else:
+            return {'Error': 'An admin cannot be deleted'}
+    else:
+        return {'Error': 'User not found, please check ID'}
 
 
 # User Creates Acc
@@ -103,7 +115,7 @@ def register_user():
         return UserSchema(exclude=['password']).dump(new_user),201
 
 
-# User Log in - NO AUTH -- NEED
+# User Log in
 @bp_users.route('/login', methods=['POST'])
 def login():
     try:

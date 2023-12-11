@@ -2,31 +2,28 @@ from models.trip import Trip, TripSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, Blueprint
 from init import db
-from blueprints.auth_bp import owner_admin_authorize
+from blueprints.auth_bp import owner_admin_authorize, admin_only
 
 bp_trips = Blueprint("bp_trips",__name__, url_prefix='/trips')
 
 #All  Users Trips --- Admin Only
 @bp_trips.route('/')
 @jwt_required()
-def read_all_trips():
-    # NEED TO ADD ADMIN ONLY HERE
+def read_all_trips_admin():
+    admin_only()
     stmt = db.select(Trip)
     trips = db.session.scalars(stmt).all()
     return TripSchema(many=True).dump(trips)
 
-
-# Users read there own personal trips - Individually - NEED TO ADD OWNER TO VIEW
-@bp_trips.route('/<int:id>')
+@bp_trips.route('/<int:user_id>')
 @jwt_required()
-def read_single_trip(id):
-    stmt = db.select(Trip).filter_by(id=id)
-    trip = db.session.scalar(stmt)
-    if trip:
-        owner_admin_authorize(trip.id)
-        return TripSchema().dump(trip)
-    else:
-        return {'error': 'Card not found'}, 404
+def read_all_users_trips(user_id):
+    owner_admin_authorize(user_id)
+    stmt = db.select(Trip).filter_by(user_id = user_id)
+    trips = db.session.scalars(stmt).all()
+    return TripSchema(many=True).dump(trips)
+
+
 
 #Create a Trip
 @bp_trips.route('/', methods=['POST'])
@@ -51,14 +48,14 @@ def create_trip():
     return TripSchema().dump(trip), 201
 
 # Update a trip
-@bp_trips.route('/<int:id>', methods=['PUT','PATCH'])
+@bp_trips.route('/<int:trip_id>', methods=['PUT','PATCH'])
 @jwt_required()
-def edit_trip(id):
+def edit_trip(trip_id):
     trip_info = TripSchema(exclude=['id']).load(request.json)
-    stmt = db.select(Trip).filter_by(id=id)
+    stmt = db.select(Trip).filter_by(id = trip_id)
     trip = db.session.scalar(stmt)
     if trip:
-        owner_admin_authorize(trip.id)
+        owner_admin_authorize(trip.user.id)
         trip.trip_name = trip_info.get('trip_name', trip.trip_name),
         trip.start_date = trip_info.get('start_date', trip.start_date),
         trip.finish_date = trip_info.get('finish_date',trip.finish_date),
@@ -73,13 +70,13 @@ def edit_trip(id):
         return {'Error': 'Trip not found'}, 404
 
 #Delete a trip
-@bp_trips.route('/<int:id>', methods=['DELETE'])
+@bp_trips.route('/<int:trip_id>', methods=['DELETE'])
 @jwt_required()
-def delete_trip(id):
-    stmt =db.select(Trip).filter_by(id = id)
+def delete_trip(trip_id):
+    stmt =db.select(Trip).filter_by(id = trip_id)
     trip =db.session.scalar(stmt)
     if trip:
-        owner_admin_authorize(trip.id)
+        owner_admin_authorize(trip.user.id)
         db.session.delete(trip)
         db.session.commit()
-        return {'Success': f'Trip ID: {id} and all related content Destination/Activities deleted'}
+        return {'Success': f'Trip ID: {trip_id} and all related content including Destination/Activities deleted'}

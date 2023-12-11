@@ -16,7 +16,7 @@ class User(db.Model):
     admin_acc = db.Column(db.Boolean, default=False)
 
     trips = db.relationship('Trip', back_populates='user', cascade= 'all, delete')
-    comments = db.relationship('Comment', back_populates='user')
+    comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
 
 
 

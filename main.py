@@ -21,13 +21,13 @@ def run_app():
     def hello_world():
         return "Hello, World!"
 
-    # @app.errorhandler(401)
-    # def unauthorized(err):
-    #     return {'error': 'You are not authorized to access this resource'}
+    @app.errorhandler(401)
+    def unauthorized(err):
+        return {'error': 'You are not authorized to access this resource'},401
 
-    # @app.errorhandler(IntegrityError)
-    # def integrity_error(err):
-    #     return {'Error': "This entry already exists in database"}, 400
+    @app.errorhandler(IntegrityError)
+    def integrity_error(err):
+        return {'Error': "This entry already exists in database"}, 400
 
 
     db.init_app(app)

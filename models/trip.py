@@ -15,7 +15,7 @@ class Trip(db.Model):
     trip_desc = db.Column(db.Text, nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    user = db.relationship('User', back_populates='trips', cascade='all, delete')
+    user = db.relationship('User', back_populates='trips')
 
     destinations = db.relationship('Destination', back_populates='trip', cascade='all, delete')
 

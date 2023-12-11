@@ -10,10 +10,10 @@ class Comment(db.Model):
     message= db.Column(db.String)
 
     activity_id = db.Column(db.Integer, db.ForeignKey('activities.id'))
-    activity = db.relationship('Activity', back_populates='comments')
+    activity = db.relationship('Activity', back_populates='comments', cascade='all, delete')
 
-    user_username = db.Column(db.String, db.ForeignKey('users.username'))
-    user = db.relationship('User', back_populates='comments')
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship('User', back_populates='comments',cascade='all, delete')
 
  
 class CommentSchema(ma.Schema):

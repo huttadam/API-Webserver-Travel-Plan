@@ -23,8 +23,8 @@ class Trip(db.Model):
 
 
 class TripSchema(ma.Schema):
-    # user = fields.Nested('UserSchema', only=['username','id'])
+    user = fields.Nested('UserSchema', only=['username','id'])
     # destinations = fields.Nested('DestinationSchema', exclude=['id'], many= True)
     
     class Meta:
-        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc")
+        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc","user")

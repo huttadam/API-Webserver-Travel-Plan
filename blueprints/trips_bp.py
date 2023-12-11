@@ -15,6 +15,7 @@ def read_all_trips_admin():
     trips = db.session.scalars(stmt).all()
     return TripSchema(many=True).dump(trips)
 
+# Users can read all there Trips they've made (so can Admin)
 @bp_trips.route('/<int:user_id>')
 @jwt_required()
 def read_all_users_trips(user_id):
@@ -29,9 +30,7 @@ def read_all_users_trips(user_id):
 @bp_trips.route('/', methods=['POST'])
 @jwt_required()
 def create_trip():
-    
     trip_info = TripSchema().load(request.json)
-    
     trip = Trip(
         trip_name = trip_info.get('trip_name'),
         start_date = trip_info.get('start_date'),

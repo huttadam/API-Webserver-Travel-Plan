@@ -2,21 +2,22 @@ from models.destination import Destination, DestinationSchema
 from flask_jwt_extended import jwt_required
 from flask import request, Blueprint
 from init import db
-from blueprints.auth_bp import owner_admin_authorize
+from blueprints.auth_bp import owner_admin_authorize, admin_only
 
 bp_destinations = Blueprint("bp_destinations",__name__, url_prefix='/destinations')
 
-
-@bp_destinations.route('/')
+#Admin Can Check All destinations
+@bp_destinations.route('/All')
 @jwt_required()
 def read_all_destination():
+    admin_only()
     stmt = db.select(Destination)
     destinations = db.session.scalars(stmt).all()
     return DestinationSchema(many=True).dump(destinations)
 
-@bp_destinations.route('/<int:id>')
+@bp_destinations.route('/<int:trip_id>')
 @jwt_required()
-def read_one_destination(id):
+def read_users_destinations(id):
     stmt = db.select(Destination).filter_by(id=id)
     dest = db.session.scalar(stmt)
     if dest:
@@ -33,7 +34,8 @@ def create_destination():
     
     destination = Destination(
         dest_name = dest_info.get('dest_name'),
-        dest_country = dest_info.get('dest_country')
+        dest_country = dest_info.get('dest_country'),
+        trip_id = dest_info.get('trip_id')
     )
 
     db.session.add(destination)
@@ -45,12 +47,12 @@ def create_destination():
 
 @bp_destinations.route('/<int:id>', methods=['PUT','PATCH'])
 @jwt_required()
-def edit_destination(id):
+def edit_destination(trip_id):
     dest_info = DestinationSchema(exclude=['id']).load(request.json)
-    stmt = db.select(Destination).filter_by(id=id)
+    stmt = db.select(Destination).filter_by(id=trip_id)
     dest = db.session.scalar(stmt)
     if dest:
-        owner_admin_authorize(dest.id)
+        owner_admin_authorize(dest.trip.id)
         dest.dest_name = dest_info.get('dest_name', dest.dest_name)
         dest.dest_country = dest_info.get('dest_country', dest.dest_country)
 

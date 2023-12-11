@@ -149,5 +149,5 @@ def owner_admin_authorize(owner_id):
     stmt = db.select(User).filter_by(id=current_user_id)
     user = db.session.scalar(stmt)
     if not (user and (user.admin_acc or current_user_id == owner_id)):
-        abort(401, description="You must be an admin or user to access")
+        abort(401, description="You must be an admin or be the owner to access")
 

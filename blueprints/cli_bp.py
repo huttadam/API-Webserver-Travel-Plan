@@ -99,8 +99,8 @@ def seed_db():
 
         Trip(
             trip_name ="Nothern Lights Trip",
-            start_date = '2023/02/4',
-            finish_date = '2023/3/11',
+            start_date = '2024/02/4',
+            finish_date = '2024/3/11',
             estimated_budget = 6500,
             trip_desc = "Camping in the wilderness and hoping to see the Aurora Borealis",
             user_id = users[0].id
@@ -118,29 +118,27 @@ def seed_db():
     db.session.query(Trip).delete()
     db.session.add_all(trips)
     db.session.commit()
-    # print(trips[0].id, "SNow Japan", users[0].id, "Sally", users[1].f_name)
-    # print(trips[1].id, "Euro", users[1].id, "Barry")
-    # print(trips[2].id, "Vietnam",users[2].id, "vic")
-    # print(trips[3].id, "Aurora", users[0].id, "Sally")
-    # print(trips[4].id, "Olympics",users[3].id, "JOhhny")
 
     destinations = [
 
         Destination(
             dest_country = 'Japan',
             dest_name = 'Niseko Ski Resort',
+            continent = 'Asia',
             trip_id = trips[0].id
         ),
 
         Destination(
             dest_country = 'Japan',
             dest_name = 'Nozawa Onsen Ski Resort',
+            continent = 'Asia',
             trip_id = trips[0].id
         ),
 
         Destination(
             dest_country = 'Japan',
             dest_name = 'Tokyo',
+            continent = 'Asia',
             trip_id = trips[0].id
 
         ),
@@ -148,6 +146,7 @@ def seed_db():
         Destination(
             dest_country = 'Spain',
             dest_name = 'Bunol',
+            continent = 'Europe',
             trip_id = trips[1].id
 
         ),
@@ -155,12 +154,14 @@ def seed_db():
         Destination(
             dest_country = 'Spain',
             dest_name = 'Pamplona',
+            continent = 'Europe',
             trip_id = trips[1].id
 
         ),
         Destination(
             dest_country = 'France',
             dest_name = 'Chamonix',
+            continent = 'Europe',
             trip_id = trips[1].id
 
         ),
@@ -168,6 +169,7 @@ def seed_db():
         Destination(
             dest_country = 'Italy',
             dest_name = 'Rome',
+            continent = 'Europe',
             trip_id = trips[1].id
 
         ),
@@ -175,18 +177,21 @@ def seed_db():
         Destination(
             dest_country = 'Germany',
             dest_name = 'Munich',
+            continent = 'Europe',
             trip_id = trips[1].id
         ),
 
         Destination(
             dest_country = 'Germany',
             dest_name = 'Hohenschwangau',
+            continent = 'Europe',
             trip_id = trips[1].id
         ),
 
         Destination(
             dest_country = 'Vietnam',
             dest_name = 'Hanoi',
+            continent = 'Asia',
             trip_id = trips[2].id
 
         ),
@@ -194,12 +199,14 @@ def seed_db():
         Destination(
             dest_country = 'Vietnam',
             dest_name = 'Bai Bien Vinh Thai beach',
+            continent = 'Asia',
             trip_id = trips[2].id
         ),
 
         Destination(
             dest_country = 'Vietnam',
             dest_name = 'Hue',
+            continent = 'Asia',
             trip_id = trips[2].id
 
         ),
@@ -207,16 +214,19 @@ def seed_db():
         Destination(
             dest_country = 'Vietnam',
             dest_name = 'Hoi An',
+            continent = 'Asia',
             trip_id = trips[2].id
         ),
 
         Destination(
             dest_country = 'Canada',
             dest_name = 'La Crete',
+            continent = 'NorthAmerica',
             trip_id = trips[3].id
         )
     ]
 
+    db.session.query(Destination).delete()
     db.session.add_all(destinations)
     db.session.commit()
     
@@ -386,19 +396,20 @@ def seed_db():
             activity_name = 'Camp and watch the Aurora Borealis',
             activity_desc = 'Make a campfire everynight and wait for the Northern lights',
             activity_location_URL = 'https://maps.app.goo.gl/ZKrMLLTLNWz99WET6',
-            budget = 50,
+            budget = 500,
             date_available = "Late August to mid April",
             destination_id = destinations[13].id
         )
     ]
 
+    db.session.query(Activity).delete()
     db.session.add_all(activities)
     db.session.commit()
 
     comments = [
 
         Comment(
-            message = 'This resoort is so crowded \U0001F62E',
+            message = 'This resort is so crowded \U0001F62E',
             activity_id = activities[0].id,
             user_id =users[3].id
         ),
@@ -454,7 +465,7 @@ def seed_db():
         Comment(
             message = 'If your not into running and danger, the bars and parties after the run are great!',
             activity_id = activities[7].id,
-            user_id =users[1].id
+            user_id =users[2].id
         ),
 
         Comment(
@@ -466,7 +477,7 @@ def seed_db():
         Comment(
             message = 'Wheres a good place to stay for the festival?',
             activity_id = activities[9].id,
-            user_id =users[4].id
+            user_id =users[3].id
         ),
 
         Comment(
@@ -484,7 +495,7 @@ def seed_db():
         Comment(
             message = 'Do you need to make a reservation?',
             activity_id = activities[12].id,
-            user_id =users[4].id
+            user_id =users[0].id
         ),
 
         Comment(
@@ -496,7 +507,7 @@ def seed_db():
         Comment(
             message = 'Pretty Boring, Doest even look like the Disney Castle! \U0001F641',   
             activity_id = activities[13].id,
-            user_id =users[4].id,
+            user_id =users[1].id,
         ),
 
         Comment(
@@ -539,10 +550,16 @@ def seed_db():
 
             message = 'Its so beautiful , you need a real clear sky to see it',
             activity_id = activities[19].id,
-            user_id =users[4].id
+            user_id =users[1].id
+        ),
+        Comment(
+            message = 'I was there three days and missed it! hopefully you see it',
+            activity_id = activities[19].id,
+            user_id =users[3].id
         )
     ]
 
+    db.session.query(Comment).delete()
     db.session.add_all(comments)
     db.session.commit()
-    print('Tables seeded Successfully')
+    print("Tables successfully seeded.")

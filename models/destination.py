@@ -10,6 +10,7 @@ class Destination(db.Model):
 
     dest_country = db.Column(db.String, nullable = False)
     dest_name = db.Column(db.String, nullable = False)
+    continent = db.Column(db.String, nullable = False)
 
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'), nullable=False)
     trip = db.relationship('Trip', back_populates='destinations')
@@ -22,6 +23,16 @@ class DestinationSchema(ma.Schema):
     activities = fields.Nested('ActivitySchema', many = True, exclude=['comments'])
 
     class Meta:
-        fields = ( "id","dest_country", "dest_name", "activities")
-        ordered =True
+        fields = ( "id","dest_country", "dest_name","continent","activities")
+
+class DestinationPublicSchema(ma.Schema):
+    activities = fields.Nested('ActivitySchema', many = True, exclude=['budget'])
+
+    class Meta:
+        fields = ( "id","dest_country", "dest_name", "activities", "continent")
+
+
+
+
+
 

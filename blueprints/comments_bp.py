@@ -1,20 +1,21 @@
 from models.comment import Comment, CommentSchema
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, Blueprint
 from init import db
-from blueprints.auth_bp import owner_admin_authorize
+from blueprints.auth_bp import owner_admin_authorize, admin_only
 
 bp_comments = Blueprint("bp_comments",__name__, url_prefix='/comments')
 
 
-@bp_comments.route('/')
+@bp_comments.route('/A')
 @jwt_required()
 def read_all_comments():
+    admin_only()
     stmt = db.select(Comment)
     comments = db.session.scalars(stmt).all()
     return CommentSchema(many=True).dump(comments)
 
-@bp_comments.route('/<int:id>')
+@bp_comments.route('/<int:comment_id>')
 @jwt_required()
 def read_one_comment(id):
     stmt = db.select(Comment).filter_by(id=id)
@@ -26,14 +27,14 @@ def read_one_comment(id):
         return {'Error': 'Comment not found'}, 404
 
 
-@bp_comments.route('/', methods=['POST'])
+@bp_comments.route('/<int:activity_id>', methods=['POST'])
 @jwt_required()
-def create_comments():
+def create_comments(activity):
     comment_info = CommentSchema(exclude=['id']).load(request.json)
     
     comment = Comment(
         message = comment_info.get('message'),
-        activity_id = comment_info.get('activity_id')
+        user_id = get_jwt_identity().get('username'),
     )
 
     db.session.add(comment)
@@ -43,7 +44,7 @@ def create_comments():
 
 
 
-@bp_comments.route('/<int:id>', methods=['PUT','PATCH'])
+@bp_comments.route('/<int:comment_id>', methods=['PUT','PATCH'])
 @jwt_required()
 def edit_comments(id):
     comment_info = CommentSchema(exclude=['id']).load(request.json)
@@ -62,7 +63,7 @@ def edit_comments(id):
         return {'Error': 'Comment not found'}, 404
 
 #Delete a comment
-@bp_comments.route('/<int:id>', methods=['DELETE'])
+@bp_comments.route('/<int:comment_id>', methods=['DELETE'])
 @jwt_required()
 def delete_comments(id):
     stmt= db.select(Comment).filter_by(id = id)

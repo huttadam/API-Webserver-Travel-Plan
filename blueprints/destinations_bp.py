@@ -1,4 +1,4 @@
-from models.destination import Destination, DestinationSchema
+from models.destination import Destination, DestinationSchema, DestinationPublicSchema
 from flask_jwt_extended import jwt_required
 from flask import request, Blueprint
 from init import db
@@ -37,7 +37,8 @@ def create_destination():
     destination = Destination(
         dest_name = dest_info.get('dest_name'),
         dest_country = dest_info.get('dest_country'),
-        trip_id = dest_info.get('trip_id')
+        trip_id = dest_info.get('trip_id'),
+        continent = dest_info.get('continent')
     )
 
     db.session.add(destination)
@@ -57,6 +58,7 @@ def edit_destination(dest_id):
         owner_admin_authorize(dest.trip.user.id)
         dest.dest_name = dest_info.get('dest_name', dest.dest_name)
         dest.dest_country = dest_info.get('dest_country', dest.dest_country)
+        dest.continent = dest_info.get('continent', dest.continent)
 
         db.session.commit()
 
@@ -76,3 +78,4 @@ def delete_destination(dest_id):
         db.session.delete(dest)
         db.session.commit()
         return {'Success': f'Destination ID: {id} and all related Activities deleted'},201
+

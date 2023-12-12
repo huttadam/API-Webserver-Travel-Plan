@@ -10,17 +10,16 @@ from datetime import timedelta
 bp_users = Blueprint("bp_users",__name__, url_prefix='/users')
 
 # Search all users (Admin Only access)
-@bp_users.route('/')
+@bp_users.route('/A')
 @jwt_required()
 def read_all_users():
     admin_only()
     stmt = db.select(User)
     users = db.session.scalars(stmt).all()
-
     return UserSchema(many = True, exclude = ['password']).dump(users)
 
 # User can look at their own account details only
-@bp_users.route('/<string:user_id>')
+@bp_users.route('/<int:user_id>')
 @jwt_required()
 def read_single_user(user_id):
     stmt = db.select(User).filter_by(id = user_id)
@@ -59,7 +58,6 @@ def update_user(user_id):
         else:
             return {'Error': 'An admin cannot be edited.'}
 
-    
     else:
         return {'Error': 'User not found, please check ID'}
 
@@ -134,6 +132,8 @@ def login():
 
     except KeyError:
         return {"Error": "Email and Password need to be provided."},400
+
+
 
 
 def admin_only():

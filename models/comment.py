@@ -12,12 +12,12 @@ class Comment(db.Model):
     activity_id = db.Column(db.Integer, db.ForeignKey('activities.id'))
     activity = db.relationship('Activity', back_populates='comments', cascade='all, delete')
 
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    username = db.Column(db.Integer, db.ForeignKey('users.username'))
     user = db.relationship('User', back_populates='comments',cascade='all, delete')
 
  
 class CommentSchema(ma.Schema):
-    # users = fields.Nested('UserSchema', only = ['username'])
+    user = fields.Nested('UserSchema', only = ['username'])
 
     class Meta:
-        fields = ("id","message")
+        fields = ("id","message","user")

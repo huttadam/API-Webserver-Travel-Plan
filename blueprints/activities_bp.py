@@ -1,4 +1,6 @@
 from models.activity import Activity, ActivitySchema
+from models.destination import Destination, DestinationPublicSchema
+from models.trip import Trip, TripSchema
 from flask_jwt_extended import jwt_required
 from flask import request, Blueprint
 from init import db
@@ -16,8 +18,6 @@ def read_all_activities():
     activities = db.session.scalars(stmt).all()
     return ActivitySchema(many=True, exclude= ['comments']).dump(activities)
 
-
-
 @bp_activities.route('/<int:activity_id>')
 @jwt_required()
 def read_single_activity(activity_id):
@@ -28,6 +28,7 @@ def read_single_activity(activity_id):
         return ActivitySchema(exclude=['comments']).dump(activity)
     else:
         return {'Error': 'Activity_ID not found'}, 404
+
 
 #Create a activity
 @bp_activities.route('/', methods=['POST'])
@@ -43,9 +44,6 @@ def create_activity():
         activity_desc = activity_info.get('activity_desc'),
 
         destination_id = activity_info.get('destination_id')
-
-
-
     )
 
     db.session.add(activity)
@@ -87,6 +85,45 @@ def delete_activity(activity_id):
         db.session.delete(activity)
         db.session.commit()
         return {'Success': f'Activity ID: {id} and all related Comments deleted'}
+
+
+
+@bp_activities.route('/public')
+def public_activities_all():
+    stmt = db.select(Destination)
+    destinations = db.session.scalars(stmt).all()
+    if destinations:
+        return DestinationPublicSchema(many=True).dump(destinations)
+    else:
+        return {'Error': 'Files not found'}, 404
+
+@bp_activities.route('/public/<int:activity_id>')
+def public_activities_single_id(activity_id):
+    activity = db.session.query(Activity).filter(Activity.id == activity_id).one()
+    if activity:
+        return ActivitySchema().dump(activity)
+    else:
+        return {'Error': 'Actvity_ID not found'}, 404
+
+
+@bp_activities.route('/public/country/<string:dest_country>')
+def public_activities_destination(dest_country):
+    stmt = db.session.query(Destination).filter(Destination.dest_country == dest_country)
+    destinations = stmt.all()
+    if destinations:
+        return DestinationPublicSchema(many=True).dump(destinations)
+    else:
+        return {'Error': 'Country not found'}, 404
+
+
+@bp_activities.route('/public/continent/<string:continent>')
+def public_activities_continent(continent):
+    stmt = db.session.query(Destination).filter(Destination.continent == continent)
+    destinations =stmt.all()
+    if destinations:
+        return DestinationPublicSchema(many=True).dump(destinations)
+    else:
+        return {'Error': 'Continent not found'}, 404
 
 
 

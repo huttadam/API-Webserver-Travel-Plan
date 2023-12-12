@@ -22,7 +22,6 @@ class Activity(db.Model):
 
 class ActivitySchema(ma.Schema):
     comments = fields.Nested('CommentSchema', many= True, exclude= ['id'])
-    # destination = fields.Nested('DestinationSchema', exclude= ['id'])
 
     class Meta:
-        fields = ("id","activity_name", "activity_location_URL", "budget", "activity_desc","date_available", "comments" )
+        fields = ("id","activity_name", "activity_location_URL", "budget", "activity_desc","date_available", "comments")

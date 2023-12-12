@@ -20,14 +20,14 @@ def read_all_users():
     return UserSchema(many = True, exclude = ['password']).dump(users)
 
 # User can look at their own account details only
-@bp_users.route('/<int:user_id>')
+@bp_users.route('/<string:user_id>')
 @jwt_required()
 def read_single_user(user_id):
     stmt = db.select(User).filter_by(id = user_id)
     user = db.session.scalar(stmt)
     if user:
         owner_admin_authorize(user.id)
-        return UserSchema(exclude = ['password']).dump(user)
+        return UserSchema(exclude = ['password', 'admin_acc']).dump(user)
     else:
         return {'Error': f'User ID {user_id} not found'}
 

@@ -21,9 +21,9 @@ def run_app():
     def hello_world():
         return "Hello, World!"
 
-    @app.errorhandler(401)
-    def unauthorized(err):
-        return {'error': 'You are not authorized to access this resource'},401
+    # @app.errorhandler(401)
+    # def unauthorized(err):
+    #     return {'error': 'You are not authorized to access this resource'},401
 
     @app.errorhandler(IntegrityError)
     def integrity_error(err):

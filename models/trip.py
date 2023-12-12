@@ -24,7 +24,16 @@ class Trip(db.Model):
 
 class TripSchema(ma.Schema):
     user = fields.Nested('UserSchema', only=['username'])
+    destinations = fields.Nested('DestinationSchema', exclude=['activities'], many= True)
 
 
     class Meta:
-        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc","user", "dest")
+        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc","user", "destinations")
+
+class FullTripSchema(ma.Schema):
+    destinations = fields.Nested('DestinationSchema', many= True, exclude=['activities.activity_location_URL'])
+
+
+    class Meta:
+        fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc", "destinations")
+

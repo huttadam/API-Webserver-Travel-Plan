@@ -1,4 +1,4 @@
-from models.trip import Trip, TripSchema
+from models.trip import Trip, TripSchema, FullTripSchema
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, Blueprint
 from init import db
@@ -7,7 +7,7 @@ from blueprints.auth_bp import owner_admin_authorize, admin_only
 bp_trips = Blueprint("bp_trips",__name__, url_prefix='/trips')
 
 #All  Users Trips --- Admin Only
-@bp_trips.route('/')
+@bp_trips.route('/A')
 @jwt_required()
 def read_all_trips_admin():
     admin_only()
@@ -22,8 +22,21 @@ def read_all_users_trips(user_id):
     owner_admin_authorize(user_id)
     stmt = db.select(Trip).filter_by(user_id = user_id)
     trips = db.session.scalars(stmt).all()
-    return TripSchema(many=True).dump(trips)
+    return TripSchema(many= True).dump(trips)
 
+
+# Users can read all there Trips they've made (so can Admin)
+@bp_trips.route('/<int:user_id>/<int:trip_id>')
+@jwt_required()
+def read_specific_trip_info(user_id, trip_id):
+    owner_admin_authorize(user_id)
+    stmt = db.select(Trip).filter_by(id= trip_id)
+    trip = db.session.scalar(stmt)
+    if trip:
+        owner_admin_authorize(trip.user_id)
+        return FullTripSchema().dump(trip)
+    else:
+        return {'Error': 'Trip not found'}
 
 
 

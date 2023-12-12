@@ -1,4 +1,5 @@
 from models.comment import Comment, CommentSchema
+from models.user import User
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, Blueprint
 from init import db
@@ -27,16 +28,20 @@ def read_one_comment(id):
         return {'Error': 'Comment not found'}, 404
 
 
-@bp_comments.route('/<int:activity_id>', methods=['POST'])
+@bp_comments.route('/', methods=['POST'])
 @jwt_required()
-def create_comments(activity):
+def create_comments():
     comment_info = CommentSchema(exclude=['id']).load(request.json)
     
+    user_id = get_jwt_identity()
+    user = User.query.filter_by(id = user_id).first()
+
     comment = Comment(
         message = comment_info.get('message'),
-        user_id = get_jwt_identity().get('username'),
+        username = user.username,
+        activity_id = comment_info.get('activity_id')
     )
-
+    print(comment)
     db.session.add(comment)
     db.session.commit()
 
@@ -65,11 +70,17 @@ def edit_comments(id):
 #Delete a comment
 @bp_comments.route('/<int:comment_id>', methods=['DELETE'])
 @jwt_required()
-def delete_comments(id):
-    stmt= db.select(Comment).filter_by(id = id)
+def delete_comments(comment_id):
+    stmt= db.select(Comment).filter_by(id = comment_id)
     comment= db.session.scalar(stmt)
     if comment:
-        owner_admin_authorize(comment.id)
+        owner_admin_authorize(comment.activity.destination.trip.user.id)
         db.session.delete(comment)
         db.session.commit()
-        return {'Success': f'Comment ID: {id} and all related content deleted'}
+        return {'Success': f'Comment ID: {comment_id} deleted'}
+
+
+
+
+
+        

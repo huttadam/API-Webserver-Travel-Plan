@@ -35,38 +35,55 @@
 Inside the API Webserver project folder, type the following commands in terminal:
 
 On Mac OS:
-```psql postgres```
+```
+psql postgres
+```
 
 or
 
 On WSL:
-```sudo -u postgres psql ```
+```
+sudo -u postgres psql
+ ```
 
 Then to create the database:
 
-```CREATE DATABASE travel_db;```
+```
+CREATE DATABASE travel_db;
+```
 
 Next, connect to the new database:
 
-```\c travel_db;```
+```
+\c travel_db;
+```
 
 Create a user with a password:
 
-```CREATE USER nomad_one WITH PASSWORD 'wander123';```
+```
+CREATE USER nomad_one WITH PASSWORD 'wander123';
+```
 
 Grant all privileges to the user:
 
-```GRANT ALL PRIVILEGES ON DATABASE travel_db TO nomad_one;```
+```
+GRANT ALL PRIVILEGES ON DATABASE travel_db TO nomad_one;
+```
 
 Open a new terminal window, enter the same folder as the source code (src), run the following to create and activate a virtual environment:
 
-```python3 -m venv .venv```
+```
+python3 -m venv .venv
 
-```source .venv/bin/activate```
+source .venv/bin/activate
+
+```
 
 Install packages required:
 
-```python3 -m pip install -r requirements.txt```
+```
+python3 -m pip install -r requirements.txt
+```
 
 Change file '.flaskenv.sample' to just '.flaskenv', and update the  fields:
 ```
@@ -110,16 +127,16 @@ The port has been set to 8000, please try connecting to http://127.0.0.1:8000/ v
 In summary, the solving of this problem can save users a lot of time and exhaustion when travelling as well as act as a community sounding board for traveller and tourists to organize travel information and gather travel information, which ultimately leads to a better travel experience.
 
 
- ### R2 - Why have you chosen your database system. What are the drawbacks compared to others?
+ ### R3 - Why have you chosen your database system. What are the drawbacks compared to others?
 
-Databases are an essential feature for API webservers and the storing and management of data needs to be a process that is functional and flexible. For my API travel planners database system I have selected PostgreSQL, which is a well-known, trusted program to manage data throughout the I.T industry. Some reasons for my choice as follows
+Databases are an essential feature for API webservers and the storing and management of data needs to be a process that is functional, flexible and tailored to my skill level. For my API travel planners database system I have selected PostgreSQL, which is a well-known,scalable, open-source and reputable database program which is utlized on a wide-range of applications throughout the I.T industry. Some reasons for my choice as follows
 
 #### Contraints
-A key feature of PostgreSQL are its contraints . Contrainsts assist in controlling data types with rules. Some examples of these contraints are foreign key constraints, unique constraints, and check constraints. These features help ensure data integrity is kept at the  database level, preventing the inserting of inconsistent or invalid data and keeping structing when deletions are made. In my API project, the ability  ability to enforce and maintain data type and integrity with contraints is a an essential factor for is functionality.
+A key feature of PostgreSQL are its contraints .In simple terms, contrainsts assist in controlling data types of data with rules. Some examples of these contraints are foreign key constraints, unique constraints, and check constraints. These features help ensure data integrity is kept at the  database level, preventing the inserting of inconsistent or invalid data and keeping structing when deletions are made. In my API project, the ability to enforce and maintain data types, relationships between tables (Primary/Foreign Key) and integrity with contraints is a an essential factor for is functionality.
 
 
 #### Robustness
-PostgreSQL has a large set of features that can be usedto facilitate multiple requirements. These features attribute to many many postives of PostgreSQL, and example would be its ACID ((Atomicity, Consistency, Isolation, Durability)) complicance which simply means that data integrity is maintained during interactions with the database when most common mistakes or problems would occur.
+PostgreSQL has a large set of features that can be usedto facilitate multiple requirements. These features are attributed to the success and and popularity of PostgreSQL. An example of these features would be its ACID ((Atomicity, Consistency, Isolation, Durability)) complicance which simply means that data integrity is maintained during interactions with the database when most common mistakes or problems would occur.
 Another feature to explain its robustness is MVCC (Multi-Version Concurrency Control) which improves performance especially in a multi-user database. While handling muitple transactions the database does not lock, it simultaneously processes the transactions and records these versions in-case a rollback or data integrityis compromised in any way.
 
 #### Scalability
@@ -129,12 +146,34 @@ PostgreSQL is suited for large and small datasets. While starting off with a sma
 #### Compareable to other databases
 As mentioned above, PostgreSQL has many benefits and well suited for my API project. However, when compared to other databases and their benfits, some noted drawbacks are noted when trying to acheive specfifc goals, these are as follows.
 
-MySQL - Another database which uses SQL language. While not object relational like postgresql, MySQL as a smaller learning curve than PostgreSQL. As I am new to API's and manageing data the simpler syntax could be an added benefit for speed and going thorough a learning process. 
-In addition to this, MySQL also utilizes cloud compatibility, which is attractive for projects/companies looking for the future and requiring a huge scaled database.
+MySQL - Another database which uses SQL language. While not object relational like postgresql, MySQL as a smaller learning curve than PostgreSQL. As I am new to API's and manageing data the simpler syntax could be an added benefit for speed and going thorough a learning process. In addition to this, MySQL also utilizes cloud compatibility, which is attractive for projects/companies looking for the future and requiring a huge scaled database.
 
 Oracle - A key featue of Oracle is it is a multi-model system. In simple terms this means that several applications utilise the same database and benfit from using the same models. Not only does this derease workload but streamlines application bulding to suite a already designed database. 
 
 
+### R4 - Identify and discuss the key functionalities and benefits of an ORM
 
+An ORM (Object-Relational Mapper) is a very poweful tool in programming. An ORM acts as the translater between the database and the programming language. The ORM enable the user to access the database from their preferred language rather than switch from one language to another. In the case of my API project we are communicating to the the database in a pythonic way to satisy postgreSQL database syntax.
 
+#### Key functionalities of ORM
+
+- Attributes from the database are mapped to programming language objects which gives the user a flexible interface to manipulate or view data from the database to a web application server.
+
+- Data can be validated and handled through implementing rules, so data integrity errors or violations can be handled  graccefully using easier to understand language in error messages.
+
+- Relationships between entities can be created and mapped from the ORM to the database. Relationships which are vital in the display and mangaing of data, these are relationships like  one to one , one to many etc. 
+
+- CRUD operations are easily serviceable via an ORM , CRUD operations are essential in assisting with interactions from the client to the server in an API and form the bridge between them and the Database . For example the CRUD operations breakdown is as follows. 'C' in CRUD stands for Create, which services POST requests to the server, i.e adding data to the database, 'R' stands for Read which services GET requests to the server i.e. reading/acessing the information in the databse, 'U' stands for Update, which services PUT/PATCH requests to the server, i.e modifyiny/changing data in the database and finally 'D' stands for Delete which services DELETE requests to the server.
+
+- Database queries can can be customized to pull data in a specific format to service specific requirements from the client side, for example , you want to access data from a certain date or a customer/product in the startbase starting with the letter 'Z'.
+
+#### Benefits of an ORM
+
+ As mentioned above, many of the ORM's features are core benefits of using however there are also some additional benefits to using an ORM.
+
+ - The use of objects and function in programming language (OOP) allows us to create a general framework for queries, commands and routes, which means that code can be easily integrated to other applications with similiar database structures. Another key benefit of this is utilzing time to focus of the structure and function of the application rather than re-writing specific queries/commands.
+
+ - Testing can be performed more easily in a programming languge which is essential for building applications for businesses which require a lot of evidence of testing and research to ensure the application is safe for public use and the protection of data.
+
+ - Communication and readability are keys benfits of ORM. This means we can actively control messages from the database and client/server to be readable for the ley-person. These messages can also greatly assist the developer in interpreting Database languages to something they can understand easier.
 

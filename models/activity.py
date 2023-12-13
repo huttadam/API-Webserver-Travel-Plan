@@ -1,6 +1,7 @@
 from init import db, ma
 from datetime import datetime
 from marshmallow import fields
+from marshmallow.validate import Regexp
 
 
 class Activity(db.Model):
@@ -8,10 +9,10 @@ class Activity(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    activity_name = db.Column(db.String, nullable=False)
-    activity_location_URL = db.Column(db.Text, nullable=False)
+    activity_name = db.Column(db.String(100), nullable=False)
+    activity_location_URL = db.Column(db.String, nullable=False)
     budget = db.Column(db.Integer, nullable=False)
-    date_available = db.Column(db.String, default= 'Anytime')
+    date_available = db.Column(db.String(50), default= 'Anytime')
     activity_desc = db.Column(db.String(100), nullable=False)
 
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'), nullable=False)
@@ -21,7 +22,10 @@ class Activity(db.Model):
  
 
 class ActivitySchema(ma.Schema):
+
+    activity_location_URL = fields.Str(validate=Regexp("^https://maps\.app\.goo\.gl/[-a-zA-Z0-9@:%._+~#=]{1,256}$", error="Invalid URL format, please only use Google Maps, Short URL"))
     comments = fields.Nested('CommentSchema', many= True, exclude= ['id'])
+
 
     class Meta:
         fields = ("id","activity_name", "activity_location_URL", "budget", "activity_desc","date_available", "comments","destination_id")

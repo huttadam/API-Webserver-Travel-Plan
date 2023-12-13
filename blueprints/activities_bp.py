@@ -57,7 +57,7 @@ def create_activity():
         db.session.add(activity)
         db.session.commit()
 
-        return ActivitySchema().dump(activity), 201
+        return ActivitySchema(exclude = ["comments"]).dump(activity), 201
 
 # Update a activity
 @bp_activities.route('/<int:activity_id>', methods=['PUT','PATCH'])

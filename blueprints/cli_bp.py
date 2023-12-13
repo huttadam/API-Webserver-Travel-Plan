@@ -11,7 +11,7 @@ bp_DBCli = Blueprint('db',__name__ )
 @bp_DBCli.cli.command('drop')
 def drop():
     db.drop_all()
-    print('All dropped')
+    print('All Tables dropped')
 
 
 @bp_DBCli.cli.command('create')

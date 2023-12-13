@@ -1,5 +1,6 @@
 from models.destination import Destination, DestinationSchema, DestinationPublicSchema
-from flask_jwt_extended import jwt_required
+from models.trip import Trip, TripSchema
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, Blueprint
 from init import db
 from blueprints.auth_bp import owner_admin_authorize, admin_only
@@ -33,12 +34,21 @@ def read_one_destination(dest_id):
 @jwt_required()
 def create_destination():
     dest_info = DestinationSchema(exclude=['id']).load(request.json)
+
+    user_id = get_jwt_identity()
+
+    # Ensure that the user is the owner of the trip associated with the destination
+    trip_id = dest_info.get('trip_id')
+    trip = Trip.query.get(trip_id)
     
+    if not trip or trip.user_id != user_id:
+        return {'Error': 'Invalid trip ID or unauthorized access'}, 401
+
     destination = Destination(
         dest_name = dest_info.get('dest_name'),
         dest_country = dest_info.get('dest_country'),
-        trip_id = dest_info.get('trip_id'),
-        continent = dest_info.get('continent')
+        continent = dest_info.get('continent'),
+        trip_id = trip_id,
     )
 
     db.session.add(destination)
@@ -77,5 +87,5 @@ def delete_destination(dest_id):
         owner_admin_authorize(dest.trip.user.id)
         db.session.delete(dest)
         db.session.commit()
-        return {'Success': f'Destination ID: {id} and all related Activities deleted'},201
+        return {'Success': f'Destination ID: {dest_id} and all related Activities deleted'},201
 

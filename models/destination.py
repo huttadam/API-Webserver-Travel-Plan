@@ -1,7 +1,10 @@
 from init import db, ma
 from datetime import datetime
 from marshmallow import fields
+from marshmallow.validate import OneOf
+from marshmallow.exceptions import ValidationError
 
+VALID_CONTINENTS = ("NorthAmerica", "SouthAmerica", "Asia", "Oceania", "Europe", "Africa", "Antartica")
 
 class Destination(db.Model):
     __tablename__ = "destinations"
@@ -20,7 +23,9 @@ class Destination(db.Model):
 
 
 class DestinationSchema(ma.Schema):
+    continent = fields.String(validate = OneOf(VALID_CONTINENTS), error = 'Continent can only be NorthAmerica, SouthAmerica, Asia, Oceania, Europe, Africa, Antartica')
     activities = fields.Nested('ActivitySchema', many = True, exclude=['comments'])
+
 
     class Meta:
         fields = ( "id","dest_country", "dest_name","continent","activities", "trip_id")

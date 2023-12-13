@@ -1,7 +1,7 @@
 from models.activity import Activity, ActivitySchema
 from models.destination import Destination, DestinationPublicSchema
 from models.trip import Trip, TripSchema
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from flask import request, Blueprint
 from init import db
 from blueprints.auth_bp import owner_admin_authorize, admin_only
@@ -35,21 +35,29 @@ def read_single_activity(activity_id):
 @jwt_required()
 def create_activity():
     activity_info = ActivitySchema().load(request.json)
+
+    user_id = get_jwt_identity()
     
-    activity = Activity(
-        activity_name = activity_info.get('activity_name'),
-        activity_location_URL = activity_info.get('activity_location_URL'),
-        budget = activity_info.get('budget'),
-        date_available = activity_info.get('date_available'),
-        activity_desc = activity_info.get('activity_desc'),
+    # Ensure that the user is the owner of the Destination associated with the Activity
+    dest_id = activity_info.get('destination_id')
+    dest = Destination.query.get(dest_id)
+    
+    if not dest or dest.trip.user_id != user_id:
+        return {'Error': 'Invalid destination ID or unauthorized access'}, 401
+    else:
+        activity = Activity(
+            activity_name=activity_info.get('activity_name'),
+            activity_location_URL=activity_info.get('activity_location_URL'),
+            budget=activity_info.get('budget'),
+            date_available=activity_info.get('date_available'),
+            activity_desc=activity_info.get('activity_desc'),
+            destination_id=dest_id
+        )
 
-        destination_id = activity_info.get('destination_id')
-    )
+        db.session.add(activity)
+        db.session.commit()
 
-    db.session.add(activity)
-    db.session.commit()
-
-    return ActivitySchema().dump(activity), 201
+        return ActivitySchema().dump(activity), 201
 
 # Update a activity
 @bp_activities.route('/<int:activity_id>', methods=['PUT','PATCH'])

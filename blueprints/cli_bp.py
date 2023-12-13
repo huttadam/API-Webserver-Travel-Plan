@@ -71,8 +71,8 @@ def seed_db():
     trips = [
         Trip(
             trip_name ="Winter Snowboarding + Tokyo",
-            start_date = '2023/01/15',
-            finish_date = '2023/1/29',
+            start_date = '2023-01-15',
+            finish_date = '2023-1-29',
             estimated_budget = 7000,
             trip_desc = "Snowboarding in two resorts on the northern island of Hokkaido + a few days in Tokyo",
             user_id = users[0].id
@@ -80,8 +80,8 @@ def seed_db():
 
         Trip(
             trip_name ="Backpacking Mainland Europe",
-            start_date = '2023/07/15',
-            finish_date = '2023/9/15',
+            start_date = '2023-07-15',
+            finish_date = '2023-9-15',
             estimated_budget = 15000,
             trip_desc = "Spain, France, Italy and Germany - Festivals",
             user_id = users[1].id
@@ -90,8 +90,8 @@ def seed_db():
 
         Trip(
             trip_name ="Vietnam on Motorbike",
-            start_date = '2023/08/10',
-            finish_date = '2023/08/15',
+            start_date = '2023-08-10',
+            finish_date = '2023-08-15',
             estimated_budget = 2000,
             trip_desc = "Riding from Hanoi to Hoi An",
             user_id = users[2].id
@@ -99,8 +99,8 @@ def seed_db():
 
         Trip(
             trip_name ="Nothern Lights Trip",
-            start_date = '2024/02/4',
-            finish_date = '2024/3/11',
+            start_date = '2024-02-4',
+            finish_date = '2024-3-11',
             estimated_budget = 6500,
             trip_desc = "Camping in the wilderness and hoping to see the Aurora Borealis",
             user_id = users[0].id
@@ -108,8 +108,8 @@ def seed_db():
 
         Trip(
             trip_name ="Paris Olympics",
-            start_date = '2024/07/26',
-            finish_date = '2024/8/11',
+            start_date = '2024-07-26',
+            finish_date = '2024-8-11',
             estimated_budget = 20000,
             trip_desc = "Moving around Paris and seeing many events Games",
             user_id = users[3].id

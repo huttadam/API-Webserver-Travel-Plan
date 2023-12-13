@@ -8,6 +8,7 @@ from blueprints.destinations_bp import bp_destinations
 from blueprints.activities_bp import bp_activities
 from blueprints.comments_bp import bp_comments
 from sqlalchemy.exc import IntegrityError
+from marshmallow.exceptions import ValidationError
 
 def run_app():
 
@@ -17,17 +18,22 @@ def run_app():
     app.config["SQLALCHEMY_DATABASE_URI"] = environ.get('DB_URI')
 
 
-    @app.route("/")
-    def hello_world():
-        return "Hello, World!"
 
     @app.errorhandler(401)
     def unauthorized(err):
         return {'error': 'You are not authorized to access this resource'},401
 
-    # @app.errorhandler(IntegrityError)
-    # def integrity_error(err):
-    #     return {'Error': "This entry already exists in database"}, 400
+    @app.errorhandler(IntegrityError)
+    def integrity_error(err):
+        return {'Error': "This entry already exists in database"}, 400
+
+    @app.errorhandler(ValidationError)
+    def validation_error(err):
+        return {'error': err.__dict__['messages']}, 400
+
+    
+
+
 
 
     db.init_app(app)

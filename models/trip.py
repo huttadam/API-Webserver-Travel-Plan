@@ -1,6 +1,7 @@
 from init import db, ma
 from datetime import datetime, timedelta
 from marshmallow import fields
+from marshmallow.validate import Regexp
 
 
 class Trip(db.Model):
@@ -26,12 +27,17 @@ class TripSchema(ma.Schema):
     user = fields.Nested('UserSchema', only=['username'])
     destinations = fields.Nested('DestinationSchema', exclude=['activities'], many= True)
 
+    start_date = fields.Date(error_messages ={'Error': 'Invalid date format, Date must be YYYY/MM/DD'} )
+    finish_date = fields.Date(error_messages ={'Error': 'Invalid date format, Date must be YYYY/MM/DD'} )
 
     class Meta:
         fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc","user", "destinations")
 
 class FullTripSchema(ma.Schema):
     destinations = fields.Nested('DestinationSchema', many= True, exclude=['activities.activity_location_URL', 'continent'])
+
+    start_date = fields.Date(error_messages ={'Error': 'Invalid date format, Date must be YYYY/MM/DD'} )
+    finish_date = fields.Date(error_messages ={'Error': 'Invalid date format, Date must be YYYY/MM/DD'} )
 
     class Meta:
         fields = ("id", "trip_name","start_date", "finish_date",'estimated_budget',"trip_desc", "destinations")

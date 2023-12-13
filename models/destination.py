@@ -23,7 +23,7 @@ class DestinationSchema(ma.Schema):
     activities = fields.Nested('ActivitySchema', many = True, exclude=['comments'])
 
     class Meta:
-        fields = ( "id","dest_country", "dest_name","continent","activities")
+        fields = ( "id","dest_country", "dest_name","continent","activities", "trip_id")
 
 class DestinationPublicSchema(ma.Schema):
     activities = fields.Nested('ActivitySchema', many = True, exclude=['budget'])

@@ -13,7 +13,7 @@ class Comment(db.Model):
     activity = db.relationship('Activity', back_populates='comments', cascade='all, delete')
 
     username = db.Column(db.String(), db.ForeignKey('users.username'))
-    user = db.relationship('User', back_populates='comments',cascade='all, delete')
+    user = db.relationship('User', back_populates='comments')
 
  
 class CommentSchema(ma.Schema):

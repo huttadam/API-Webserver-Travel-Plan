@@ -15,7 +15,7 @@ class User(db.Model):
     password = db.Column(db.String, nullable=False)
     admin_acc = db.Column(db.Boolean, default=False)
 
-    trips = db.relationship('Trip', back_populates='user', cascade= 'all, delete')
+    trips = db.relationship('Trip', back_populates='user', cascade= 'delete')
     comments = db.relationship('Comment', back_populates='user', cascade='all, delete')
 
 

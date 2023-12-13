@@ -16,17 +16,6 @@ def read_all_comments():
     comments = db.session.scalars(stmt).all()
     return CommentSchema(many=True).dump(comments)
 
-@bp_comments.route('/<int:comment_id>')
-@jwt_required()
-def read_one_comment(id):
-    stmt = db.select(Comment).filter_by(id=id)
-    comment = db.session.scalar(stmt)
-    if comment:
-        owner_admin_authorize(comment.id)
-        return CommentSchema().dump(comment)
-    else:
-        return {'Error': 'Comment not found'}, 404
-
 
 @bp_comments.route('/', methods=['POST'])
 @jwt_required()
@@ -41,7 +30,6 @@ def create_comments():
         username = user.username,
         activity_id = comment_info.get('activity_id')
     )
-    print(comment)
     db.session.add(comment)
     db.session.commit()
 
@@ -51,12 +39,12 @@ def create_comments():
 
 @bp_comments.route('/<int:comment_id>', methods=['PUT','PATCH'])
 @jwt_required()
-def edit_comments(id):
+def edit_comments(comment_id):
     comment_info = CommentSchema(exclude=['id']).load(request.json)
-    stmt = db.select(Comment).filter_by(id=id)
+    stmt = db.select(Comment).filter_by(id = comment_id)
     comment = db.session.scalar(stmt)
     if comment:
-        owner_admin_authorize(comment.id)
+        owner_admin_authorize(comment.activity.destination.trip.user.id)
         comment.message = comment_info.get('message', comment.message)
         comment.activity_id = comment_info.get('activity_id', comment.activity_id)
 

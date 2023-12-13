@@ -17,11 +17,11 @@ class Activity(db.Model):
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'), nullable=False)
     destination = db.relationship('Destination', back_populates='activities')
 
-    comments = db.relationship('Comment', back_populates='activity')
+    comments = db.relationship('Comment', back_populates='activity', cascade= 'all, delete')
  
 
 class ActivitySchema(ma.Schema):
     comments = fields.Nested('CommentSchema', many= True, exclude= ['id'])
 
     class Meta:
-        fields = ("id","activity_name", "activity_location_URL", "budget", "activity_desc","date_available", "comments")
+        fields = ("id","activity_name", "activity_location_URL", "budget", "activity_desc","date_available", "comments","destination_id")

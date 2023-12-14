@@ -9,11 +9,11 @@ class Activity(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    activity_name = db.Column(db.String(100), nullable=False)
-    activity_location_URL = db.Column(db.String, nullable=False)
+    activity_name = db.Column(db.String(100), nullable=False, unique = True)
+    activity_location_URL = db.Column(db.String)
     budget = db.Column(db.Integer, nullable=False)
     date_available = db.Column(db.String(50), default= 'Anytime')
-    activity_desc = db.Column(db.String(100), nullable=False)
+    activity_desc = db.Column(db.String(150), nullable=False)
 
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'), nullable=False)
     destination = db.relationship('Destination', back_populates='activities')

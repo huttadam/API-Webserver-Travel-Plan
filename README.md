@@ -10,17 +10,17 @@
 
 ## Contents
 
-* [Installation and Setup](#installation-and-setup)
-* [R1: Problem Indentification](#r1-identify-the-problem-you-are-trying-to-solve-with-this-app)
-* [R2: Problem Justification](#r2-why-is-it-a-problem-that-needs-solving)
-* [R3: Database System](#r3-why-have-you-chosen-this-database-system-what-are-the-drawbacks-compared-to-others)
-* [R4: ORM Functionalities and Benefits](#r4-identify-and-discuss-the-key-functionalities-and-benefits-of-an-orm)
-* [R5: Endpoints](#r5-endpoints)
-    * [Auth/User Routes](#auth-routes)
-    * [Trips Routes](#Trips-routes)
-    * [Destinations Routes](#Destinations-routes)
-    * [Activities Routes](#Activities-routes)
-    * [Comments Routes](#Comments-routes)
+* [Installation and Setup](#installation-and-setup-instructions)
+* [R1: Problem Indentification](#r1---identify-the-problem-you-are-trying-to-solve-with-this-app)
+* [R2: Problem Justification](#r2---why-is-it-a-problem-that-needs-solving-?)
+* [R3: Database System](#r3---why-have-you-chosen-your-database-system-what-are-the-drawbacks-compared-to-others-?)
+* [R4: ORM Functionalities and Benefits](#r4---identify-and-discuss-the-key-functionalities-and-benefits-of-an-ORM)
+* [R5: Endpoints](#r5-documenting-api-endpoints)
+    * [Auth/User Routes](#authuser-routes)
+    * [Trips Routes](#trip-routes)
+    * [Destinations Routes](#Destination-routes)
+    * [Activities Routes](#Activity-routes)
+    * [Comments Routes](#Comment-routes)
 * [R6: ERD](#r6-erd)
 * [R7: Third Party Services](#r7-detail-any-third-party-services-that-your-app-will-use)
 * [R8: Models and Relationships](#r8-describe-your-projects-models-in-terms-of-the-relationships-they-have-with-each-other)
@@ -30,7 +30,7 @@
 
 ---
 
-### Installation and Setup Istructions
+### Installation and Setup Instructions
 
 Inside the API Webserver project folder, type the following commands in terminal:
 
@@ -127,7 +127,7 @@ The port has been set to 8000, please try connecting to http://127.0.0.1:8000/ v
 In summary, the solving of this problem can save users a lot of time and exhaustion when travelling as well as act as a community sounding board for traveller and tourists to organize travel information and gather travel information, which ultimately leads to a better travel experience.
 
 
- ### R3 - Why have you chosen your database system. What are the drawbacks compared to others?
+ ### R3 - Why have you chosen your database system, What are the drawbacks compared to others?
 
 Databases are an essential feature for API webservers and the storing and management of data needs to be a process that is functional, flexible and tailored to my skill level. For my API travel planners database system I have selected PostgreSQL, which is a well-known,scalable, open-source and reputable database program which is utlized on a wide-range of applications throughout the I.T industry. Some reasons for my choice as follows
 
@@ -178,7 +178,7 @@ An ORM (Object-Relational Mapper) is a very poweful tool in programming. An ORM 
  - Communication and readability are keys benfits of ORM. This means we can actively control messages from the database and client/server to be readable for the ley-person. These messages can also greatly assist the developer in interpreting Database languages to something they can understand easier.
 
 
-### R5 Documenting Endpoints
+### R5 Documenting API Endpoints
 
 ### Auth/User Routes
 
@@ -360,9 +360,7 @@ Error message:
 }
 ```
 
-### Users Routes
-
-#### 1. /users/A
+#### 3. /users/A
 
 * Methods: GET
 
@@ -439,7 +437,7 @@ Error Message:
 }
 ```
 
-#### 2. /users/user_id
+#### 4. /users/user_id
 
 * Methods: GET
 
@@ -492,7 +490,7 @@ Error Message:
 	"Error": "Page not found, please try again"
 }
 ```
-#### 3. /users/user_id
+#### 5. /users/user_id
 
 * Methods: PUT, PATCH
 
@@ -552,7 +550,7 @@ Error message:
 	"Error": "You are not authorized to access this information"
 }
 ```
-#### 4. /users/user_id
+#### 6. /users/user_id
 
 * Methods: DELETE
 
@@ -1387,7 +1385,7 @@ Error message:
 
 * Authentication: @jwt_required()
 
-* Authorisation: Bearer token of users ID or Admin
+* Authorisation: Bearer token of the Trip IDs owner (user_id) or admin_acc
 
 * Request Body: None
 
@@ -1398,7 +1396,7 @@ Error message:
 }
 ```
 
-* Error Handling: Same potential errors and messages as destination delete (Authorization and Incorrect ID).
+* Error Handling: Same potential errors and messages as destination update (Authorization and Incorrect ID).
 
 Scenario: The Destination ID in URL doesnt exist
 
@@ -1412,7 +1410,479 @@ Error message:
 }
 ```
 
-Scenario: User isn't owner/admin of the trip they are trying to update
+Scenario: User isn't owner/admin of the destination they are trying to delete
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+### Activity Routes
+
+#### 1. /activities/A
+
+* Methods: GET
+
+* Description: Retrieves a list of all Activities of all users, For Admins to monitor content. This content is public so its important an Authority can check and delete if necessary.
+
+* Request Parameters: Capital letter A (Admin)
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of admin_acc only
+
+* Request Body: None
+
+* Request Response: 22
+
+HTTP Status Code: 200 OK
+
+
+```
+[
+	{
+		"activity_desc": "Explore the resort and riding from the peak to the bottom",
+		"activity_location_URL": "https://maps.app.goo.gl/WN9YHnqVA7MSowBT8",
+		"activity_name": "Snowboarding Niseko resort",
+		"budget": 2000,
+		"date_available": "December to April",
+		"destination_id": 1,
+		"id": 1
+	},
+	{
+		"activity_desc": "Rent snowshoes/poles and and a guide to take us to the top to ride down",
+		"activity_location_URL": "https://maps.app.goo.gl/WN9YHnqVA7MSowBT8",
+		"activity_name": "Hike Mt Yotei",
+		"budget": 500,
+		"date_available": "Late January, Early February (best time)",
+		"destination_id": 1,
+		"id": 2
+	},
+	{
+		"activity_desc": "Explore the resort and ride the backcountry",
+		"activity_location_URL": "https://maps.app.goo.gl/xkqVSWxRvw1zS85W9",
+		"activity_name": "Snowboarding Nozawa Onsen Resort",
+		"budget": 1700,
+		"date_available": "December to March",
+		"destination_id": 2,
+		"id": 3
+	},
+	{
+		"activity_desc": "Use of the many free public baths to relax , post snowboarding",
+		"activity_location_URL": "https://maps.app.goo.gl/xkqVSWxRvw1zS85W9",
+		"activity_name": "Have an onsen in a Soto-yu",
+		"budget": 0,
+		"date_available": "Anytime",
+		"destination_id": 2,
+		"id": 4
+	},
+	{
+		"activity_desc": "Go to as many bars as possible and meet new people",
+		"activity_location_URL": "https://maps.app.goo.gl/xsZhtKfEp6vQx9LcA",
+		"activity_name": "Drinking in Golden Gai, Shinjuku",
+		"budget": 200,
+		"date_available": "Anytime",
+		"destination_id": 3,
+		"id": 5
+	},
+	{
+		"activity_desc": "Walk around and look for some crazy fashion to buy",
+		"activity_location_URL": "https://maps.app.goo.gl/K4uuJJYzsR9ek8Fh9",
+		"activity_name": "Shopping in Harajuku",
+		"budget": 500,
+		"date_available": "Anytime",
+		"destination_id": 3,
+		"id": 6
+	},
+	{
+		"activity_desc": "Throw tomatoes at everyone",
+		"activity_location_URL": "https://maps.app.goo.gl/gkoE1mjfwye2wAjF8",
+		"activity_name": "Joining La Tomatina Festival",
+		"budget": 200,
+		"date_available": "Late August",
+		"destination_id": 4,
+		"id": 7
+	},
+	{
+		"activity_desc": "Join one of the daily bull runs and run around in the stadium with bulls",
+		"activity_location_URL": "https://maps.app.goo.gl/ECajwSUKBF1Bq9zY7",
+		"activity_name": "Run with Bulls",
+		"budget": 150,
+		"date_available": "July 7th - 14th",
+		"destination_id": 5,
+		"id": 8
+	},
+	{
+		"activity_desc": "Join the festival and get amognst the festivities",
+		"activity_location_URL": "https://maps.app.goo.gl/uFgp5LcguFTFnM1f7",
+		"activity_name": "The San Fermin Festival opening ceremony",
+		"budget": 120,
+		"date_available": "July 6th",
+		"destination_id": 5,
+		"id": 9
+	},
+	{
+		"activity_desc": "Try a lot of wines, foods and watch live music",
+		"activity_location_URL": "https://maps.app.goo.gl/X9yzp921LR7uMCuV8",
+		"activity_name": "Chamonix Jazz Music Festival",
+		"budget": 300,
+		"date_available": "22nd July to 29th July",
+		"destination_id": 6,
+		"id": 10
+	},
+	{
+		"activity_desc": "Do the coleseum tour and eat and drink afterwards",
+		"activity_location_URL": "https://maps.app.goo.gl/ajUedXi4puh2fGeT7",
+		"activity_name": "Visit the coleseum",
+		"budget": 330,
+		"date_available": "Anytime",
+		"destination_id": 7,
+		"id": 11
+	},
+	{
+		"activity_desc": "Buy and wear traditional clothes, try at least three different beer tents",
+		"activity_location_URL": "https://maps.app.goo.gl/qUGNxXha6GBBifM88",
+		"activity_name": "Join the Oktoberfest Beer Festival",
+		"budget": 450,
+		"date_available": "Mid September until the first Sunday of October",
+		"destination_id": 8,
+		"id": 12
+	},
+	{
+		"activity_desc": "Go to the original location for the festival, drink beer and try the pork-knuckle",
+		"activity_location_URL": "https://maps.app.goo.gl/t1WUTGm58fXPG22D9",
+		"activity_name": "Visit original Hof Brau Haus",
+		"budget": 70,
+		"date_available": "Anytime",
+		"destination_id": 8,
+		"id": 13
+	},
+	{
+		"activity_desc": "Go on a tour of the Neuscwanstein Castle",
+		"activity_location_URL": "https://maps.app.goo.gl/XPuQrZLhW1rdUyZz8",
+		"activity_name": "Visit the inspiration for the Disney Castle",
+		"budget": 120,
+		"date_available": "Anytime",
+		"destination_id": 9,
+		"id": 14
+	},
+	{
+		"activity_desc": "Buy tickets for the show in central Hanoi",
+		"activity_location_URL": "https://maps.app.goo.gl/57rr6wfoyJTuk98x8",
+		"activity_name": "See water puppet show",
+		"budget": 20,
+		"date_available": "Anytime",
+		"destination_id": 10,
+		"id": 15
+	},
+	{
+		"activity_desc": "Walk around the markets, bars and restaurants around central Hanoi",
+		"activity_location_URL": "https://maps.app.goo.gl/oWWij22p9awGZZQe8",
+		"activity_name": "Wander around Hanoi city",
+		"budget": 60,
+		"date_available": "Anytime",
+		"destination_id": 10,
+		"id": 16
+	},
+	{
+		"activity_desc": "Stop off and spend some time relaxing",
+		"activity_location_URL": "https://maps.app.goo.gl/XdfBCrXYfUKgvGyy8",
+		"activity_name": "Visit the Beach and Swim",
+		"budget": 20,
+		"date_available": "Anytime",
+		"destination_id": 11,
+		"id": 17
+	},
+	{
+		"activity_desc": "Walk around the park, climb on the attractions, take some cool photos",
+		"activity_location_URL": "https://maps.app.goo.gl/u4cmPtRF4C2nqHv6A",
+		"activity_name": "Hue abondoned Water Park",
+		"budget": 10,
+		"date_available": "Anytime",
+		"destination_id": 12,
+		"id": 18
+	},
+	{
+		"activity_desc": "Stroll through Hoi an, take in the atmosphere and eat Banh Mi",
+		"activity_location_URL": "https://maps.app.goo.gl/ayM4FLZUnqoseNjE6",
+		"activity_name": "Watch the lanterns being lit on the river at the night market",
+		"budget": 50,
+		"date_available": "Anytime",
+		"destination_id": 13,
+		"id": 19
+	},
+	{
+		"activity_desc": "Make a campfire everynight and wait for the Northern lights",
+		"activity_location_URL": "https://maps.app.goo.gl/ZKrMLLTLNWz99WET6",
+		"activity_name": "Camp and watch the Aurora Borealis",
+		"budget": 500,
+		"date_available": "Late August to mid April",
+		"destination_id": 14,
+		"id": 20
+	}
+]
+```
+
+* Error Handling:
+
+Scenario: User (token) isn't admin
+
+Error Code: 401 UNAUTHORIZED
+
+Error Message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+#### 2. /activities/_id
+
+* Methods: GET
+
+* Description: Retrieves a list of the Activity information associated with the ID number, It will also show acitivities related to the destination without comments for for readability and srictly organizational purposes.
+
+* Request Parameters: destination_id integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of owner of Destination (In-turn owner of Trip the token user) or an Admin
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+
+```
+{
+	"activity_desc": "Go to as many bars as possible and meet new people",
+	"activity_location_URL": "https://maps.app.goo.gl/xsZhtKfEp6vQx9LcA",
+	"activity_name": "Drinking in Golden Gai, Shinjuku",
+	"budget": 200,
+	"date_available": "Anytime",
+	"destination_id": 3,
+	"id": 5
+}
+```
+
+* Error Handling:
+
+Scenario: User doesnt enter Activity Id into URL, for example ... activities/
+
+Error Code: 405 METHOD NOT ALLOWED
+
+Error Message:
+```
+{
+	"Error": "405 Method Not Allowed: The method is not allowed for the requested URL."
+}
+```
+
+
+#### 3. /activities/
+
+* Methods: POST
+
+* Description: Users create a new activity assigned to a destination.
+
+* Request Parameters: None
+
+* Authentication: @jwt_required
+
+* Authorisation: Bearer token of owner of Destination (In-turn owner of Trip the token user) or an Admin
+
+* Request Body:
+
+Please see feilds below. The destination_id field will checked against the trip_ID's and user_id's token which need to match, meaning: Only the owner of the trip/destination or the admin can add an activity to a destination.
+
+The feild "date_available" is not necessary and only specified for events at a particular time. If nothing is entered it will default to "Anytime".The feild "activity_location_URL" is also optional to add.
+
+
+```
+{ 
+
+    "activity_desc": "Walk around the temple grounds, buy some souveineirs and try go inside the statue ",
+    "activity_location_URL": "https://maps.app.goo.gl/x9zf22MePnxds4157",
+    "activity_name": "See the Giant Buddha Statue ",
+    "budget": 100,
+    "destination_id": 15
+}
+```
+
+* Request Response:
+
+Status code: 201 CREATED
+
+```
+{
+{
+	"activity_desc": "Walk around the temple grounds, buy some souveineirs and try go inside the statue ",
+	"activity_location_URL": "https://maps.app.goo.gl/x9zf22MePnxds4157",
+	"activity_name": "See the Giant Buddha Statue ",
+	"budget": 100,
+	"date_available": "Anytime",
+	"destination_id": 15,
+	"id": 21
+}
+}
+```
+
+* Error Handling:
+
+Scenario: A required parameter is missing.
+
+Error Code: 409 CONFLICT
+
+This error will display a more general error message with information about the ID number received.
+
+Error Message:
+```
+{
+	"Error": "Integrity Error, please check inputs and not already created"
+}
+```
+
+Scenario: A user tries to add to a Destination they do not own or the destination_id does not exist.
+
+Error Code: 401 UNAUTHROIZED
+
+Error Message:
+```
+{
+	"Error": "Invalid destination ID or unauthorized access"
+}
+```
+Scenario: A user tries to type an activity_name or activity_description that is too long.
+
+Error Code: 400 BAD REQUEST
+
+Error Message:
+```
+{
+	"Error": "Data formatted incorrectly, please check"
+}
+```
+Scenario: A user tries to enter an activity_location_URL that isnt from google maps and short-formed.
+
+Error Code: 409 CONFLICT
+
+Error Message:
+```
+{
+	"Error": {
+		"activity_location_URL": [
+			"Invalid URL format, please only use Google Maps, Short URL"
+		]
+	}
+}
+```
+
+#### 4. /activities/activity_id
+
+* Methods: PUT, PATCH
+
+* Description: Updating the activity information
+
+* Request Parameters: Activity Id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of owner of Destination (In-turn owner of Trip and the token user) or an Admin
+
+* Request Body:
+
+Requires some on the trip details to update. If the same details are entered, no change will occur.
+
+```
+{ 
+		"activity_desc": "Walk around the temple grounds, buy ALOT OF souveineirs and try go inside the statue",
+		"budget": 300,
+
+}
+```
+
+* Request Response:
+
+Status Code: 200 OK
+
+```
+{
+	"activity_desc": "Walk around the temple grounds, buy ALOT OF souveineirs and try go inside the statue",
+	"activity_location_URL": "https://maps.app.goo.gl/x9zf22MePnxds4157",
+	"activity_name": "See the Giant Buddha Statue ",
+	"budget": 300,
+	"date_available": "Anytime",
+	"destination_id": 15,
+	"id": 21
+}
+```
+* Error Handling:
+
+Scenario: The activity ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+	"Error": "Activity ID : 88 not found"
+}
+```
+
+Scenario: User isn't owner/admin of the activity they are trying to update
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+#### 5. /activities/activity_id
+
+* Methods: DELETE
+
+* Description: Deletes an Activity and all related details (Comments), if any from the database
+
+* Request Parameters: Activity Id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of owner of Destination (In-turn owner of Trip and the token user) or an Admin
+
+* Request Body: None
+
+* Request Response: Status code 200 OK
+```
+{
+	"Success": "Activity ID: 21 and all related Activities deleted"
+}
+```
+
+* Error Handling: Same potential errors and messages as Activity delete (Authorization and Incorrect ID).
+
+Scenario: The Destination ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+    "Error": "Activity ID: 88 not found"
+}
+```
+
+Scenario: User isn't owner/admin of the activity they are trying to delete
 
 Error code: 401 UNAUTHORIZED
 

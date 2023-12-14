@@ -80,7 +80,7 @@ def edit_activity(activity_id):
         return ActivitySchema(exclude= ['comments']).dump(act)
    
     else:
-        return {'Error': 'Activity not found'}, 404
+        return {'Error': f'Activity ID : {activity_id} not found'}, 404
 
 #Delete a activity
 @bp_activities.route('/<int:activity_id>', methods=['DELETE'])
@@ -94,6 +94,8 @@ def delete_activity(activity_id):
         db.session.commit()
         return {'Success': f'Activity ID: {activity_id} and all related Comments deleted'}
 
+    else:
+        return {'Error': f'Activity ID: {activity_id} not found'}, 404
 
 
 @bp_activities.route('/public')

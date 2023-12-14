@@ -36,7 +36,7 @@ def read_specific_trip_info(user_id, trip_id):
         owner_admin_authorize(trip.user_id)
         return FullTripSchema().dump(trip)
     else:
-        return {'Error': 'Trip not found'}
+        return {'Error': f'Trip ID {trip_id} not found'},404
 
 
 
@@ -54,11 +54,10 @@ def create_trip():
 
         user_id = get_jwt_identity()
     )
-
     db.session.add(trip)
     db.session.commit()
 
-    return TripSchema().dump(trip), 201
+    return TripSchema(exclude= ["destinations"]).dump(trip), 201
 
 # Update a trip
 @bp_trips.route('/<int:trip_id>', methods=['PUT','PATCH'])

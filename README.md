@@ -439,7 +439,7 @@ Error Message:
 }
 ```
 
-#### 2. /users/<int:user_id>
+#### 2. /users/user_id
 
 * Methods: GET
 
@@ -481,7 +481,7 @@ Error Message:
 }
 ```
 
-Scenario: User doesnt enter user_id integer or miss-types as letter 
+Scenario: User doesnt enter user_id integer or mis-types as letter 
 
 Error Code: 404 NOT FOUND
 
@@ -492,7 +492,7 @@ Error Message:
 	"Error": "Page not found, please try again"
 }
 ```
-#### 2. /users/<int:user_id>
+#### 3. /users/user_id
 
 * Methods: PUT, PATCH
 
@@ -552,7 +552,7 @@ Error message:
 	"Error": "You are not authorized to access this information"
 }
 ```
-#### 3. /users/<int:user_id>
+#### 4. /users/user_id
 
 * Methods: DELETE
 
@@ -579,6 +579,434 @@ Error message:
 ```
 {
 	"Error": "User not found, please check ID"
+}
+```
+
+Scenario: User isn't admin or the person they are trying to update
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+### Trip Routes
+
+#### 1. /trips/A
+
+* Methods: GET
+
+* Description: Retrieves a list of all trips as well as there related Destinations. For Admins to monitor content.
+
+* Request Parameters: Capital letter A (Admin)
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of admin_acc only
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+* Please note only one example shown (original data very long)
+
+```
+[
+	{
+		"destinations": [
+			{
+				"continent": "Asia",
+				"dest_country": "Vietnam",
+				"dest_name": "Hanoi",
+				"id": 10,
+				"trip_id": 3
+			},
+			{
+				"continent": "Asia",
+				"dest_country": "Vietnam",
+				"dest_name": "Bai Bien Vinh Thai beach",
+				"id": 11,
+				"trip_id": 3
+			},
+			{
+				"continent": "Asia",
+				"dest_country": "Vietnam",
+				"dest_name": "Hue",
+				"id": 12,
+				"trip_id": 3
+			},
+			{
+				"continent": "Asia",
+				"dest_country": "Vietnam",
+				"dest_name": "Hoi An",
+				"id": 13,
+				"trip_id": 3
+			}
+		],
+		"estimated_budget": 2000,
+		"finish_date": "2023-08-15",
+		"id": 3,
+		"start_date": "2023-08-10",
+		"trip_desc": "Riding from Hanoi to Hoi An",
+		"trip_name": "Vietnam on Motorbike",
+		"user": {
+			"username": "MotoManiac"
+		}
+	}
+]
+```
+
+* Error Handling:
+
+Scenario: User isn't admin
+
+Error Code: 401 UNAUTHORIZED
+
+Error Message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+#### 2. /trips/user_id
+
+* Methods: GET
+
+* Description: Retrieves a list of all trips with associated destinations that have been created by a user. This will depict multiple tripsif the user has more than one.
+
+* Request Parameters: user_id integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of user_id or admin_acc token
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+* Please note below, Username OyukiDaisuki has two trips.
+
+```
+[
+	{
+		"destinations": [
+			{
+				"continent": "Asia",
+				"dest_country": "Japan",
+				"dest_name": "Niseko Ski Resort",
+				"id": 1,
+				"trip_id": 1
+			},
+			{
+				"continent": "Asia",
+				"dest_country": "Japan",
+				"dest_name": "Nozawa Onsen Ski Resort",
+				"id": 2,
+				"trip_id": 1
+			},
+			{
+				"continent": "Asia",
+				"dest_country": "Japan",
+				"dest_name": "Tokyo",
+				"id": 3,
+				"trip_id": 1
+			}
+		],
+		"estimated_budget": 7000,
+		"finish_date": "2023-01-29",
+		"id": 1,
+		"start_date": "2023-01-15",
+		"trip_desc": "Snowboarding in two resorts on the northern island of Hokkaido + a few days in Tokyo",
+		"trip_name": "Winter Snowboarding + Tokyo",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	},
+	{
+		"destinations": [
+			{
+				"continent": "NorthAmerica",
+				"dest_country": "Canada",
+				"dest_name": "La Crete",
+				"id": 14,
+				"trip_id": 4
+			}
+		],
+		"estimated_budget": 6500,
+		"finish_date": "2024-03-11",
+		"id": 4,
+		"start_date": "2024-02-04",
+		"trip_desc": "Camping in the wilderness and hoping to see the Aurora Borealis",
+		"trip_name": "Nothern Lights Trip",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	}
+]
+
+```
+
+* Error Handling:
+
+Scenario: User doesnt enter user_id for example ... trips/
+
+Error Code: 405 METHOD NOT ALLOWED
+
+Error Message:
+```
+{
+	"Error": "405 Method Not Allowed: The method is not allowed for the requested URL."
+}
+```
+
+#### 3. /trips/user_id/trip_id
+
+* Methods: GET
+
+* Description: Retrieves a specific Trip of user. The trip the user has selected will display some activity information also.
+
+* Request Parameters: user_id integer / trip_id integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of user_id or admin_acc token
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+* Please note below, this is Sally's (OyukiDaisuki) trip , so the URL http://127.0.0.1:8000/trips/1/4
+which is = 1(Sallys user_id)/4(The Northern lights Trip trip_id)
+```
+{
+	"destinations": [
+		{
+			"activities": [
+				{
+					"activity_desc": "Make a campfire everynight and wait for the Northern lights",
+					"activity_name": "Camp and watch the Aurora Borealis",
+					"budget": 500,
+					"date_available": "Late August to mid April",
+					"destination_id": 14,
+					"id": 20
+				}
+			],
+			"dest_country": "Canada",
+			"dest_name": "La Crete",
+			"id": 14,
+			"trip_id": 4
+		}
+	],
+	"estimated_budget": 6500,
+	"finish_date": "2024-03-11",
+	"id": 4,
+	"start_date": "2024-02-04",
+	"trip_desc": "Camping in the wilderness and hoping to see the Aurora Borealis",
+	"trip_name": "Nothern Lights Trip"
+}
+```
+
+* Error Handling:
+
+Scenario: User enters an incorrect trip ID number
+
+Error Code: 404 NOT FOUND
+
+This error will display a more specific error message with information about the ID number received.
+
+Error Message:
+```
+{
+	"Error": "Trip ID 8 not found"
+}
+```
+
+#### 4. /trips
+
+* Methods: POST
+
+* Description: Users create a new trip
+
+* Request Parameters: None
+
+* Authentication: @jwt_required
+
+* Authorisation: Bearer token of user
+
+* Request Body:
+
+All Below Fields are required and using the bearer and token and get_jwt_identity method , the user_id field will be generated automatically. The users username will also be dispalyed.
+
+```
+{
+ "trip_name" : "New Zealand South Island",
+ "start_date" : "2024-07-31",
+ "finish_date" : "2024-07-11",
+ "estimated_budget" : 5000 ,
+ "trip_desc": "Travelling, Snowboarding and meeting friends"
+}
+```
+
+* Request Response:
+
+Status code: 201 CREATED
+
+```
+{
+	"estimated_budget": 5000,
+	"finish_date": "2024-07-11",
+	"id": 6,
+	"start_date": "2024-07-31",
+	"trip_desc": "Travelling, Snowboarding and meeting friends",
+	"trip_name": "New Zealand South Island",
+	"user": {
+		"username": "OyukiDaisuki"
+    }
+}
+
+```
+
+* Error Handling:
+
+Scenario: A required parameter is missing.
+
+Error Code: 409 CONFLICT
+
+This error will display a more specific error message with information about the ID number received.
+
+Error Message:
+```
+{
+	"Error": "Integrity Error, please check inputs and not already created"
+}
+```
+
+Scenario: A user incorrectly writes a parameter
+
+Error Code: 400 BAD REQUEST
+
+Error Message:
+```
+{
+	"Error": {
+		"trip_nam": [
+			"Unknown field."
+		]
+	}
+}
+
+Scenario: Incorrect Date Format is written
+
+Error Code: 400 BAD REQUEST
+
+Error Message:
+```
+{
+	"Error": "Data formatted incorrectly, please check"
+}
+```
+
+
+#### 5. /trips/trip_id
+
+* Methods: PUT, PATCH
+
+* Description: Updating the trip information and display any destination info also
+
+* Request Parameters: Trip id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of users ID or admin_acc
+
+* Request Body:
+
+Requires some on the trip details to update.
+
+```
+{
+    "trip_name" : "New Zealand North Island",
+}
+```
+
+* Request Response:
+
+Status Code: 200 OK
+
+```
+{
+	"estimated_budget": 5000,
+	"finish_date": "2024-07-11",
+	"id": 6,
+	"start_date": "2024-07-31",
+	"trip_desc": "Travelling, Snowboarding and meeting friends",
+	"trip_name": "New Zealand North Island"
+	"user": {
+		"username": "OyukiDaisuki"
+	}
+}
+```
+* Error Handling:
+
+Scenario: The Trip ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+	"Error": "Trip 88 not found"
+}
+```
+
+Scenario: User isn't owner/creator/admin of the trip they are trying to update
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+#### 4. /trips/trip_id
+
+* Methods: DELETE
+
+* Description: Deletes a user and related details from the database
+
+* Request Parameters: Trip id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of users ID or Admin
+
+* Request Body: None
+
+* Request Response: Status code 200 OK
+
+* Error Handling: Same potential errors and messages as trip update.
+
+Scenario: The Trip ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+    "Error": "Trip {trip_id} not found"
 }
 ```
 

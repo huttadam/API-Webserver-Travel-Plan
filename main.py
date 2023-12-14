@@ -28,12 +28,11 @@ def run_app():
 
     @app.errorhandler(IntegrityError)
     def integrity_error(err):
-        return {'Error': "Integrity Error, please check "}, 409
+        return {'Error': "Integrity Error, please check inputs and not already created" }, 409
 
-
-    @app.errorhandler(ValidationError)
-    def validation_error(err):
-        return {'Error': err.__dict__['messages']}, 400
+    # @app.errorhandler(ValidationError)
+    # def validation_error(err):
+    #     return {'Error': err.__dict__['messages']}, 403
 
     @app.errorhandler(NoResultFound)
     def no_result_found(err):
@@ -41,7 +40,7 @@ def run_app():
 
     @app.errorhandler(DataError)
     def data_error(err):
-        return {'Error': str(err)}, 500
+        return {'Error': "Data formatted incorrectly, please check"}, 400
 
     @app.errorhandler(404)
     def page_not_found(err):
@@ -54,6 +53,7 @@ def run_app():
     @app.errorhandler(KeyError)
     def key_error(err):
         return {'Error': f'The field {err} is required.'}, 400
+
 
 
 

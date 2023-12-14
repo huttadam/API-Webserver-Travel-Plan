@@ -7,7 +7,7 @@ class Comment(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    message= db.Column(db.String)
+    message= db.Column(db.String(200), nullable=False)
 
     activity_id = db.Column(db.Integer, db.ForeignKey('activities.id'), nullable=False)
     activity = db.relationship('Activity', back_populates='comments', cascade='all, delete')

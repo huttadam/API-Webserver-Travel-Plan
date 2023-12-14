@@ -42,7 +42,7 @@ def update_user(user_id):
             owner_admin_authorize(user.id)
             user.f_name = user_info.get('f_name', user.f_name)
             user.l_name = user_info.get('l_name', user.l_name)
-            user.username = user_info.get('username', user.username)
+            user.username = user.username
             user.email = user_info.get('email', user.email)
             
             if 'password' in user_info:
@@ -60,7 +60,6 @@ def update_user(user_id):
 
     else:
         return {'Error': 'User not found, please check ID'}
-
 
 
 @bp_users.route('/<int:user_id>', methods = ['DELETE'])

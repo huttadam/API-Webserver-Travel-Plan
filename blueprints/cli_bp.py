@@ -33,10 +33,10 @@ def seed_db():
 
         User(
             username = "EuroStar44",
-            email = "Bazza@email.com",
+            email = "bazza@email.com",
             f_name = "Barry",
             l_name = "Backpacker",
-            password= bcrypt.generate_password_hash('LetsgototoSpain22').decode('utf-8')
+            password= bcrypt.generate_password_hash('LetsgotoSpain22').decode('utf-8')
         ),
 
         User(

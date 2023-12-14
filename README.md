@@ -177,3 +177,417 @@ An ORM (Object-Relational Mapper) is a very poweful tool in programming. An ORM 
 
  - Communication and readability are keys benfits of ORM. This means we can actively control messages from the database and client/server to be readable for the ley-person. These messages can also greatly assist the developer in interpreting Database languages to something they can understand easier.
 
+
+### R5 Documenting Endpoints
+
+### Auth/User Routes
+
+#### 1. /users/register
+
+* Methods: POST
+
+* Description: User can creat an account
+
+* Request Parameters: None
+
+* Authentication: None
+
+* Authorisation: None
+
+* Request Body: 
+
+```
+{
+    "email": "testemail@connection.com",
+    "f_name": "Victor",
+    "l_name": "Vagabond",
+    "username": "VictaDaVagabond",
+    "password": "Testing145"
+}
+```
+
+* Request Response:
+
+HTTP Status Code: 201 CREATED
+
+```
+{
+	"admin_acc": false,
+	"email": "testemail@connection.com",
+	"f_name": "Victor",
+	"id": 6,
+	"l_name": "Vagabond",
+	"username": "VictaDaVagabond"
+}
+
+```
+
+* Error Handling:
+
+Scenario: This email address is already registered
+
+Error code: 409 CONFLICT
+
+Error Message: 
+```
+{
+	"Error": " This Email address is already registered"
+}
+```
+
+Scenario: Username already in use
+
+Error code: 409 CONFLICT
+
+Error Message: 
+```
+{
+	"Error": "Someone already has this Username, Please change"
+}
+```
+
+Scenario: Username and email already in use
+
+Error code: 409 CONFLICT
+
+Error Message: 
+```
+{
+	"Error": "Both Username and Email already registered"
+}
+```
+
+Scenario: Missing field for f_name (same applies to l_name, username, email and password)
+
+Error code: 400 BAD REQUEST
+
+Error Message:
+```
+{
+	"Error": "The field 'f_name' is required."
+}
+
+Scenario: Password is invalid
+
+Error code: 400 BAD REQUEST
+
+Error Message:
+```
+{
+	"error": {
+		"password": [
+			"Password must have a minimum of ten characters + At least one uppercase letter, lowercase letter and number"
+		]
+	}
+}
+```
+I also have some customized validaton messages for , f_name, l_name, username and email address. 
+
+```
+{
+	"Error": {
+		"email": [
+			"Invalid Email address, please check and re-enter"
+		],
+		"f_name": [
+			"Please enter letters only."
+		],
+		"l_name": [
+			"Please enter at least one character."
+		],
+		"username": [
+			"Invalid username, Must be at least 3 Chars"
+		]
+	}
+}
+
+```
+
+#### 2. /login
+
+* Methods: POST
+
+* Description: User login and developing a  JWT token
+
+* Request Parameters: None
+
+* Authentication: None
+
+* Authorisation: None
+
+* Request Body: 
+
+```
+{
+    "email": "bazza@email.com",
+    "password": "LetsgotoSpain22"
+	
+}
+```
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+```
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMjU0OTgyOCwianRpIjoiYmJhNjM2ZGMtMmFiYi00Y2RkLWE5ZTMtNTRhYTYyZjkyYWUyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6MiwibmJmIjoxNzAyNTQ5ODI4LCJleHAiOjE3MDI1NjQyMjh9.CoLa30rCOBG8Rn0-O7kjib0GYwn18c7skpWG4O6Btgw",
+  "user": {
+    "email": "bazza@email.com",
+    "f_name": "Barry",
+    "l_name": "Backpacker",
+    "username": "EuroStar44"
+  }
+}
+```
+* Error Handling:
+
+Scenario: Email or password is incorrect
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+  "Error": "Incorrect email address or password , Please try again"
+}
+```
+
+```
+{
+  "Error": "Email and Password need to be provided."
+}
+```
+
+### Users Routes
+
+#### 1. /users/A
+
+* Methods: GET
+
+* Description: Retrieves a list of all users, for Admins to look-upon, also displays admin information for all accounts
+
+* Request Parameters: Capital letter A (Admin)
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of admin_acc only
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+```
+[
+	{
+		"admin_acc": false,
+		"email": "sally@japantravel.com",
+		"f_name": "Sally",
+		"id": 1,
+		"l_name": "Snowboarder",
+		"username": "OyukiDaisuki"
+	},
+	{
+		"admin_acc": false,
+		"email": "bazza@email.com",
+		"f_name": "Barry",
+		"id": 2,
+		"l_name": "Backpacker",
+		"username": "EuroStar44"
+	},
+	{
+		"admin_acc": false,
+		"email": "vic@motobike.com",
+		"f_name": "Victor",
+		"id": 3,
+		"l_name": "Vietnam",
+		"username": "MotoManiac"
+	},
+	{
+		"admin_acc": false,
+		"email": "justbrowsing@gmail.com",
+		"f_name": "Johnny",
+		"id": 4,
+		"l_name": "Commentalot",
+		"username": "CommentKing"
+	},
+	{
+		"admin_acc": true,
+		"email": "undeleteable@admin.com",
+		"f_name": "Admin",
+		"id": 5,
+		"l_name": "Administrator",
+		"username": "SuperAdmin"
+	}
+]
+
+```
+
+* Error Handling:
+
+Scenario: User isn't admin
+
+Error Code: 401 UNAUTHORIZED
+
+Error Message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+#### 2. /users/<int:user_id>
+
+* Methods: GET
+
+* Description: Retrieves a list of all users information for the specified user
+
+* Request Parameters: User id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of users ID or Admin
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+```
+
+{
+	"email": "bazza@email.com",
+	"f_name": "Barry",
+	"id": 2,
+	"l_name": "Backpacker",
+	"username": "EuroStar44"
+}
+```
+* Error Handling:
+
+Scenario: User trying to access another accounts 
+
+Error Code: 401 UNAUTHORIZED
+
+Error Message:
+
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+Scenario: User doesnt enter user_id integer or miss-types as letter 
+
+Error Code: 404 NOT FOUND
+
+Error Message:
+
+```
+{
+	"Error": "Page not found, please try again"
+}
+```
+#### 2. /users/<int:user_id>
+
+* Methods: PUT, PATCH
+
+* Description: Updating a user's information (except username)
+
+* Request Parameters: User id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of users ID or Admin
+
+* Request Body:
+
+Requires some on the users details to update (including password)
+
+```
+{
+	"f_name": "Baz"
+}
+```
+
+* Request Response:
+
+Status Code: 200 OK
+
+```
+{
+	"admin_acc": false,
+	"email": "bazza@email.com",
+	"f_name": "Baz",
+	"id": 2,
+	"l_name": "Backpacker",
+	"username": "EuroStar44"
+}
+```
+* Error Handling:
+
+Scenario: The User ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+	"Error": "User not found, please check ID"
+}
+```
+
+Scenario: User isn't admin or the person they are trying to update
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+#### 3. /users/<int:user_id>
+
+* Methods: DELETE
+
+* Description: Deletes a user and related details from the database
+
+* Request Parameters: User id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of users ID or Admin
+
+* Request Body: None
+
+* Request Response: Status code 200 OK
+
+* Error Handling: Same potential errors and messages as users update.
+
+Scenario: The User ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+	"Error": "User not found, please check ID"
+}
+```
+
+Scenario: User isn't admin or the person they are trying to update
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```

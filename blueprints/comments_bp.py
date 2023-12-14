@@ -70,6 +70,3 @@ def delete_comments(comment_id):
 
 
 
-
-
-        

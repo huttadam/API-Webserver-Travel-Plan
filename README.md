@@ -266,6 +266,7 @@ Error Message:
 {
 	"Error": "The field 'f_name' is required."
 }
+```
 
 Scenario: Password is invalid
 

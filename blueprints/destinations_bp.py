@@ -37,7 +37,7 @@ def create_destination():
 
     user_id = get_jwt_identity()
 
-    # Ensure that the user is the owner of the trip associated with the destination
+    # Check that the user is the owner of the trip associated with the destination
     trip_id = dest_info.get('trip_id')
     trip = Trip.query.get(trip_id)
     
@@ -54,7 +54,7 @@ def create_destination():
     db.session.add(destination)
     db.session.commit()
 
-    return DestinationSchema().dump(destination), 201
+    return DestinationSchema(exclude= ['activities']).dump(destination), 201
 
 
 #User can edit a destination

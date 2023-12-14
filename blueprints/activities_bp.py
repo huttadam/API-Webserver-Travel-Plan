@@ -38,7 +38,7 @@ def create_activity():
 
     user_id = get_jwt_identity()
     
-    # Ensure that the user is the owner of the Destination associated with the Activity
+    # Check that the user is the owner of the Destination is associated with the Activity
     dest_id = activity_info.get('destination_id')
     dest = Destination.query.get(dest_id)
     
@@ -73,7 +73,7 @@ def edit_activity(activity_id):
         act.budget = act_info.get('budget',act.budget),
         act.date_available= act_info.get('date_available', act.date_available),
         act.activity_desc = act_info.get('activity_desc', act.activity_desc)
-        act.destination_id = act_info.get('destination_id', act.destination_id)
+    
 
         db.session.commit()
 
@@ -92,7 +92,7 @@ def delete_activity(activity_id):
         owner_admin_authorize(activity.destination.trip.user.id)
         db.session.delete(activity)
         db.session.commit()
-        return {'Success': f'Activity ID: {id} and all related Comments deleted'}
+        return {'Success': f'Activity ID: {activity_id} and all related Comments deleted'}
 
 
 

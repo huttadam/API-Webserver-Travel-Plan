@@ -9,6 +9,7 @@ from blueprints.activities_bp import bp_activities
 from blueprints.comments_bp import bp_comments
 from sqlalchemy.exc import IntegrityError
 from marshmallow.exceptions import ValidationError
+from sqlalchemy.orm.exc import NoResultFound
 
 def run_app():
 
@@ -21,7 +22,7 @@ def run_app():
 
     @app.errorhandler(401)
     def unauthorized(err):
-        return {'error': 'You are not authorized to access this resource'},401
+        return {'Error': 'You are not authorized to access this resource'},401
 
     @app.errorhandler(IntegrityError)
     def integrity_error(err):
@@ -29,11 +30,18 @@ def run_app():
 
     @app.errorhandler(ValidationError)
     def validation_error(err):
-        return {'error': err.__dict__['messages']}, 400
+        return {'Error': err.__dict__['messages']}, 400
+
+    @app.errorhandler(NoResultFound)
+    def no_result_found(err):
+        return {'Error': "No Result for this reference, please check again."}
+
+    @app.errorhandler(404)
+    def not_found(err):
+        return {'Error': str(err)}, 404
+
 
     
-
-
 
 
     db.init_app(app)

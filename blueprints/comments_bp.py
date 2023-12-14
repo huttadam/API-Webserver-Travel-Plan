@@ -33,7 +33,7 @@ def create_comments():
     db.session.add(comment)
     db.session.commit()
 
-    return CommentSchema().dump(comment), 201
+    return CommentSchema(exclude=['activity_id']).dump(comment), 201
 
 
 
@@ -44,16 +44,15 @@ def edit_comments(comment_id):
     stmt = db.select(Comment).filter_by(id = comment_id)
     comment = db.session.scalar(stmt)
     if comment:
-        owner_admin_authorize(comment.activity.destination.trip.user.id)
+        owner_admin_authorize(comment.user.id)
         comment.message = comment_info.get('message', comment.message)
-        comment.activity_id = comment_info.get('activity_id', comment.activity_id)
 
         db.session.commit()
 
         return CommentSchema().dump(comment)
    
     else:
-        return {'Error': 'Comment not found'}, 404
+        return {'Error': 'Comment not found, please check reference and try again'}, 404
 
 #Delete a comment
 @bp_comments.route('/<int:comment_id>', methods=['DELETE'])
@@ -62,10 +61,12 @@ def delete_comments(comment_id):
     stmt= db.select(Comment).filter_by(id = comment_id)
     comment= db.session.scalar(stmt)
     if comment:
-        owner_admin_authorize(comment.activity.destination.trip.user.id)
+        owner_admin_authorize(comment.user.id)
         db.session.delete(comment)
         db.session.commit()
         return {'Success': f'Comment ID: {comment_id} deleted'}
+    else:
+        return {'Error': 'Comment not found, please check reference and try again'}, 404
 
 
 

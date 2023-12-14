@@ -80,7 +80,7 @@ def edit_trip(trip_id):
         return TripSchema().dump(trip)
    
     else:
-        return {'Error': 'Trip not found'}, 404
+        return {'Error': f'Trip {trip_id} not found'}, 404
 
 #Delete a trip
 @bp_trips.route('/<int:trip_id>', methods=['DELETE'])
@@ -93,3 +93,5 @@ def delete_trip(trip_id):
         db.session.delete(trip)
         db.session.commit()
         return {'Success': f'Trip ID: {trip_id} and all related content including Destination/Activities deleted'}
+    else:
+        return {'Error': f'Trip {trip_id} not found'}, 404

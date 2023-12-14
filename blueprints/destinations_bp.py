@@ -72,10 +72,10 @@ def edit_destination(dest_id):
 
         db.session.commit()
 
-        return DestinationSchema().dump(dest)
+        return DestinationSchema(exclude = ["activities"]).dump(dest)
    
     else:
-        return {'Error': 'Destination not found'}, 404
+        return {'Error': f'Destination ID: {dest_id} not found'}, 404
 
 #Delete a destination
 @bp_destinations.route('/<int:dest_id>', methods=['DELETE'])
@@ -88,4 +88,7 @@ def delete_destination(dest_id):
         db.session.delete(dest)
         db.session.commit()
         return {'Success': f'Destination ID: {dest_id} and all related Activities deleted'},201
+    
+    else:
+        return {'Error': f'Destination ID: {dest_id} not found'}, 404
 

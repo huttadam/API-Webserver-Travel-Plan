@@ -904,7 +904,7 @@ Error Message:
 		]
 	}
 }
-
+```
 Scenario: Incorrect Date Format is written
 
 Error Code: 400 BAD REQUEST
@@ -980,11 +980,11 @@ Error message:
 	"Error": "You are not authorized to access this information"
 }
 ```
-#### 4. /trips/trip_id
+#### 6. /trips/trip_id
 
 * Methods: DELETE
 
-* Description: Deletes a user and related details from the database
+* Description: Deletes a trip and all related details (Destination, Activities, Comments), if any from the database
 
 * Request Parameters: Trip id, integer
 
@@ -1011,6 +1011,408 @@ Error message:
 ```
 
 Scenario: User isn't admin or the person they are trying to update
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+### Destination Routes
+
+#### 1. /destinations/A
+
+* Methods: GET
+
+* Description: Retrieves a list of all destinaions of all users, For Admins to monitor content. This content is public so its important an Authority can check , update and delete if necessary.
+
+* Request Parameters: Capital letter A (Admin)
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of admin_acc only
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+
+```
+[
+	{
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Niseko Ski Resort",
+		"id": 1,
+		"trip_id": 1
+	},
+	{
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Nozawa Onsen Ski Resort",
+		"id": 2,
+		"trip_id": 1
+	},
+	{
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Tokyo",
+		"id": 3,
+		"trip_id": 1
+	},
+	{
+		"continent": "Europe",
+		"dest_country": "Spain",
+		"dest_name": "Bunol",
+		"id": 4,
+		"trip_id": 2
+	},
+	{
+		"continent": "Europe",
+		"dest_country": "Spain",
+		"dest_name": "Pamplona",
+		"id": 5,
+		"trip_id": 2
+	},
+	{
+		"continent": "Europe",
+		"dest_country": "France",
+		"dest_name": "Chamonix",
+		"id": 6,
+		"trip_id": 2
+	},
+	{
+		"continent": "Europe",
+		"dest_country": "Italy",
+		"dest_name": "Rome",
+		"id": 7,
+		"trip_id": 2
+	},
+	{
+		"continent": "Europe",
+		"dest_country": "Germany",
+		"dest_name": "Munich",
+		"id": 8,
+		"trip_id": 2
+	},
+	{
+		"continent": "Europe",
+		"dest_country": "Germany",
+		"dest_name": "Hohenschwangau",
+		"id": 9,
+		"trip_id": 2
+	},
+	{
+		"continent": "Asia",
+		"dest_country": "Vietnam",
+		"dest_name": "Hanoi",
+		"id": 10,
+		"trip_id": 3
+	},
+	{
+		"continent": "Asia",
+		"dest_country": "Vietnam",
+		"dest_name": "Bai Bien Vinh Thai beach",
+		"id": 11,
+		"trip_id": 3
+	},
+	{
+		"continent": "Asia",
+		"dest_country": "Vietnam",
+		"dest_name": "Hue",
+		"id": 12,
+		"trip_id": 3
+	},
+	{
+		"continent": "Asia",
+		"dest_country": "Vietnam",
+		"dest_name": "Hoi An",
+		"id": 13,
+		"trip_id": 3
+	},
+	{
+		"continent": "NorthAmerica",
+		"dest_country": "Canada",
+		"dest_name": "La Crete",
+		"id": 14,
+		"trip_id": 4
+	}
+]
+```
+
+* Error Handling:
+
+Scenario: User (token) isn't admin
+
+Error Code: 401 UNAUTHORIZED
+
+Error Message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+#### 2. /destinations/destination_id
+
+* Methods: GET
+
+* Description: Retrieves a list of the destination information associated with the ID number, It will also show acitivities related to the destination without comments for for readability and srictly organizational purposes.
+
+* Request Parameters: destination_id integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of user_id or admin_acc token
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+
+```
+{
+	"activities": [
+		{
+			"activity_desc": "Explore the resort and ride the backcountry",
+			"activity_location_URL": "https://maps.app.goo.gl/xkqVSWxRvw1zS85W9",
+			"activity_name": "Snowboarding Nozawa Onsen Resort",
+			"budget": 1700,
+			"date_available": "December to March",
+			"destination_id": 2,
+			"id": 3
+		},
+		{
+			"activity_desc": "Use of the many free public baths to relax , post snowboarding",
+			"activity_location_URL": "https://maps.app.goo.gl/xkqVSWxRvw1zS85W9",
+			"activity_name": "Have an onsen in a Soto-yu",
+			"budget": 0,
+			"date_available": "Anytime",
+			"destination_id": 2,
+			"id": 4
+		}
+	],
+	"continent": "Asia",
+	"dest_country": "Japan",
+	"dest_name": "Nozawa Onsen Ski Resort",
+	"id": 2,
+	"trip_id": 1
+}
+
+```
+
+* Error Handling:
+
+Scenario: User doesnt enter destination_id into URL, for example ... destinations/
+
+Error Code: 405 METHOD NOT ALLOWED
+
+Error Message:
+```
+{
+	"Error": "405 Method Not Allowed: The method is not allowed for the requested URL."
+}
+```
+
+
+#### 3. /destinations/
+
+* Methods: POST
+
+* Description: Users create a new destination for a trip
+
+* Request Parameters: None
+
+* Authentication: @jwt_required
+
+* Authorisation: Bearer token of owner of Trip or an Admin
+
+* Request Body:
+
+All Below Fields are required., the trip_id field will checked against the Trip_ID's user token, meaning: Only the owner of the trip or the admin can add a destination to the trip.
+
+```
+{ 
+"dest_country": "Japan",
+"dest_name": "Kamakura",
+"continent": "Asia",
+"trip_id": 1
+}
+```
+
+* Request Response:
+
+Status code: 201 CREATED
+
+```
+{
+	"continent": "Asia",
+	"dest_country": "Japan",
+	"dest_name": "Kamakura",
+	"id": 15,
+	"trip_id": 1
+}
+```
+
+* Error Handling:
+
+Scenario: A required parameter is missing.
+
+Error Code: 409 CONFLICT
+
+This error will display a more general error message with information about the ID number received.
+
+Error Message:
+```
+{
+	"Error": "Integrity Error, please check inputs and not already created"
+}
+```
+
+Scenario: A user tries to add to a Trip they do not own or the Trip_id does not exist.
+
+Error Code: 401 UNAUTHROIZED
+
+Error Message:
+```
+{
+	"Error": "Invalid trip ID or unauthorized access"
+}
+```
+Scenario: A user tries to enter a continent ,outside the accepted values.
+
+Error Code: 409 CONFLICT
+
+Error Message:
+```
+{
+	"Error": {
+		"continent": [
+			"Must be one of: NorthAmerica, SouthAmerica, Asia, Oceania, Europe, Africa, Antartica."
+		]
+	}
+}
+```
+
+#### 4. /destinations/destination_id
+
+* Methods: PUT, PATCH
+
+* Description: Updating the destination information.
+
+* Request Parameters: Destination id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of the Trip IDs owner (user_id) or admin_acc
+
+* Request Body:
+
+Requires some on the trip details to update. If the same details are entered, no change will occur.
+
+```
+{ 
+"dest_country": "Japan",
+"dest_name": "Yokohama",
+"continent": "Asia",
+}
+```
+
+* Request Response:
+
+Status Code: 200 OK
+
+```
+{
+	"continent": "Asia",
+	"dest_country": "Japan",
+	"dest_name": "Yokohama",
+	"id": 15,
+	"trip_id": 1
+}
+```
+* Error Handling:
+
+Scenario: The destination ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+	"Error": "Destination ID: 48 not found"
+}
+```
+
+Scenario: User isn't owner/admin of the trip they are trying to update
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+Scenario: Additional field is added.
+
+Error code: 409 CONFLICT
+
+Error message:
+```
+{
+	"Error": {
+		"City": [
+			"Unknown field."
+		]
+	}
+}
+```
+
+#### 5. /destinations/destination_id
+
+* Methods: DELETE
+
+* Description: Deletes a Destination and all related details (Activities, Comments), if any from the database
+
+* Request Parameters: Trip id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of users ID or Admin
+
+* Request Body: None
+
+* Request Response: Status code 200 OK
+```
+{
+	"Success": "Destination ID: 15 and all related Activities deleted"
+}
+```
+
+* Error Handling: Same potential errors and messages as destination delete (Authorization and Incorrect ID).
+
+Scenario: The Destination ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+    "Error": "Destination 88 not found"
+}
+```
+
+Scenario: User isn't owner/admin of the trip they are trying to update
 
 Error code: 401 UNAUTHORIZED
 

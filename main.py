@@ -30,9 +30,9 @@ def run_app():
     def integrity_error(err):
         return {'Error': "Integrity Error, please check inputs and not already created" }, 409
 
-    # @app.errorhandler(ValidationError)
-    # def validation_error(err):
-    #     return {'Error': err.__dict__['messages']}, 403
+    @app.errorhandler(ValidationError)
+    def validation_error(err):
+        return {'Error': err.__dict__['messages']}, 409
 
     @app.errorhandler(NoResultFound)
     def no_result_found(err):

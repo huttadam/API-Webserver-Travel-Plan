@@ -258,9 +258,11 @@ class UserSchema(ma.Schema):
 This is the model representing the User entity from the database and like all models in the project is written using SQLAlchemy and in a Python class. By this it means that the columns represent the attributes in the database and vice versa. This User class in python handles all information related to the user having an account. The User model has two relationships with other entities. Both relationships are back-popualated to the User model but foreign keys /attributes are not utilized to the model, only away from.
 
 * Trip Model
+
 The relationship is one to many. A user can have multiple Trip models associated with it and a Trip can only have one user associated. The Trip model information back populates to the user, however no Trip infomation is utilized when serializing the User Schema with Marshmallow. The User attributes ID ( The primary key of the User model) is used to show ownership of the Trip as a ForeignKey.
 
 *  Comment Model
+
 The relationship is one to many similarly to the relationship with the Trip model but in this case the User model's username is used as a ForeignKey in the Comment model rather than the User Id.. This is done because as comments are public, some users do not want there name shown on the web, so an alias (username) is used instead. So a user can have multiple comments associated with them but a comment can only have one user associated.
 
 
@@ -303,9 +305,11 @@ class FullTripSchema(ma.Schema):
 The Trip model is used to represent a overview of the trip planned by the user and includes information about what they are doing in a general sense. It contains some date inforamtion and budget info. You can notice that there are two schemas. TripSchema is for the user when creating/organizing the trip in their account and utilizes the relationship to depict the username. And the FullTripSchema is for displaying larger amount of data with destination info. The Trip model informationn as well as related destination information.
 
 * User
+
 As mentioned previously the Trip model is the many part of the relationship in the one-to-many relationship. The Foreign Key in the Trip model is the User model's Id. It is a necessary field in the Trip model and has to be allocated to a User, symbolzing ownership. i.e The user plans/organizes the trip. What is also is important to note is that although back-populated the trip does not cascade backwards but the forwards to the Destination Model.
 
 * Destination
+
 So the relationship with the Destination model is similar to the User > Trip relationship. It is one to many, the Trip model's Id attribute is the foreign key of the Destination model. So, a trip can have multiple Destinations but the destination is part of one trip. i.e You can go many places destinations on a trip but its regarded as one trip. Also, the cascade arguement is 'all, delete', which means that if the trip is deleted the destinations will also be deleted, maintaining data integrity.
 
 #### Destination Model
@@ -351,7 +355,14 @@ class DestinationPublicSchema(ma.Schema):
 The Destination model represents the countries, cities/locations and continents that will be visitied on the users trip. The destination model has two Schemas: The DestinationSchema is for handling/viewing just the destination information where as the DestinationPublicSchema is used to display at lot of information and excludes and includes specific informationfor this purpose. As you may begin to realize the relationship between the Models are quite similar. The model Id becoming the the foreign key on the next model. The relationships are as follows.
 
 * Trip
+
 The Destination Model is the many part of the one-to-many relationship, so many destinations can be related to a Trips Id.  The Trip information is back populated which means Trip info can be accessed and is utilized in the DestinationSchema and can related information can be displayed. The db.realtionship created with the Trip model also does not utilize the cascade arguement, meaning deletion will not flow backwards to the related Trip model if a Destination is deleted from the database.
+
+* Activity
+
+The Activity model relationship with the Destination model is similar to the User > Trip relationship, Trip > Destination relationships. The Destination model relationship with the Activity model is a one to many relationship. So one destination can have multiple activities but every activity needs a destination.
+
+#### Activity Model
 
 
 

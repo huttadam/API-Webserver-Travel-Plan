@@ -1100,6 +1100,13 @@ HTTP Status Code: 200 OK
 		"dest_name": "La Crete",
 		"id": 14,
 		"trip_id": 4
+	},
+	{
+		"continent": "Europe",
+		"dest_country": "Albania",
+		"dest_name": "Tirana",
+		"id": 15,
+		"trip_id": 5
 	}
 ]
 ```

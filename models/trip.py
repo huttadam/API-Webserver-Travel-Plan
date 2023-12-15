@@ -21,8 +21,6 @@ class Trip(db.Model):
     destinations = db.relationship('Destination', back_populates='trip', cascade='all, delete')
 
 
-
-
 class TripSchema(ma.Schema):
     user = fields.Nested('UserSchema', only=['username'])
     destinations = fields.Nested('DestinationSchema', exclude=['activities'], many= True)

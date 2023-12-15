@@ -310,7 +310,7 @@ As mentioned previously the Trip model is the many part of the relationship in t
 
 **Destination**
 
-So the relationship with the Destination model is similar to the User > Trip relationship. It is one to many, the Trip model's Id attribute is the foreign key of the Destination model. So, a trip can have multiple Destinations but the destination is part of one trip. i.e You can go many places destinations on a trip but its regarded as one trip. Also, the cascade arguement is 'all, delete', which means that if the trip is deleted the destinations will also be deleted, maintaining data integrity.
+The relationship with the Destination model is similar to the User > Trip relationship. It is one to many, the Trip model's Id attribute is the foreign key of the Destination model. So, a trip can have multiple Destinations but the destination is part of one trip. i.e You can go many places destinations on a trip but its regarded as one trip. Also, the cascade arguement is 'all, delete', which means that if the trip is deleted the destinations will also be deleted, maintaining data integrity.
 
 #### Destination Model
 
@@ -352,15 +352,15 @@ class DestinationPublicSchema(ma.Schema):
         fields = ( "id","dest_country", "dest_name", "activities", "continent")
 
 ```
-The Destination model represents the countries, cities/locations and continents that will be visitied on the users trip. The destination model has two Schemas: The DestinationSchema is for handling/viewing just the destination information where as the DestinationPublicSchema is used to display at lot of information and excludes and includes specific informationfor this purpose. As you may begin to realize the relationship between the Models are quite similar. The model Id becoming the the foreign key on the next model. The relationships are as follows.
+The Destination model represents the countries, cities/locations and continents that will be visitied on the users trip. The destination model has two Schemas: The DestinationSchema is for handling/viewing just the destination information where as the DestinationPublicSchema is used to display at lot of information and excludes and includes specific informationfor this purpose. As you may begin to realize the relationship between the Models are quite similar, The model id becomes a foreign key on the next model and then that next model back populates with the former and share a one to many relationship. The relationships on the Destination model are as follows.
 
 **Trip**
 
-The Destination Model is the many part of the one-to-many relationship, so many destinations can be related to a Trips Id.  The Trip information is back populated which means Trip info can be accessed and is utilized in the DestinationSchema and can related information can be displayed. The db.realtionship created with the Trip model also does not utilize the cascade arguement, meaning deletion will not flow backwards to the related Trip model if a Destination is deleted from the database.
+The Destination Model is the many part of the one-to-many relationship, so many destinations can be related to a Trip's Id.  The Trip information is back populated which means Trip info can be accessed and is utilized in the DestinationSchema and can related information can be displayed. The db.realtionship created with the Trip model also does not utilize the cascade arguement, meaning deletion will not flow backwards to the related Trip model if a Destination is deleted from the database.
 
 **Activity**
 
-The Activity model relationship with the Destination model is similar to the User > Trip relationship, Trip > Destination relationships. The Destination model relationship with the Activity model is a one to many relationship. So one destination can have multiple activities but every activity needs a destination.
+The Activity model relationship with the Destination model is similar to the User > Trip relationship, Trip > Destination relationships. The Destination model relationship with the Activity model is a one to many relationship. So one destination can have multiple activities but every activity needs only one destination.
 
 #### Activity Model
 
@@ -395,8 +395,52 @@ class ActivitySchema(ma.Schema):
         fields = ("id","activity_name", "activity_location_URL", "budget", "activity_desc","date_available", "comments","destination_id")
 
 ```
-The Activity model contains all activity information 
+The Activity model contains all activity information. It represents the things the user wants to do at the destination. The table fields are very open so, could be anything from a music festival, meeting a friend and trying a restaurant.In the Activity model the Schema displays some comment information from the Comment model as there is a relationship connection set-up. As you can see from previous models that the models are connected in sequence by one to many relationships. The activity model contains two relationships and a Foreign key relationship.
 
+**Destination**
+The destination id fom he Desination model is the foreign key associated withe Activity model. It acts as ownership of the activity , much like the User > Trip, Trip > Destination etc. The db.realtionship between these two are very useful for this API as it facilitates the public search GET requests. The user can search by Destination dest_country or continent to pull a list of all matching activities.
+
+**Comment**
+The Comment model acts as the "child" in the one to many relationship meaning that the activity id is the foreign key assocated with the comment content. So the activity can have multiple comments but only one activity can be associated with one comment. Similar to previous models , comments also contain cascade. , Which means that the Activity/Comment models are associated with other other models through the relationships that have with other models.
+
+#### Comment Model
+
+```py
+class Comment(db.Model):
+    __tablename__ = "comments"
+    #Primary key
+    id = db.Column(db.Integer, primary_key=True)
+    #Table Feilds
+    message= db.Column(db.String(200), nullable=False)
+    #Foreign keys
+    activity_id = db.Column(db.Integer, db.ForeignKey('activities.id'), nullable=False)
+    username = db.Column(db.String, db.ForeignKey('users.username'), nullable=False)
+
+    #Relationships
+    activity = db.relationship('Activity', back_populates='comments', cascade='all, delete')
+    user = db.relationship('User', back_populates='comments')
+
+ 
+class CommentSchema(ma.Schema):
+    user = fields.Nested('UserSchema', only = ['username'])
+
+    class Meta:
+        fields = ("id","message","user","activity_id")
+
+```
+The Comment model simply represents the text, writing , questions etc that a user wants to write on their own or another users acitvity , for the public to see. It uses it relationship with the User model to utilize the users username as an identifier as to who wrote the comment. Similiar to social media sites a comment needs an author (username from User model), a message (the users message saved in the message field) and a place to write /people to see/react/reply (the Activity model). The comment model is slightly diffrent to previous models as this is where the cascade stops.
+
+**Activity**
+The activity is similar to previous relationships. The foreign key on this model represents the activity where the comment is placed. The actvity can host many comments , so this is the many side of the one to many relationship. The single/one side is represented by the comment, the single comment can only be hosted on one activity. Please note Activity also cascades , so if the User creates a Trip, some destinations, some activities and some people comment on these activities. If the user were to be deleted all this trip,destination, activity and comment data would follow with it, This ensures integrity in the database. 
+
+**User**
+The user foreign key on this model represents the user wiritng the comment. It is back populated to gather the information but cannot be cascaded to the User model. If this were to happen all models would be linked and deleting something , would result in all data in the database getting deleted. So the Comment model acts as an end to the cascading connection for deletion. This relation is also one to many as well, the Username (user) can write many comments but a comment can only have one wrote (user).
+
+
+In conclusion, below is a small visual depiction of the relationship cycle between the models.
+
+
+User.id > Trip.id > Destination.id > Activity.id > Comment.id < User.username
 
 
 ### R9 Discuss the database relations to be implemented in your application

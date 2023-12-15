@@ -175,12 +175,13 @@ An ORM (Object-Relational Mapper) is a very poweful tool in programming. An ORM 
 
 ### R5 Documenting API Endpoints
 
-![ERD](./docs/endpoints.md)
+[Authentication routes endpoints](./docs/api_endpoints.md##travel-planner-api-routes)   
+
 
 
 ### R6 - ERD - Travel Planner API
 
-[Authentication routes endpoints](./docs/api_endpoints.md##travel-planner-api-routes)   
+![ERD](./docs/APIERD.png)
 
 ### R7 - Third party services utilized
 

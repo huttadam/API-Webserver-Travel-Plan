@@ -459,23 +459,57 @@ The relationships depicted in the User models are the same in nature but are dis
 ![crowsfoot](./docs/one%20to%20many.png)
 
 #### Users and Trips
-A user can have multiple trips or zero, (right) assigned to it and a Trip can only user one user (left). The User entity primary key "id" is te foreign key on the Trip entity.
+A user can have multiple trips or zero, (right) assigned to it and a Trip can only user one user (left). The User entity primary key "id" is the foreign key on the Trip entity. This depicts ownership on the trip. The user can own many trips or zero.
 
 #### Trips and Destinations
-A trip can have many destinatons, i.e you can  go many places on a holiday/trip , so similarly to the above. The Trip can be assigne to zero or many (right) destinations, But the destination can only be assigned to one trip. The primary key on Trip , the "id" entity is the foreign key on the destination entity. 
+A trip can have many destinatons, i.e you can  go many places on a holiday/trip , so similarly to the above. The Trip can be assigned to zero or many (right) destinations, But the destination can only be assigned to one trip. The primary key on Trip , the "id" entity is the foreign key on the destination entity. 
 As you can see becuase User and Trip are realted and Trip and Dest are related. A user can be related to a destination. This is used throughout my model and really assists with authoristaion.
 
 #### Destinations and Activities
-At each detination , you have many things you want to do , but the acitivity can only be done in this destination (place). So the same relationship between is used to define them . One destination (left) can host many or zero activities (right). The primary key on Destination , the "id" entity is the foreign key on The activities entity. Similarly to the above the chain extends so User and Acitvity are defacto connected.
+At each detination , you have many things you want to do , but the acitivity can only be done in this destination (place). So the same relationship between is used to define them . One destination (left) can host many or zero activities (right). The primary key on Destination , the "id" entity is the foreign key on The activities entity. Similarly to the above the chain extends so User and Activity are defacto connected.
 
 #### Activties and Comments
 Each activity can have zero or many (right) comments assigned to it , but each unique comment can only have one activity (left) it is assigned to. Multiple instances can be displayed on an activity, but an acitvity cannot share a single comment. The activity entities primary key "id" is used as the foreign key on the comments entity.
 
 #### Comments and Users
-This relationship is different from the previous discussed. The comment entity has two foreign keys displayed. The first one is as expected, the activity id, depicting that the unique comment can be assigned to one activity (left) but the activity can have multiple or zero (right) comments assigned to it. 
+This relationship is different from the previous discussed. The comment entity has two foreign keys displayed. The first one is as expected, the activity id, depicting that the comment can be assigned to one activity (left) but the activity can have multiple or zero (right) comments assigned to it. 
 
 So the attribute username from the users entity is a foreign key on the comments entity. The username depicts the author of the comment and their can only be one author for the comment. But the author can write several comments, so the author is the one (left) and the comment is the many or one (right) side of the relationship.
 
 
 ### R10 Describe the way tasks are allocated and tracked in your project
+
+To track progress and monitor tasks throughtout my project, I used Trello , a project tracking web application. Trello allows customization and easy creation of tasks and subtasks which provide a clear picture of what needs to be done. Trello also allows deadlines and dates functions to track when certain tasks need to be completed by. I did not use this feature on this project as I wanted to explore options and different relationship/ entity set-ups and couldnt reallistically give a timeframe for this.
+
+I found it extremely helpful to add tasks throughtout my project, at the beginning its hard to understand the scope of what needs to be and as you face this problems , I could easily create a task to remind myself to follow-up on or check.
+
+The cards are placed into 4 categories, which represent what stage of the task you are currently at.  The stages I used were "backlog" (need to begin), "working", "Testing" and "Completed". When working on the project , I would consult the working section and move to the testing section for further checks. After there was nothing in the working section, I would begin a task from the backlog category.
+
+Below are some photos of the daily changes in the trello and the completed sub tasks list.
+
+#### Daily Flow
+
+![day1](./docs/Trello/day1%20-1.png)
+![day1-2](./docs/Trello/day1%20-2.png)
+![day2](./docs/Trello/day2%20-1.png)
+![day3](./docs/Trello/day3%20-1.png)
+![day4](./docs/Trello/day4%20-1.png)
+![day5](./docs/Trello/day5%20-1.png)
+![day6](./docs/Trello/day6%20-1.png)
+![day7](./docs/Trello/day7%20-1.png)
+![day8](./docs/Trello/day8%20-1.png)
+![day9](./docs/Trello/day9%20-1.png)
+![day10](./docs/Trello/day10%20-1.png)
+![day11](./docs/Trello/day11%20-1.png)
+![day12](./docs/Trello/day12%20-1.png)
+![day13](./docs/Trello/day13%20-1.png)
+
+#### Completed Subtasks
+
+![st1](./docs/Trello/day4%20-2.png)
+![st2](./docs/Trello/day4%20-3.png)
+![st3](./docs/Trello/day6%20-3.png)
+![st3](./docs/Trello/day13%20-2.png)
+
+
 

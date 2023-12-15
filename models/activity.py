@@ -11,7 +11,7 @@ class Activity(db.Model):
 
     activity_name = db.Column(db.String(100), nullable=False, unique = True)
     activity_location_URL = db.Column(db.String)
-    budget = db.Column(db.Integer, nullable=False)
+    budget = db.Column(db.Integer)
     date_available = db.Column(db.String(50), default= 'Anytime')
     activity_desc = db.Column(db.String(150), nullable=False)
 

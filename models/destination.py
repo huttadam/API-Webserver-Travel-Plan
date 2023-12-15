@@ -11,9 +11,9 @@ class Destination(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
 
-    dest_country = db.Column(db.String, nullable = False)
-    dest_name = db.Column(db.String, nullable = False)
-    continent = db.Column(db.String, nullable = False)
+    dest_country = db.Column(db.String(30), nullable = False)
+    dest_name = db.Column(db.String(30), nullable = False)
+    continent = db.Column(db.String(30), nullable = False)
 
     trip_id = db.Column(db.Integer, db.ForeignKey('trips.id'), nullable=False)
     trip = db.relationship('Trip', back_populates='destinations')

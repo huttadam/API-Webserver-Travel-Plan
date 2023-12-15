@@ -2818,7 +2818,7 @@ Error Message:
 ```
 
 
-#### 8. /activities/public/continent/(continent_name)
+#### 9. /activities/public/continent/(continent_name)
 
 * Methods: GET
 
@@ -3075,9 +3075,9 @@ Error Message:
 }
 ```
 
-#### Comments Routes
+### Comments Routes
 
-### 4. /comments/A
+#### 1. /comments/A
 
 * Methods: GET
 
@@ -3452,3 +3452,7 @@ Error message:
 	"Error": "You are not authorized to access this information"
 }
 ```
+
+### R6 - ERD - Travel Planner API
+
+![ERD](./docs/APIERD.png)

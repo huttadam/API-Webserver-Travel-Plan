@@ -12,7 +12,7 @@ class Comment(db.Model):
     activity_id = db.Column(db.Integer, db.ForeignKey('activities.id'), nullable=False)
     activity = db.relationship('Activity', back_populates='comments', cascade='all, delete')
 
-    username = db.Column(db.String(), db.ForeignKey('users.username'))
+    username = db.Column(db.String, db.ForeignKey('users.username'), nullable=False)
     user = db.relationship('User', back_populates='comments')
 
  

@@ -1254,7 +1254,7 @@ Status code: 201 CREATED
 	"continent": "Asia",
 	"dest_country": "Japan",
 	"dest_name": "Kamakura",
-	"id": 15,
+	"id": 16,
 	"trip_id": 1
 }
 ```
@@ -1640,7 +1640,7 @@ Error Message:
 }
 ```
 
-#### 2. /activities/_id
+#### 2. /activities/activity_id
 
 * Methods: GET
 
@@ -1711,7 +1711,7 @@ The feild "date_available" is not necessary and only specified for events at a p
     "activity_location_URL": "https://maps.app.goo.gl/x9zf22MePnxds4157",
     "activity_name": "See the Giant Buddha Statue ",
     "budget": 100,
-    "destination_id": 15
+    "destination_id": 16
 }
 ```
 
@@ -1727,7 +1727,7 @@ Status code: 201 CREATED
 	"activity_name": "See the Giant Buddha Statue ",
 	"budget": 100,
 	"date_available": "Anytime",
-	"destination_id": 15,
+	"destination_id": 16,
 	"id": 21
 }
 }
@@ -1818,8 +1818,8 @@ Status Code: 200 OK
 	"activity_name": "See the Giant Buddha Statue ",
 	"budget": 300,
 	"date_available": "Anytime",
-	"destination_id": 15,
-	"id": 21
+	"destination_id": 16,
+	"id": 22
 }
 ```
 * Error Handling:
@@ -1878,7 +1878,7 @@ Error message:
 
 ```
 {
-    "Error": "Activity ID: 88 not found"
+    "Error": "Activity ID:  88 not found"
 }
 ```
 
@@ -1890,5 +1890,1049 @@ Error message:
 ```
 {
 	"Error": "You are not authorized to access this information"
+}
+```
+
+#### 6. /activities/public
+
+* Methods: GET
+
+* Description: Retrieves a list of all created Activitys with their destinations. It will hide budget information but display comments on each Activity and the commenters username. This is for the public and account holders to get ideas and entice them to sign up and comment or create a trip.
+
+* Request Parameters: just the word /public
+
+* Authentication: None
+
+* Authorisation: None
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+
+```
+[
+	{
+		"activities": [
+			{
+				"activity_desc": "Explore the resort and riding from the peak to the bottom",
+				"activity_location_URL": "https://maps.app.goo.gl/WN9YHnqVA7MSowBT8",
+				"activity_name": "Snowboarding Niseko resort",
+				"comments": [
+					{
+						"activity_id": 1,
+						"message": "This resort is so crowded 😮",
+						"user": {
+							"username": "CommentKing"
+						}
+					},
+					{
+						"activity_id": 1,
+						"message": "Its not as crowded in late January.",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					}
+				],
+				"date_available": "December to April",
+				"destination_id": 1,
+				"id": 1
+			},
+			{
+				"activity_desc": "Rent snowshoes/poles and and a guide to take us to the top to ride down",
+				"activity_location_URL": "https://maps.app.goo.gl/WN9YHnqVA7MSowBT8",
+				"activity_name": "Hike Mt Yotei",
+				"comments": [
+					{
+						"activity_id": 2,
+						"message": "Seems fun, Can you recommmend a guide?",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Late January, Early February (best time)",
+				"destination_id": 1,
+				"id": 2
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Niseko Ski Resort",
+		"id": 1
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Explore the resort and ride the backcountry",
+				"activity_location_URL": "https://maps.app.goo.gl/xkqVSWxRvw1zS85W9",
+				"activity_name": "Snowboarding Nozawa Onsen Resort",
+				"comments": [],
+				"date_available": "December to March",
+				"destination_id": 2,
+				"id": 3
+			},
+			{
+				"activity_desc": "Use of the many free public baths to relax , post snowboarding",
+				"activity_location_URL": "https://maps.app.goo.gl/xkqVSWxRvw1zS85W9",
+				"activity_name": "Have an onsen in a Soto-yu",
+				"comments": [
+					{
+						"activity_id": 4,
+						"message": "My favorite onsen was Ogama, its the oldest and biggest?",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 2,
+				"id": 4
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Nozawa Onsen Ski Resort",
+		"id": 2
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Go to as many bars as possible and meet new people",
+				"activity_location_URL": "https://maps.app.goo.gl/xsZhtKfEp6vQx9LcA",
+				"activity_name": "Drinking in Golden Gai, Shinjuku",
+				"comments": [
+					{
+						"activity_id": 5,
+						"message": "Im going Golden Gai tomorrow night , Whats the best bar for sake? 🍶",
+						"user": {
+							"username": "CommentKing"
+						}
+					},
+					{
+						"activity_id": 5,
+						"message": "Try this one ...https://maps.app.goo.gl/2RfcE5WScpHyqWMq8",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					},
+					{
+						"activity_id": 5,
+						"message": "Thanks! 🙏",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 3,
+				"id": 5
+			},
+			{
+				"activity_desc": "Walk around and look for some crazy fashion to buy",
+				"activity_location_URL": "https://maps.app.goo.gl/K4uuJJYzsR9ek8Fh9",
+				"activity_name": "Shopping in Harajuku",
+				"comments": [
+					{
+						"activity_id": 6,
+						"message": "Cant miss this , Its a must-do in Tokyo",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 3,
+				"id": 6
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Tokyo",
+		"id": 3
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Throw tomatoes at everyone",
+				"activity_location_URL": "https://maps.app.goo.gl/gkoE1mjfwye2wAjF8",
+				"activity_name": "Joining La Tomatina Festival",
+				"comments": [
+					{
+						"activity_id": 7,
+						"message": "Dont wear anything valuable and wear goggles 🍅",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "Late August",
+				"destination_id": 4,
+				"id": 7
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Spain",
+		"dest_name": "Bunol",
+		"id": 4
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Join one of the daily bull runs and run around in the stadium with bulls",
+				"activity_location_URL": "https://maps.app.goo.gl/ECajwSUKBF1Bq9zY7",
+				"activity_name": "Run with Bulls",
+				"comments": [
+					{
+						"activity_id": 8,
+						"message": "If your not into running and danger, the bars and parties after the run are great!",
+						"user": {
+							"username": "MotoManiac"
+						}
+					}
+				],
+				"date_available": "July 7th - 14th",
+				"destination_id": 5,
+				"id": 8
+			},
+			{
+				"activity_desc": "Join the festival and get amognst the festivities",
+				"activity_location_URL": "https://maps.app.goo.gl/uFgp5LcguFTFnM1f7",
+				"activity_name": "The San Fermin Festival opening ceremony",
+				"comments": [
+					{
+						"activity_id": 9,
+						"message": "Best atmoshphere Ive been in. Try the sangria !!",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "July 6th",
+				"destination_id": 5,
+				"id": 9
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Spain",
+		"dest_name": "Pamplona",
+		"id": 5
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Try a lot of wines, foods and watch live music",
+				"activity_location_URL": "https://maps.app.goo.gl/X9yzp921LR7uMCuV8",
+				"activity_name": "Chamonix Jazz Music Festival",
+				"comments": [
+					{
+						"activity_id": 10,
+						"message": "Wheres a good place to stay for the festival?",
+						"user": {
+							"username": "CommentKing"
+						}
+					},
+					{
+						"activity_id": 10,
+						"message": "You should stay around Cham Sud, theres a lot of good hotels there!",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "22nd July to 29th July",
+				"destination_id": 6,
+				"id": 10
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "France",
+		"dest_name": "Chamonix",
+		"id": 6
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Do the coleseum tour and eat and drink afterwards",
+				"activity_location_URL": "https://maps.app.goo.gl/ajUedXi4puh2fGeT7",
+				"activity_name": "Visit the coleseum",
+				"comments": [],
+				"date_available": "Anytime",
+				"destination_id": 7,
+				"id": 11
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Italy",
+		"dest_name": "Rome",
+		"id": 7
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Buy and wear traditional clothes, try at least three different beer tents",
+				"activity_location_URL": "https://maps.app.goo.gl/qUGNxXha6GBBifM88",
+				"activity_name": "Join the Oktoberfest Beer Festival",
+				"comments": [
+					{
+						"activity_id": 12,
+						"message": "Dont ride the rollercoaster after beer 🤮",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Mid September until the first Sunday of October",
+				"destination_id": 8,
+				"id": 12
+			},
+			{
+				"activity_desc": "Go to the original location for the festival, drink beer and try the pork-knuckle",
+				"activity_location_URL": "https://maps.app.goo.gl/t1WUTGm58fXPG22D9",
+				"activity_name": "Visit original Hof Brau Haus",
+				"comments": [
+					{
+						"activity_id": 13,
+						"message": "Do you need to make a reservation?",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					},
+					{
+						"activity_id": 13,
+						"message": "On the weekend, you might have to. Enjoy! 🍖 🍻?",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 8,
+				"id": 13
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Germany",
+		"dest_name": "Munich",
+		"id": 8
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Go on a tour of the Neuscwanstein Castle",
+				"activity_location_URL": "https://maps.app.goo.gl/XPuQrZLhW1rdUyZz8",
+				"activity_name": "Visit the inspiration for the Disney Castle",
+				"comments": [
+					{
+						"activity_id": 14,
+						"message": "Pretty Boring, Doest even look like the Disney Castle! 🙁",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 9,
+				"id": 14
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Germany",
+		"dest_name": "Hohenschwangau",
+		"id": 9
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Buy tickets for the show in central Hanoi",
+				"activity_location_URL": "https://maps.app.goo.gl/57rr6wfoyJTuk98x8",
+				"activity_name": "See water puppet show",
+				"comments": [
+					{
+						"activity_id": 15,
+						"message": "Amazing Show, You have to do this in Hanoi",
+						"user": {
+							"username": "MotoManiac"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 10,
+				"id": 15
+			},
+			{
+				"activity_desc": "Walk around the markets, bars and restaurants around central Hanoi",
+				"activity_location_URL": "https://maps.app.goo.gl/oWWij22p9awGZZQe8",
+				"activity_name": "Wander around Hanoi city",
+				"comments": [
+					{
+						"activity_id": 16,
+						"message": "Dont eat the fruit, it will make you sick",
+						"user": {
+							"username": "MotoManiac"
+						}
+					},
+					{
+						"activity_id": 16,
+						"message": "Where did you buy the motorbike and around How much?",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 10,
+				"id": 16
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Vietnam",
+		"dest_name": "Hanoi",
+		"id": 10
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Stop off and spend some time relaxing",
+				"activity_location_URL": "https://maps.app.goo.gl/XdfBCrXYfUKgvGyy8",
+				"activity_name": "Visit the Beach and Swim",
+				"comments": [
+					{
+						"activity_id": 17,
+						"message": "Water is not so clean, but a great spot for lunch",
+						"user": {
+							"username": "MotoManiac"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 11,
+				"id": 17
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Vietnam",
+		"dest_name": "Bai Bien Vinh Thai beach",
+		"id": 11
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Walk around the park, climb on the attractions, take some cool photos",
+				"activity_location_URL": "https://maps.app.goo.gl/u4cmPtRF4C2nqHv6A",
+				"activity_name": "Hue abondoned Water Park",
+				"comments": [
+					{
+						"activity_id": 18,
+						"message": "A real hidden gem",
+						"user": {
+							"username": "MotoManiac"
+						}
+					},
+					{
+						"activity_id": 18,
+						"message": "Be careful after the rain, some of the structures are really slippery",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 12,
+				"id": 18
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Vietnam",
+		"dest_name": "Hue",
+		"id": 12
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Stroll through Hoi an, take in the atmosphere and eat Banh Mi",
+				"activity_location_URL": "https://maps.app.goo.gl/ayM4FLZUnqoseNjE6",
+				"activity_name": "Watch the lanterns being lit on the river at the night market",
+				"comments": [],
+				"date_available": "Anytime",
+				"destination_id": 13,
+				"id": 19
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Vietnam",
+		"dest_name": "Hoi An",
+		"id": 13
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Make a campfire everynight and wait for the Northern lights",
+				"activity_location_URL": "https://maps.app.goo.gl/ZKrMLLTLNWz99WET6",
+				"activity_name": "Camp and watch the Aurora Borealis",
+				"comments": [
+					{
+						"activity_id": 20,
+						"message": "Its so beautiful , you need a real clear sky to see it",
+						"user": {
+							"username": "EuroStar44"
+						}
+					},
+					{
+						"activity_id": 20,
+						"message": "I was there three days and missed it! hopefully you see it",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Late August to mid April",
+				"destination_id": 14,
+				"id": 20
+			}
+		],
+		"continent": "NorthAmerica",
+		"dest_country": "Canada",
+		"dest_name": "La Crete",
+		"id": 14
+	}
+]
+```
+
+* Error Handling:
+
+Scenario: User doesnt enter URL correctly, for example ... /public*&^%
+
+Error Code: 404 NOT FOUND
+
+Error Message:
+```
+{
+	"Error": "Page not found, please try again"
+}
+```
+
+#### 7. /activities/public/activity_id
+
+* Methods: GET
+
+* Description: Retrieves a specific created Activitys with its destinations. It will hide budget information and display comments on each Activity and the commenters username. Similiar to previous endpoint but easier to view information.
+
+* Request Parameters: the word /public and Activity Id - Integer
+
+* Authentication: None
+
+* Authorisation: None
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+```
+{
+	"activity_desc": "Explore the resort and riding from the peak to the bottom",
+	"activity_location_URL": "https://maps.app.goo.gl/WN9YHnqVA7MSowBT8",
+	"activity_name": "Snowboarding Niseko resort",
+	"budget": 2000,
+	"comments": [
+		{
+			"activity_id": 1,
+			"message": "This resort is so crowded 😮",
+			"user": {
+				"username": "CommentKing"
+			}
+		},
+		{
+			"activity_id": 1,
+			"message": "Its not as crowded in late January.",
+			"user": {
+				"username": "OyukiDaisuki"
+			}
+		}
+	],
+	"date_available": "December to April",
+	"destination_id": 1,
+	"id": 1
+}
+
+```
+
+* Error Handling:
+
+Scenario: enters an invalid Activity Id in URL
+
+Error Code: 404 NOT FOUND
+
+Error Message:
+```
+{
+	"Error": "No Result for this reference, please check again."
+}
+```
+
+#### 8. /activities/public/country/dest_country
+
+* Methods: GET
+
+* Description: Retrieves a specific list of Activitys along with there destinations. It will hide budget information and display any comments on each Activity and the commenters username. The list of Activities shown is based off the name of the destination country
+
+* Request Parameters: the words /public/country/ and then dest_country - String
+
+* Authentication: None
+
+* Authorisation: None
+
+* Request Body: None
+
+* Request Response: 
+
+* For example the below pulls our recently created Trip/Destinaion/Activity along with list of activities from two different users under activties/public/country/Japan, as they both have Japan set as there dest_country.
+
+HTTP Status Code: 200 OK
+
+```
+[
+	{
+		"activities": [
+			{
+				"activity_desc": "Explore the resort and riding from the peak to the bottom",
+				"activity_location_URL": "https://maps.app.goo.gl/WN9YHnqVA7MSowBT8",
+				"activity_name": "Snowboarding Niseko resort",
+				"comments": [
+					{
+						"activity_id": 1,
+						"message": "This resort is so crowded 😮",
+						"user": {
+							"username": "CommentKing"
+						}
+					},
+					{
+						"activity_id": 1,
+						"message": "Its not as crowded in late January.",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					}
+				],
+				"date_available": "December to April",
+				"destination_id": 1,
+				"id": 1
+			},
+			{
+				"activity_desc": "Rent snowshoes/poles and and a guide to take us to the top to ride down",
+				"activity_location_URL": "https://maps.app.goo.gl/WN9YHnqVA7MSowBT8",
+				"activity_name": "Hike Mt Yotei",
+				"comments": [
+					{
+						"activity_id": 2,
+						"message": "Seems fun, Can you recommmend a guide?",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Late January, Early February (best time)",
+				"destination_id": 1,
+				"id": 2
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Niseko Ski Resort",
+		"id": 1
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Explore the resort and ride the backcountry",
+				"activity_location_URL": "https://maps.app.goo.gl/xkqVSWxRvw1zS85W9",
+				"activity_name": "Snowboarding Nozawa Onsen Resort",
+				"comments": [],
+				"date_available": "December to March",
+				"destination_id": 2,
+				"id": 3
+			},
+			{
+				"activity_desc": "Use of the many free public baths to relax , post snowboarding",
+				"activity_location_URL": "https://maps.app.goo.gl/xkqVSWxRvw1zS85W9",
+				"activity_name": "Have an onsen in a Soto-yu",
+				"comments": [
+					{
+						"activity_id": 4,
+						"message": "My favorite onsen was Ogama, its the oldest and biggest?",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 2,
+				"id": 4
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Nozawa Onsen Ski Resort",
+		"id": 2
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Go to as many bars as possible and meet new people",
+				"activity_location_URL": "https://maps.app.goo.gl/xsZhtKfEp6vQx9LcA",
+				"activity_name": "Drinking in Golden Gai, Shinjuku",
+				"comments": [
+					{
+						"activity_id": 5,
+						"message": "Im going Golden Gai tomorrow night , Whats the best bar for sake? 🍶",
+						"user": {
+							"username": "CommentKing"
+						}
+					},
+					{
+						"activity_id": 5,
+						"message": "Try this one ...https://maps.app.goo.gl/2RfcE5WScpHyqWMq8",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					},
+					{
+						"activity_id": 5,
+						"message": "Thanks! 🙏",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 3,
+				"id": 5
+			},
+			{
+				"activity_desc": "Walk around and look for some crazy fashion to buy",
+				"activity_location_URL": "https://maps.app.goo.gl/K4uuJJYzsR9ek8Fh9",
+				"activity_name": "Shopping in Harajuku",
+				"comments": [
+					{
+						"activity_id": 6,
+						"message": "Cant miss this , Its a must-do in Tokyo",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 3,
+				"id": 7
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Tokyo",
+		"id": 3
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Walk around the temple grounds, buy some souveineirs and try go inside the statue",
+				"activity_location_URL": "https://maps.app.goo.gl/x9zf22MePnxds4157",
+				"activity_name": "See the Giant Buddha Statue",
+				"comments": [],
+				"date_available": "Anytime",
+				"destination_id": 16,
+				"id": 21
+			}
+		],
+		"continent": "Asia",
+		"dest_country": "Japan",
+		"dest_name": "Kamakura",
+		"id": 16
+	}
+]
+```
+
+* Error Handling:
+
+Scenario: Country information cant be retrieved
+
+Error Code: 404 NOT FOUND
+
+Error Message:
+```
+{
+	"Error": "Country not found"
+}
+```
+
+Scenario: URL address incorrect
+
+Error Code: 404 NOT FOUND
+
+Error Message:
+```
+{
+	"Error": "Page not found, please try again"
+}
+```
+
+
+#### 8. /activities/public/continent/(continent_name)
+
+* Methods: GET
+
+* Description: Retrieves a specific list of Activitys along with there destinations. It will hide budget information and display any comments on each Activity and the commenters username. The list of Activities shown is based off the name of the continent
+
+* Request Parameters: the words /public/continent/ and then continent - String
+
+* Authentication: None
+
+* Authorisation: None
+
+* Request Body: None
+
+* Request Response: 
+
+* For example the below pulls a list of activities from two different users under activties/public/continent/Europe
+
+HTTP Status Code: 200 OK
+
+```
+[
+	{
+		"activities": [
+			{
+				"activity_desc": "Throw tomatoes at everyone",
+				"activity_location_URL": "https://maps.app.goo.gl/gkoE1mjfwye2wAjF8",
+				"activity_name": "Joining La Tomatina Festival",
+				"comments": [
+					{
+						"activity_id": 7,
+						"message": "Dont wear anything valuable and wear goggles 🍅",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "Late August",
+				"destination_id": 4,
+				"id": 7
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Spain",
+		"dest_name": "Bunol",
+		"id": 4
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Join one of the daily bull runs and run around in the stadium with bulls",
+				"activity_location_URL": "https://maps.app.goo.gl/ECajwSUKBF1Bq9zY7",
+				"activity_name": "Run with Bulls",
+				"comments": [
+					{
+						"activity_id": 8,
+						"message": "If your not into running and danger, the bars and parties after the run are great!",
+						"user": {
+							"username": "MotoManiac"
+						}
+					}
+				],
+				"date_available": "July 7th - 14th",
+				"destination_id": 5,
+				"id": 8
+			},
+			{
+				"activity_desc": "Join the festival and get amognst the festivities",
+				"activity_location_URL": "https://maps.app.goo.gl/uFgp5LcguFTFnM1f7",
+				"activity_name": "The San Fermin Festival opening ceremony",
+				"comments": [
+					{
+						"activity_id": 9,
+						"message": "Best atmoshphere Ive been in. Try the sangria !!",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "July 6th",
+				"destination_id": 5,
+				"id": 9
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Spain",
+		"dest_name": "Pamplona",
+		"id": 5
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Try a lot of wines, foods and watch live music",
+				"activity_location_URL": "https://maps.app.goo.gl/X9yzp921LR7uMCuV8",
+				"activity_name": "Chamonix Jazz Music Festival",
+				"comments": [
+					{
+						"activity_id": 10,
+						"message": "Wheres a good place to stay for the festival?",
+						"user": {
+							"username": "CommentKing"
+						}
+					},
+					{
+						"activity_id": 10,
+						"message": "You should stay around Cham Sud, theres a lot of good hotels there!",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "22nd July to 29th July",
+				"destination_id": 6,
+				"id": 10
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "France",
+		"dest_name": "Chamonix",
+		"id": 6
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Do the coleseum tour and eat and drink afterwards",
+				"activity_location_URL": "https://maps.app.goo.gl/ajUedXi4puh2fGeT7",
+				"activity_name": "Visit the coleseum",
+				"comments": [],
+				"date_available": "Anytime",
+				"destination_id": 7,
+				"id": 11
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Italy",
+		"dest_name": "Rome",
+		"id": 7
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Buy and wear traditional clothes, try at least three different beer tents",
+				"activity_location_URL": "https://maps.app.goo.gl/qUGNxXha6GBBifM88",
+				"activity_name": "Join the Oktoberfest Beer Festival",
+				"comments": [
+					{
+						"activity_id": 12,
+						"message": "Dont ride the rollercoaster after beer 🤮",
+						"user": {
+							"username": "CommentKing"
+						}
+					}
+				],
+				"date_available": "Mid September until the first Sunday of October",
+				"destination_id": 8,
+				"id": 12
+			},
+			{
+				"activity_desc": "Go to the original location for the festival, drink beer and try the pork-knuckle",
+				"activity_location_URL": "https://maps.app.goo.gl/t1WUTGm58fXPG22D9",
+				"activity_name": "Visit original Hof Brau Haus",
+				"comments": [
+					{
+						"activity_id": 13,
+						"message": "Do you need to make a reservation?",
+						"user": {
+							"username": "OyukiDaisuki"
+						}
+					},
+					{
+						"activity_id": 13,
+						"message": "On the weekend, you might have to. Enjoy! 🍖 🍻?",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 8,
+				"id": 13
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Germany",
+		"dest_name": "Munich",
+		"id": 8
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Go on a tour of the Neuscwanstein Castle",
+				"activity_location_URL": "https://maps.app.goo.gl/XPuQrZLhW1rdUyZz8",
+				"activity_name": "Visit the inspiration for the Disney Castle",
+				"comments": [
+					{
+						"activity_id": 14,
+						"message": "Pretty Boring, Doest even look like the Disney Castle! 🙁",
+						"user": {
+							"username": "EuroStar44"
+						}
+					}
+				],
+				"date_available": "Anytime",
+				"destination_id": 9,
+				"id": 14
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Germany",
+		"dest_name": "Hohenschwangau",
+		"id": 9
+	},
+	{
+		"activities": [
+			{
+				"activity_desc": "Visiting the hundreds of bomb shelters and looking at butalist Yugo architecture",
+				"activity_location_URL": "https://maps.app.goo.gl/WVbLfU9hzK5idHhk6",
+				"activity_name": "Bussing Around Albania",
+				"comments": [],
+				"date_available": "Anytime",
+				"destination_id": 15,
+				"id": 21
+			}
+		],
+		"continent": "Europe",
+		"dest_country": "Albania",
+		"dest_name": "Tirana",
+		"id": 15
+	}
+]
+
+```
+
+* Error Handling:
+
+Scenario: Country information cant be retrieved
+
+Error Code: 404 NOT FOUND
+
+Error Message:
+```
+{
+	"Error": " No activities in this Country as yet"
+}
+```
+
+Scenario: URL address incorrect
+
+Error Code: 404 NOT FOUND
+
+Error Message:
+```
+{
+	"Error": "Page not found, please try again"
 }
 ```

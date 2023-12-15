@@ -36,7 +36,7 @@ def run_app():
 
     @app.errorhandler(NoResultFound)
     def no_result_found(err):
-        return {'Error': "No Result for this reference, please check again."},400
+        return {'Error': "No Result for this reference, please check again."},404
 
     @app.errorhandler(DataError)
     def data_error(err):

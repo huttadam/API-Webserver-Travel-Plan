@@ -123,7 +123,7 @@ def public_activities_destination(dest_country):
     if destinations:
         return DestinationPublicSchema(many=True).dump(destinations)
     else:
-        return {'Error': 'Country not found'}, 404
+        return {'Error': ' No activities in this country as yet'}, 404
 
 
 @bp_activities.route('/public/continent/<string:continent>')
@@ -133,7 +133,7 @@ def public_activities_continent(continent):
     if destinations:
         return DestinationPublicSchema(many=True).dump(destinations)
     else:
-        return {'Error': 'Continent not found'}, 404
+        return {'Error': 'No activities in this continent as yet'}, 404
 
 
 

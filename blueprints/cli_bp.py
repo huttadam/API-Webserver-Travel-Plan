@@ -107,13 +107,14 @@ def seed_db():
         ),
 
         Trip(
-            trip_name ="Paris Olympics",
-            start_date = '2024-07-26',
-            finish_date = '2024-8-11',
-            estimated_budget = 20000,
-            trip_desc = "Moving around Paris and seeing many events Games",
+            trip_name = "Eastern Europe on Bus",
+            start_date = "2024-07-31",
+            finish_date = "2024-07-11",
+            estimated_budget = 5000,
+            trip_desc = "Backpacking through Moldova, Romania, Albania, Bulgaria",
             user_id = users[3].id
-        )
+            )
+
     ]
     db.session.query(Trip).delete()
     db.session.add_all(trips)
@@ -223,6 +224,12 @@ def seed_db():
             dest_name = 'La Crete',
             continent = 'NorthAmerica',
             trip_id = trips[3].id
+        ),
+        Destination(
+            dest_country = 'Albania',
+            dest_name = 'Tirana',
+            continent = 'Europe',
+            trip_id = trips[4].id
         )
     ]
 
@@ -398,6 +405,14 @@ def seed_db():
             activity_location_URL = 'https://maps.app.goo.gl/ZKrMLLTLNWz99WET6',
             budget = 500,
             date_available = "Late August to mid April",
+            destination_id = destinations[13].id
+        ),
+        Activity(
+            activity_name = 'Bussing Around Albania',
+            activity_desc = 'Visiting the hundreds of bomb shelters and looking at brutalist Yugo architecture',
+            activity_location_URL = "https://maps.app.goo.gl/WVbLfU9hzK5idHhk6",
+            budget = 3500,
+            date_available = "Summer",
             destination_id = destinations[13].id
         )
     ]

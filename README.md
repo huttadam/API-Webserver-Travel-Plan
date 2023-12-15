@@ -20,7 +20,7 @@
     * [Trips Routes](#trip-routes)
     * [Destinations Routes](#Destination-routes)
     * [Activities Routes](#Activity-routes)
-    * [Comments Routes](#Comment-routes)
+    * [Comments Routes](#Comments-routes)
 * [R6: ERD](#r6-erd)
 * [R7: Third Party Services](#r7-detail-any-third-party-services-that-your-app-will-use)
 * [R8: Models and Relationships](#r8-describe-your-projects-models-in-terms-of-the-relationships-they-have-with-each-other)
@@ -611,10 +611,99 @@ Error message:
 
 HTTP Status Code: 200 OK
 
-* Please note only one example shown (original data very long)
+
 
 ```
 [
+	{
+		"destinations": [
+			{
+				"continent": "Asia",
+				"dest_country": "Japan",
+				"dest_name": "Niseko Ski Resort",
+				"id": 1,
+				"trip_id": 1
+			},
+			{
+				"continent": "Asia",
+				"dest_country": "Japan",
+				"dest_name": "Nozawa Onsen Ski Resort",
+				"id": 2,
+				"trip_id": 1
+			},
+			{
+				"continent": "Asia",
+				"dest_country": "Japan",
+				"dest_name": "Tokyo",
+				"id": 3,
+				"trip_id": 1
+			}
+		],
+		"estimated_budget": 7000,
+		"finish_date": "2023-01-29",
+		"id": 1,
+		"start_date": "2023-01-15",
+		"trip_desc": "Snowboarding in two resorts on the northern island of Hokkaido + a few days in Tokyo",
+		"trip_name": "Winter Snowboarding + Tokyo",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	},
+	{
+		"destinations": [
+			{
+				"continent": "Europe",
+				"dest_country": "Spain",
+				"dest_name": "Bunol",
+				"id": 4,
+				"trip_id": 2
+			},
+			{
+				"continent": "Europe",
+				"dest_country": "Spain",
+				"dest_name": "Pamplona",
+				"id": 5,
+				"trip_id": 2
+			},
+			{
+				"continent": "Europe",
+				"dest_country": "France",
+				"dest_name": "Chamonix",
+				"id": 6,
+				"trip_id": 2
+			},
+			{
+				"continent": "Europe",
+				"dest_country": "Italy",
+				"dest_name": "Rome",
+				"id": 7,
+				"trip_id": 2
+			},
+			{
+				"continent": "Europe",
+				"dest_country": "Germany",
+				"dest_name": "Munich",
+				"id": 8,
+				"trip_id": 2
+			},
+			{
+				"continent": "Europe",
+				"dest_country": "Germany",
+				"dest_name": "Hohenschwangau",
+				"id": 9,
+				"trip_id": 2
+			}
+		],
+		"estimated_budget": 15000,
+		"finish_date": "2023-09-15",
+		"id": 2,
+		"start_date": "2023-07-15",
+		"trip_desc": "Spain, France, Italy and Germany - Festivals",
+		"trip_name": "Backpacking Mainland Europe",
+		"user": {
+			"username": "EuroStar44"
+		}
+	},
 	{
 		"destinations": [
 			{
@@ -654,6 +743,46 @@ HTTP Status Code: 200 OK
 		"trip_name": "Vietnam on Motorbike",
 		"user": {
 			"username": "MotoManiac"
+		}
+	},
+	{
+		"destinations": [
+			{
+				"continent": "NorthAmerica",
+				"dest_country": "Canada",
+				"dest_name": "La Crete",
+				"id": 14,
+				"trip_id": 4
+			}
+		],
+		"estimated_budget": 6500,
+		"finish_date": "2024-03-11",
+		"id": 4,
+		"start_date": "2024-02-04",
+		"trip_desc": "Camping in the wilderness and hoping to see the Aurora Borealis",
+		"trip_name": "Nothern Lights Trip",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	},
+	{
+		"destinations": [
+			{
+				"continent": "Europe",
+				"dest_country": "Albania",
+				"dest_name": "Tirana",
+				"id": 15,
+				"trip_id": 5
+			}
+		],
+		"estimated_budget": 5000,
+		"finish_date": "2024-07-11",
+		"id": 5,
+		"start_date": "2024-07-31",
+		"trip_desc": "Backpacking through Moldova, Romania, Albania, Bulgaria",
+		"trip_name": "Eastern Europe on Bus",
+		"user": {
+			"username": "CommentKing"
 		}
 	}
 ]
@@ -1332,7 +1461,7 @@ Status Code: 200 OK
 	"continent": "Asia",
 	"dest_country": "Japan",
 	"dest_name": "Yokohama",
-	"id": 15,
+	"id": 16,
 	"trip_id": 1
 }
 ```
@@ -1392,7 +1521,7 @@ Error message:
 * Request Response: Status code 200 OK
 ```
 {
-	"Success": "Destination ID: 15 and all related Activities deleted"
+	"Success": "Destination ID: 16 and all related Activities deleted"
 }
 ```
 
@@ -1623,6 +1752,15 @@ HTTP Status Code: 200 OK
 		"date_available": "Late August to mid April",
 		"destination_id": 14,
 		"id": 20
+	},
+	{
+		"activity_desc": "Visiting the hundreds of bomb shelters and looking at brutalist Yugo architecture",
+		"activity_location_URL": "https://maps.app.goo.gl/WVbLfU9hzK5idHhk6",
+		"activity_name": "Bussing Around Albania",
+		"budget": 3500,
+		"date_available": "Summer",
+		"destination_id": 15,
+		"id": 21
 	}
 ]
 ```
@@ -2934,5 +3072,383 @@ Error Message:
 ```
 {
 	"Error": "Page not found, please try again"
+}
+```
+
+#### Comments Routes
+
+### 4. /comments/A
+
+* Methods: GET
+
+* Description: Retrieves a list of all comments, for Admins to look-upon and delete if necesary.
+
+* Request Parameters: Capital letter A (Admin)
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of admin_acc only
+
+* Request Body: None
+
+* Request Response: 
+
+HTTP Status Code: 200 OK
+
+```
+[
+	{
+		"activity_id": 1,
+		"id": 1,
+		"message": "This resort is so crowded 😮",
+		"user": {
+			"username": "CommentKing"
+		}
+	},
+	{
+		"activity_id": 1,
+		"id": 2,
+		"message": "Its not as crowded in late January.",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	},
+	{
+		"activity_id": 2,
+		"id": 3,
+		"message": "Seems fun, Can you recommmend a guide?",
+		"user": {
+			"username": "CommentKing"
+		}
+	},
+	{
+		"activity_id": 4,
+		"id": 4,
+		"message": "My favorite onsen was Ogama, its the oldest and biggest?",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	},
+	{
+		"activity_id": 5,
+		"id": 5,
+		"message": "Im going Golden Gai tomorrow night , Whats the best bar for sake? 🍶",
+		"user": {
+			"username": "CommentKing"
+		}
+	},
+	{
+		"activity_id": 5,
+		"id": 6,
+		"message": "Try this one ...https://maps.app.goo.gl/2RfcE5WScpHyqWMq8",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	},
+	{
+		"activity_id": 5,
+		"id": 7,
+		"message": "Thanks! 🙏",
+		"user": {
+			"username": "CommentKing"
+		}
+	},
+	{
+		"activity_id": 6,
+		"id": 8,
+		"message": "Cant miss this , Its a must-do in Tokyo",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	},
+	{
+		"activity_id": 7,
+		"id": 9,
+		"message": "Dont wear anything valuable and wear goggles 🍅",
+		"user": {
+			"username": "EuroStar44"
+		}
+	},
+	{
+		"activity_id": 8,
+		"id": 10,
+		"message": "If your not into running and danger, the bars and parties after the run are great!",
+		"user": {
+			"username": "MotoManiac"
+		}
+	},
+	{
+		"activity_id": 9,
+		"id": 11,
+		"message": "Best atmoshphere Ive been in. Try the sangria !!",
+		"user": {
+			"username": "EuroStar44"
+		}
+	},
+	{
+		"activity_id": 10,
+		"id": 12,
+		"message": "Wheres a good place to stay for the festival?",
+		"user": {
+			"username": "CommentKing"
+		}
+	},
+	{
+		"activity_id": 10,
+		"id": 13,
+		"message": "You should stay around Cham Sud, theres a lot of good hotels there!",
+		"user": {
+			"username": "EuroStar44"
+		}
+	},
+	{
+		"activity_id": 12,
+		"id": 14,
+		"message": "Dont ride the rollercoaster after beer 🤮",
+		"user": {
+			"username": "CommentKing"
+		}
+	},
+	{
+		"activity_id": 13,
+		"id": 15,
+		"message": "Do you need to make a reservation?",
+		"user": {
+			"username": "OyukiDaisuki"
+		}
+	},
+	{
+		"activity_id": 13,
+		"id": 16,
+		"message": "On the weekend, you might have to. Enjoy! 🍖 🍻?",
+		"user": {
+			"username": "EuroStar44"
+		}
+	},
+	{
+		"activity_id": 14,
+		"id": 17,
+		"message": "Pretty Boring, Doest even look like the Disney Castle! 🙁",
+		"user": {
+			"username": "EuroStar44"
+		}
+	},
+	{
+		"activity_id": 15,
+		"id": 18,
+		"message": "Amazing Show, You have to do this in Hanoi",
+		"user": {
+			"username": "MotoManiac"
+		}
+	},
+	{
+		"activity_id": 16,
+		"id": 19,
+		"message": "Dont eat the fruit, it will make you sick",
+		"user": {
+			"username": "MotoManiac"
+		}
+	},
+	{
+		"activity_id": 16,
+		"id": 20,
+		"message": "Where did you buy the motorbike and around How much?",
+		"user": {
+			"username": "CommentKing"
+		}
+	},
+	{
+		"activity_id": 17,
+		"id": 21,
+		"message": "Water is not so clean, but a great spot for lunch",
+		"user": {
+			"username": "MotoManiac"
+		}
+	},
+	{
+		"activity_id": 18,
+		"id": 22,
+		"message": "A real hidden gem",
+		"user": {
+			"username": "MotoManiac"
+		}
+	},
+	{
+		"activity_id": 18,
+		"id": 23,
+		"message": "Be careful after the rain, some of the structures are really slippery",
+		"user": {
+			"username": "CommentKing"
+		}
+	},
+	{
+		"activity_id": 20,
+		"id": 24,
+		"message": "Its so beautiful , you need a real clear sky to see it",
+		"user": {
+			"username": "EuroStar44"
+		}
+	},
+	{
+		"activity_id": 20,
+		"id": 25,
+		"message": "I was there three days and missed it! hopefully you see it",
+		"user": {
+			"username": "CommentKing"
+		}
+	}
+]
+
+```
+* Error Handling:
+
+Scenario: User trying to access comments
+
+Error Code: 401 UNAUTHORIZED
+
+Error Message:
+
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+
+#### 2. /comments/
+
+* Methods: POST
+
+* Description: Users can create a comment on an Activity and be viewed by the public
+
+* Request Parameters: None
+
+* Authentication: @jwt_required
+
+* Authorisation: Any bearer token (have an account)
+
+* Request Body:
+
+Only the message and the acitivity Id that is going to be commented on is necessarY to input.
+
+```
+{
+    "message": "Can you recommend a place to stay for this activity?",
+    "activity_id": 10
+}
+```
+
+* Request Response:
+
+Status code: 201 CREATED
+
+```
+{
+	"id": 27,
+	"message": "Can you recommend a place to stay for this activity?",
+	"user": {
+		"username": "OyukiDaisuki"
+	}
+}
+```
+
+
+#### 3. /comments/comment_id
+
+* Methods: PUT, PATCH
+
+* Description: Updating a comment a user has made on an activity
+
+* Request Parameters: Comment id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of comment Id and admin , can update
+
+* Request Body:
+
+Only the message can be changed for comments.
+
+```
+{
+	"message": "This place is great!"
+}
+```
+
+* Request Response:
+
+Status Code: 200 OK
+
+```
+{
+	"activity_id": 1,
+	"id": 2,
+	"message": "This place is great!",
+	"user": {
+		"username": "OyukiDaisuki"
+	}
+}
+```
+* Error Handling:
+
+Scenario: The comment ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+	"Error": "User not found, please check ID"
+}
+```
+
+Scenario: User isn't admin or the person they are trying to update
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
+}
+```
+#### 4. /comments/comment_id
+
+* Methods: DELETE
+
+* Description: Deletes a comment form the database
+
+* Request Parameters: Comment id, integer
+
+* Authentication: @jwt_required()
+
+* Authorisation: Bearer token of users ID or Admin
+
+* Request Body: None
+
+* Request Response: Status code 200 OK
+
+* Error Handling: Same potential errors and messages as comments update.
+
+Scenario: The comment ID in URL doesnt exist
+
+Error code: 404 NOT FOUND
+
+Error message:
+
+```
+{
+	"Error": "Comment ID: 88 not found, please check and try again"
+}
+```
+
+Scenario: User isn't admin or the owner of the comment
+
+Error code: 401 UNAUTHORIZED
+
+Error message:
+```
+{
+	"Error": "You are not authorized to access this information"
 }
 ```

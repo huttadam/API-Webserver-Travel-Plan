@@ -52,7 +52,7 @@ def edit_comments(comment_id):
         return CommentSchema().dump(comment)
    
     else:
-        return {'Error': 'Comment not found, please check reference and try again'}, 404
+        return {'Error': f'Comment ID: {comment_id} not found, please check and try again'}, 404
 
 #Delete a comment
 @bp_comments.route('/<int:comment_id>', methods=['DELETE'])
@@ -66,7 +66,7 @@ def delete_comments(comment_id):
         db.session.commit()
         return {'Success': f'Comment ID: {comment_id} deleted'}
     else:
-        return {'Error': 'Comment not found, please check reference and try again'}, 404
+        return {'Error': f'Comment ID: {comment_id} not found, please check and try again'}, 404
 
 
 

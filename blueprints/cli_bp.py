@@ -413,7 +413,7 @@ def seed_db():
             activity_location_URL = "https://maps.app.goo.gl/WVbLfU9hzK5idHhk6",
             budget = 3500,
             date_available = "Summer",
-            destination_id = destinations[13].id
+            destination_id = destinations[14].id
         )
     ]
 

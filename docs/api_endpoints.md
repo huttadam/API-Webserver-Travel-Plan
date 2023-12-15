@@ -2,7 +2,7 @@
 
 [Return to main page](../README.md)
 
-[Authentication routes](#authentication-routes)   
+[Travel Planner API routes](#travel-planner-api-routes)   
 
 [Auth/User Routes](#authuser-routes)
 [Trips Routes](#trip-routes)

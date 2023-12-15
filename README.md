@@ -175,6 +175,8 @@ An ORM (Object-Relational Mapper) is a very poweful tool in programming. An ORM 
 
 ### R5 Documenting API Endpoints
 
+API's documented on a seperate document due to size. Please click link below to see.
+
 [Authentication routes endpoints](./docs/api_endpoints.md##travel-planner-api-routes)   
 
 
@@ -221,6 +223,13 @@ Insomnia is an API client and testing application that is used to test HTTP requ
 
 ### R8 Describe your projects models in terms of the relationships they have with each other
 
+Below are the model classes representing the entities from the database and like all models in the project is written using SQLAlchemy and in a Python. By this it means that the columns represent the attributes in the database and vice versa. Genrally to define an entity relationship or just create in an attribute in the model, SQLAlchemy is used (db).
+
+The db.Column object allows as to create the feilds in the entity and relevant relation information i.e  assing the attribute as a Primary key or as a foreign key. In the case of the forein key, its necessary to assign the original table and the column the key is from.
+
+To establish the relationship the object db.relationship is assigned to a variable with the name of the relating entity, if the relationship is one to many , a plural is used to represent the many and singular for the one. We also add arguments like back-populate which allows acess to related columns from the related models. Two variables are created , one on each entity which shows the connection between the two and cascade represents the flow of the relationship if information is deleted it will also need to be deleted from the related model.
+
+
 #### User Model
 
 ```py
@@ -255,11 +264,11 @@ class UserSchema(ma.Schema):
         fields = ("id", "username", "email", "password", "admin_acc", "f_name", "l_name")
 
 ```
-This is the model representing the User entity from the database and like all models in the project is written using SQLAlchemy and in a Python class. By this it means that the columns represent the attributes in the database and vice versa. This User class in python handles all information related to the user having an account. The User model has two relationships with other entities. Both relationships are back-popualated to the User model but foreign keys /attributes are not utilized to the model, only away from.
+This User model handles all information related to the user having an account. The User model has two relationships with other entities. Both relationships are back-popualated to the User model but foreign keys /attributes are not utilized on the model, only the other direction from the entity.
 
 **Trip Model**
 
-The relationship is one to many. A user can have multiple Trip models associated with it and a Trip can only have one user associated. The Trip model information back populates to the user, however no Trip infomation is utilized when serializing the User Schema with Marshmallow. The User attributes ID ( The primary key of the User model) is used to show ownership of the Trip as a ForeignKey.
+This relationship is one to many. A user can have multiple Trip models associated with it and a Trip can only have one user associated. The Trip model information back populates to the user, however no Trip infomation is utilized when serializing the User Schema with Marshmallow. The User attributes ID ( The primary key of the User model) is used to show ownership of the Trip as a ForeignKey on the Trip model.
 
 **Comment Model**
 
@@ -306,7 +315,7 @@ The Trip model is used to represent a overview of the trip planned by the user a
 
 **User**
 
-As mentioned previously the Trip model is the many part of the relationship in the one-to-many relationship. The Foreign Key in the Trip model is the User model's Id. It is a necessary field in the Trip model and has to be allocated to a User, symbolzing ownership. i.e The user plans/organizes the trip. What is also is important to note is that although back-populated the trip does not cascade backwards but the forwards to the Destination Model.
+As mentioned previously the Trip model is the many part of the relationship in the one-to-many relationship. The Foreign Key in the Trip model is the User model's Id. It is a necessary field in the Trip model and has to be allocated to a User, symbolzing ownership. i.e The user plans/organizes the trip. What is also is important to note is that although back-populated the trip does not cascade backwards but forwards to the Destination Model.
 
 **Destination**
 
@@ -352,7 +361,7 @@ class DestinationPublicSchema(ma.Schema):
         fields = ( "id","dest_country", "dest_name", "activities", "continent")
 
 ```
-The Destination model represents the countries, cities/locations and continents that will be visitied on the users trip. The destination model has two Schemas: The DestinationSchema is for handling/viewing just the destination information where as the DestinationPublicSchema is used to display at lot of information and excludes and includes specific informationfor this purpose. As you may begin to realize the relationship between the Models are quite similar, The model id becomes a foreign key on the next model and then that next model back populates with the former and share a one to many relationship. The relationships on the Destination model are as follows.
+The Destination model represents the countries, cities/locations and continents that will be visitied on the users trip. The destination model has two Schemas: The DestinationSchema is for handling/viewing just the destination information where as the DestinationPublicSchema is used to display at lot of information and excludes and includes specific information for this purpose. As you may begin to realize the relationship between the Models are quite similar, The model id becomes a foreign key on the next model and then that next model back populates with the former and share a one to many relationship. The relationships on the Destination model are as follows.
 
 **Trip**
 
@@ -360,7 +369,7 @@ The Destination Model is the many part of the one-to-many relationship, so many 
 
 **Activity**
 
-The Activity model relationship with the Destination model is similar to the User > Trip relationship, Trip > Destination relationships. The Destination model relationship with the Activity model is a one to many relationship. So one destination can have multiple activities but every activity needs only one destination.
+The Activity model relationship with the Destination model is similar to the User > Trip relationship, Trip > Destination relationships. The Destination model relationship with the Activity model is a one to many relationship. So one destination can have multiple activities but every activity needs only one destination. A deletion of a destination will effect the activities related to it.
 
 #### Activity Model
 
@@ -428,13 +437,13 @@ class CommentSchema(ma.Schema):
         fields = ("id","message","user","activity_id")
 
 ```
-The Comment model simply represents the text, writing , questions etc that a user wants to write on their own or another users acitvity , for the public to see. It uses it relationship with the User model to utilize the users username as an identifier as to who wrote the comment. Similiar to social media sites a comment needs an author (username from User model), a message (the users message saved in the message field) and a place to write /people to see/react/reply (the Activity model). The comment model is slightly diffrent to previous models as this is where the cascade stops.
+The Comment model simply represents the text, writing , questions etc that a user wants to write on their own or another users acitvity , for the public to see. It uses it relationship with the User model to utilize the users username as an identifier as to who wrote the comment. Similiar to social media sites a comment needs an author (username from User model), a message (the users message saved in the message field) and a place to write i.e people to see/react/reply (the Activity model). The comment model is slightly diffrent to previous models as this is where the cascade flow stops.
 
 **Activity**
 The activity is similar to previous relationships. The foreign key on this model represents the activity where the comment is placed. The actvity can host many comments , so this is the many side of the one to many relationship. The single/one side is represented by the comment, the single comment can only be hosted on one activity. Please note Activity also cascades , so if the User creates a Trip, some destinations, some activities and some people comment on these activities. If the user were to be deleted all this trip,destination, activity and comment data would follow with it, This ensures integrity in the database. 
 
 **User**
-The user foreign key on this model represents the user wiritng the comment. It is back populated to gather the information but cannot be cascaded to the User model. If this were to happen all models would be linked and deleting something , would result in all data in the database getting deleted. So the Comment model acts as an end to the cascading connection for deletion. This relation is also one to many as well, the Username (user) can write many comments but a comment can only have one wrote (user).
+The user foreign key on this model represents the user wiritng the comment. It is back populated to gather the information but cannot be cascaded to the User model. If this were to happen all models would be linked and deleting something , would result in all data in the database getting deleted. So the Comment model acts as an end to the cascading connection for deletion. This relation is also one to many as well, the Username (user) can write many comments but a comment can only have one writer (user).
 
 
 In conclusion, below is a small visual depiction of the relationship cycle between the models.
@@ -444,6 +453,29 @@ User.id > Trip.id > Destination.id > Activity.id > Comment.id < User.username
 
 
 ### R9 Discuss the database relations to be implemented in your application
+
+The relationships depicted in the User models are the same in nature but are displayed different in the database. As the ERD in R6 shows the lines linking the Primary keys and the foreign keys. The symbols of the end of these lines represent the nature of the the relationships. For my application the same type of relation ship is used throughout the entities and this is the one to many relationship. This is depicted using the below. the left side represents one entity and the right side represents 0 or many that can be related with.
+
+![crowsfoot](./docs/one%20to%20many.png)
+
+#### Users and Trips
+A user can have multiple trips or zero, (right) assigned to it and a Trip can only user one user (left). The User entity primary key "id" is te foreign key on the Trip entity.
+
+#### Trips and Destinations
+A trip can have many destinatons, i.e you can  go many places on a holiday/trip , so similarly to the above. The Trip can be assigne to zero or many (right) destinations, But the destination can only be assigned to one trip. The primary key on Trip , the "id" entity is the foreign key on the destination entity. 
+As you can see becuase User and Trip are realted and Trip and Dest are related. A user can be related to a destination. This is used throughout my model and really assists with authoristaion.
+
+#### Destinations and Activities
+At each detination , you have many things you want to do , but the acitivity can only be done in this destination (place). So the same relationship between is used to define them . One destination (left) can host many or zero activities (right). The primary key on Destination , the "id" entity is the foreign key on The activities entity. Similarly to the above the chain extends so User and Acitvity are defacto connected.
+
+#### Activties and Comments
+Each activity can have zero or many (right) comments assigned to it , but each unique comment can only have one activity (left) it is assigned to. Multiple instances can be displayed on an activity, but an acitvity cannot share a single comment. The activity entities primary key "id" is used as the foreign key on the comments entity.
+
+#### Comments and Users
+This relationship is different from the previous discussed. The comment entity has two foreign keys displayed. The first one is as expected, the activity id, depicting that the unique comment can be assigned to one activity (left) but the activity can have multiple or zero (right) comments assigned to it. 
+
+So the attribute username from the users entity is a foreign key on the comments entity. The username depicts the author of the comment and their can only be one author for the comment. But the author can write several comments, so the author is the one (left) and the comment is the many or one (right) side of the relationship.
+
 
 ### R10 Describe the way tasks are allocated and tracked in your project
 

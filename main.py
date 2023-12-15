@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from init import db, ma, jwt, bcrypt
 from os import environ
 from blueprints.cli_bp import bp_DBCli

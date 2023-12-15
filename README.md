@@ -131,7 +131,7 @@ A key feature of PostgreSQL are its contraints .In simple terms, contrainsts ass
 
 
 #### Robustness
-PostgreSQL has a large set of features that can be usedto facilitate multiple requirements. These features are attributed to the success and and popularity of PostgreSQL. An example of these features would be its ACID ((Atomicity, Consistency, Isolation, Durability)) complicance which simply means that data integrity is maintained during interactions with the database when most common mistakes or problems would occur.
+PostgreSQL has a large set of features that can be used to facilitate multiple requirements. These features are attributed to the success and and popularity of PostgreSQL. An example of these features would be its ACID ((Atomicity, Consistency, Isolation, Durability)) complicance which simply means that data integrity is maintained during interactions with the database when most common mistakes or problems would occur.
 Another feature to explain its robustness is MVCC (Multi-Version Concurrency Control) which improves performance especially in a multi-user database. While handling muitple transactions the database does not lock, it simultaneously processes the transactions and records these versions in-case a rollback or data integrityis compromised in any way.
 
 #### Scalability
@@ -178,10 +178,47 @@ An ORM (Object-Relational Mapper) is a very poweful tool in programming. An ORM 
 [Authentication routes endpoints](./docs/api_endpoints.md##travel-planner-api-routes)   
 
 
-
 ### R6 - ERD - Travel Planner API
 
 ![ERD](./docs/APIERD.png)
 
 ### R7 - Third party services utilized
+
+
+## Flask
+Flask is a web framework program that provides the user multiple tools to build and facilitate web applications. It is well-known for being light-weight and flexible to the user. It achieves this haveing the user import and integrate tools as needed form a large selection of features. This allows the user to operate in a very free way , without satisfying multiple requirements of tools not being used. It is designed to be a simple and scalable option for developers to efficiently create web developers. Throughtout my project I will be importing many modules and librarie from Flask.
+
+## SQLAlchemy
+As discussed previously , part of my project will involve using a database to interact with and store and manage data. SQLAlchemy is a library in Python that facilitates this need. It is what was previously discussed in R4 ; an ORM (Object relational mapper). SQLAlchemy provides the user the tools to communicate and manage data in an SQL database in Pythonic language. So we get all the benefits of Python , objects, methods, function, automation , to manage stored data within an SQL database and link it to a web API server. SQLAlchemy streamlines the API creation and utlization process and allows as the handle SQL database interactions from a Python file.
+
+
+## PostgreSQL
+PostgreSQL is a relational database management system that is scalable, flexible and efficient. We will use its features to create relationships between our entitites. , facilitate data transactions and maintain data integrity throughout the project. As mentioned in R3 , Postgresql contains many features which have been utilised and due to its performacnce and scalability  capabilities, my API has room for growth.
+
+## Marshmallow
+Marshmallow is a tool from both the Flask library and also the used from SQLAlchemy. It allows developers to validate complex data types into formats to use as required. In our case marshmallow is serializing data from our database along with SQLalchemy serialized and strucrtured in Python language through a marshmallow feature called a schema. From this schema , we can receive the data as JSON and output when requested for API endpoints.
+
+
+## Psycopg2
+In API's there needs to be a connection point from the Postgresql database. This function is performed by an adapter. Pyscopg2 is a popular postgreSQL adapter for python that establishes the connection to the Postgresql database and facilitates data tranasactions performed by the ORM SQlAlchemy and Python.
+
+
+## Bcrypt
+A popular and widely used password hashing algoritihim , that will allow us to have the users password protected by encryption. The encryption is very complex and not only hides from potential threats but also from developers. The encrypted passwords will be stored within the database and accessed and stored as an encrypted hash.
+
+## JWT Manager
+Authentication is required in the project to ensure users can keep their credentials/data safe from other users. JWT Manager is a python library that will utilizes JSON Web Tokens to ensure this happens. With this library we are able to create tokens and assign them to a variable that can is used the reference and authorize the user in the client/server communication process.
+
+
+## Trello
+Trello is a project management web application that allows the user to create and customize tasks and assign them to certain stages. They provide a great visual representation of the project and help developers track progress of a project.
+
+
+## Insomnia
+Insomnia is an API client and testing application that is used to test HTTP requests and recieve and debug the messages, for web API's in a controlled and safe environment.
+
+
+
+
+
 

@@ -4,11 +4,11 @@
 
 [Travel Planner API routes](#travel-planner-api-routes)   
 
-[Auth/User Routes](#authuser-routes)
-[Trips Routes](#trip-routes)
-[Destinations Routes](#Destination-routes)
-[Activities Routes](#Activity-routes)
-[Comments Routes](#Comments-routes)
+* [Auth/User Routes](#authuser-routes)
+* [Trips Routes](#trip-routes)
+* [Destinations Routes](#Destination-routes)
+* [Activities Routes](#Activity-routes)
+* [Comments Routes](#Comments-routes)
    
 
 

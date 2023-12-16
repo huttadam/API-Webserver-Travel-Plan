@@ -90,15 +90,15 @@ JWT_KEY="Anything Here"
 ```
 Run the following cli commands to set up and run the Flask app:
 
-``` flask db create```
+```flask db create``` Drops and creates all tables
 
-```flask db seed```
+```flask db seed``` Seeds the data into the created tables
 
-```flask run```
+```flask run``` Runs the application
 
 If any errors occur during seed process, you can run the below also.
 
-```flask db drop```
+```flask db drop``` Only necessary , if issues during creation, to force dropping without creating.
 
 The port has been set to 8000, please try connecting to http://127.0.0.1:8000/ via your browser, Insomnia or Hoppscotch
 
@@ -512,4 +512,24 @@ Below are some photos of the daily changes in the trello and the completed sub t
 
 ### References
 
+About (no date) PostgreSQL. Available at: https://www.postgresql.org/about/ (Accessed: 16 December 2023). 
 
+AltexSoft (2023) Database Management Systems (DBMS) comparison: Mysql, postgr, AltexSoft. Available at: https://www.altexsoft.com/blog/comparing-database-management-systems-mysql-postgresql-mssql-server-mongodb-elasticsearch-and-others/ (Accessed: 16 December 2023). 
+
+Abba, I.V. (2022) What is an ORM – the meaning of object relational mapping database tools, freeCodeCamp.org. Available at: https://www.freecodecamp.org/news/what-is-an-orm-the-meaning-of-object-relational-mapping-database-tools/ (Accessed: 16 December 2023). 
+
+Password regex python (no date) Password regex Python | UI Bakery. Available at: https://uibakery.io/regex-library/password-regex-python (Accessed: 16 December 2023). 
+
+Email regex python (no date) Email regex Python | UI Bakery. Available at: https://uibakery.io/regex-library/email-regex-python (Accessed: 16 December 2023). 
+
+PSYCOPG 2.9.9 documentation (no date) Psycopg. Available at: https://www.psycopg.org/docs/ (Accessed: 16 December 2023). 
+
+Rahman, Md.N. (2020) Flask with SQLAlchemy &amp; Marshmallow, Medium. Available at: https://medium.com/craftsmenltd/flask-with-sqlalchemy-marshmallow-2ec34ecfd9d4 (Accessed: 16 December 2023). 
+
+Object–relational mapping (2023) Wikipedia. Available at: https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping (Accessed: 16 December 2023). 
+
+What is Bcrypt and how it works? (2023) NordVPN. Available at: https://nordvpn.com/blog/what-is-bcrypt/ (Accessed: 16 December 2023). 
+
+JWT-extended’s documentation¶ (no date) Flask. Available at: https://flask-jwt-extended.readthedocs.io/en/stable/ (Accessed: 16 December 2023). 
+
+Simplified object serialization¶ (no date) marshmallow. Available at: https://marshmallow.readthedocs.io/en/stable/ (Accessed: 16 December 2023). 

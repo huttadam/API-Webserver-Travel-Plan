@@ -11,13 +11,17 @@ from sqlalchemy.exc import IntegrityError, DataError
 from marshmallow.exceptions import ValidationError
 from sqlalchemy.orm.exc import NoResultFound
 
+# Runs the application
 def run_app():
 
     app = Flask(__name__)
 
+    #Configure JET and SQLALchemy Database
     app.config['JWT_SECRET_KEY'] = environ.get('JWT_KEY')
     app.config["SQLALCHEMY_DATABASE_URI"] = environ.get('DB_URI')
 
+
+    # Error handlers to handle gracefully with JSON messages 
     @app.errorhandler(400)
     def bad_request(err):
         return {'Error': str(err)}, 400
@@ -54,18 +58,13 @@ def run_app():
     def key_error(err):
         return {'Error': f'The field {err} is required.'}, 400
 
-
-
-
-
-
-
-
+    #Initializes SQLAlchemy, Marshamallow, JWT Manager and Bcrypt modules for use from Init.
     db.init_app(app)
     ma.init_app(app)
     jwt.init_app(app)
     bcrypt.init_app(app)
 
+    # registers the blueprint modules in flask
     app.register_blueprint(bp_comments)
     app.register_blueprint(bp_DBCli)
     app.register_blueprint(bp_users)

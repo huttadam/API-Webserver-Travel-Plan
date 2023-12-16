@@ -106,9 +106,9 @@ The port has been set to 8000, please try connecting to http://127.0.0.1:8000/ v
 
 ### R1 - Identify the problem you are trying to solve with this app
 
- The Tourism and Travel industries since the re-opening of countries borders for tourists since the COVID-19 pandemic are experiencing a a huge spike in popularity and income. These industries have always been strong and especially since the availability of the internet, it has made travel destinaton information a lot easier to access and utilize. The problem with all this new information is that it can be difficult to manage and keep track of what you actually want to do and where you want to go. There are so many many travel blogs/vlogs to consume, planning and packing  before travelling that you can lose track of your goals before or on a trip.
+ The Tourism and Travel industries since the re-opening of countries borders for tourists since the COVID-19 pandemic are experiencing a a huge spike in popularity and income. These industries have always been strong and especially since the availability of the internet, it has made travel destinaton information a lot easier to access and utilize. The problem with all this new information is that it can be difficult to manage and keep track of what you actually want to do and where you want to go. There are so many travel blogs/vlogs to consume, planning and packing  before travelling that you can lose track of your goals before or on a trip.
 
- As a keen traveller myself, I have experienced a lot of frustration trying to gather information about an activity/monument/restaurant and if is acheiveable to visit when you are in the same city or country as it.  Whether your on a strict time-frame, jet-lagged or have lost a lot of time due to unforseen events, the frustration is compounded in trying to remember the crucial information about this activity. e.g. What website you visited?, What video you watched? Where exactly it was? Why was it special ? is it really worth it?  Its often that after I left left a destination,  I experience thoughts of .. I was supposed to go ... , Why didnt I see ... . 
+ As a keen traveller myself, I have experienced a lot of frustration trying to gather information about an activity/monument/restaurant and if is acheiveable to visit when you are in the same city or country as it.  Whether your on a strict time-frame, jet-lagged or have lost a lot of time due to unforseen events, the frustration is compounded in trying to remember the crucial information about this activity. e.g. What website you your read about it?, What video you watched? Where exactly it was? Why was it special ? is it really worth it?  Its often that after I left left a destination,  I experience thoughts of .. I was supposed to go ... , Why didnt I see ... . 
 
  My API webserver attempts to solve this disorganization and stress revolved around travel and give the user the ability to track, add, sort, and update the information they have researched to ultimately improve the planning and decision-making around the travel experience and make the most of the users time travelling. In addition, the user is also able to gather ideas and be an inspiration for other users. The API webserver will have a feature for the public and account holders to view other users activities (minus personal information) and gather inspiration from them. Account holders are also able to leave comments on activities and gather additional information about potential activities.
 
@@ -117,7 +117,7 @@ The port has been set to 8000, please try connecting to http://127.0.0.1:8000/ v
 
  As mentioned above having all the information about a travel destination is not benefitial for a person unless they can organize their plans, store information they have recieved which in-turn will really increase the likelihood of following through on these plans. 
 
- This is a problem that needs solving as , in todays economic climate , the cost of travelling and goods have increased rapidly and when people have the oppurtunity to travel, they need to ensure the time and money they are spending is not wasted. Furthermore,In terms of the public discussion feature, I believe there is space in the market amongst other huge online travel tools ,(Youtube (travel vlogs), TripAdvisor) for a user-based platform for travellers to gather information from other travellers. I feel advertisment money and big corporate companies give way to fake reviews which give users a biased or unfaithable depiction of what an acitivty or detination is actually.
+ This is a problem that needs solving as , in todays economic climate , the cost of travelling and goods have increased rapidly and when people have the oppurtunity to travel, they need to ensure the time and money they are spending is not wasted. Furthermore,In terms of the public discussion feature, I believe there is space in the market amongst other huge online travel tools ,(Youtube (travel vlogs), TripAdvisor), for a user-based platform for travellers to gather information from other travellers. I feel advertisment money and big corporate companies give way to fake reviews which give users a biased or unfaithable depiction of what an acitivty or detination is actually.
 
 In summary, the solving of this problem can save users a lot of time and exhaustion when travelling as well as act as a community sounding board for traveller and tourists to organize travel information and gather travel information, which ultimately leads to a better travel experience.
 
@@ -127,23 +127,23 @@ In summary, the solving of this problem can save users a lot of time and exhaust
 Databases are an essential feature for API webservers and the storing and management of data needs to be a process that is functional, flexible and tailored to my skill level. For my API travel planners database system I have selected PostgreSQL, which is a well-known,scalable, open-source and reputable database program which is utlized on a wide-range of applications throughout the I.T industry. Some reasons for my choice as follows
 
 #### Contraints
-A key feature of PostgreSQL are its contraints .In simple terms, contrainsts assist in controlling data types of data with rules. Some examples of these contraints are foreign key constraints, unique constraints, and check constraints. These features help ensure data integrity is kept at the  database level, preventing the inserting of inconsistent or invalid data and keeping structing when deletions are made. In my API project, the ability to enforce and maintain data types, relationships between tables (Primary/Foreign Key) and integrity with contraints is a an essential factor for is functionality.
+A key feature of PostgreSQL are its contraints .In simple terms, contrainsts assist in controlling types of data with rules. Some examples of these contraints are foreign key constraints, unique constraints, and check constraints. These features help ensure data integrity is kept at the  database level, preventing the inserting of inconsistent or invalid data and keeping structing when deletions are made. In my API project, the ability to enforce and maintain data types, relationships between tables (Primary/Foreign Key) and integrity with contraints is a an essential factor for is functionality.
 
 
 #### Robustness
-PostgreSQL has a large set of features that can be used to facilitate multiple requirements. These features are attributed to the success and and popularity of PostgreSQL. An example of these features would be its ACID ((Atomicity, Consistency, Isolation, Durability)) complicance which simply means that data integrity is maintained during interactions with the database when most common mistakes or problems would occur.
-Another feature to explain its robustness is MVCC (Multi-Version Concurrency Control) which improves performance especially in a multi-user database. While handling muitple transactions the database does not lock, it simultaneously processes the transactions and records these versions in-case a rollback or data integrityis compromised in any way.
+PostgreSQL has a large set of features that can be used to facilitate multiple requirements. These features are attributed to the success and and popularity of PostgreSQL. An example of these features would be its ACID (Atomicity, Consistency, Isolation, Durability) complicance which simply means that data integrity is maintained during interactions with the database when most common mistakes or problems would occur.
+Another feature to explain its robustness is MVCC (Multi-Version Concurrency Control) which improves performance especially in a multi-user database. While handling muitple transactions the database does not lock, it simultaneously processes the transactions and records these versions in-case a rollback or data integrity is compromised in any way.
 
 #### Scalability
-PostgreSQL is suited for large and small datasets. While starting off with a small dataset , as data grows and become more complicated , postgreSQL is able to support this growth anf of course we can  adopt additional features to suite this change as required.
+PostgreSQL is suited for large and small datasets. While starting off with a small dataset , as data grows and become more complicated , postgreSQL is able to support this growth and of course we can  adopt additional features to suite this change as required.
 
 
 #### Compareable to other databases
 As mentioned above, PostgreSQL has many benefits and well suited for my API project. However, when compared to other databases and their benfits, some noted drawbacks are noted when trying to acheive specfifc goals, these are as follows.
 
-MySQL - Another database which uses SQL language. While not object relational like postgresql, MySQL as a smaller learning curve than PostgreSQL. As I am new to API's and manageing data the simpler syntax could be an added benefit for speed and going thorough a learning process. In addition to this, MySQL also utilizes cloud compatibility, which is attractive for projects/companies looking for the future and requiring a huge scaled database.
+MySQL - Another database which uses SQL language. While not object relational like postgresql, MySQL has a smaller learning curve than PostgreSQL. As I am new to API's and manageing data the simpler syntax could be an added benefit for speed and going thorough a learning process. In addition to this, MySQL also utilizes cloud compatibility, which is attractive for projects/companies looking for the future and requiring a huge scaled database.
 
-Oracle - A key featue of Oracle is it is a multi-model system. In simple terms this means that several applications utilise the same database and benfit from using the same models. Not only does this derease workload but streamlines application bulding to suite a already designed database. 
+Oracle - A key featue of Oracle is it is a multi-model system. In simple terms this means that several applications utilise the same database and benefit from using the same models. Not only does this decrease workload but streamlines application building to suite a already designed database. 
 
 
 ### R4 - Identify and discuss the key functionalities and benefits of an ORM
@@ -160,15 +160,15 @@ An ORM (Object-Relational Mapper) is a very poweful tool in programming. An ORM 
 
 - CRUD operations are easily serviceable via an ORM , CRUD operations are essential in assisting with interactions from the client to the server in an API and form the bridge between them and the Database . For example the CRUD operations breakdown is as follows. 'C' in CRUD stands for Create, which services POST requests to the server, i.e adding data to the database, 'R' stands for Read which services GET requests to the server i.e. reading/acessing the information in the databse, 'U' stands for Update, which services PUT/PATCH requests to the server, i.e modifyiny/changing data in the database and finally 'D' stands for Delete which services DELETE requests to the server.
 
-- Database queries can can be customized to pull data in a specific format to service specific requirements from the client side, for example , you want to access data from a certain date or a customer/product in the startbase starting with the letter 'Z'.
+- Database queries can can be customized to pull data in a specific format to service specific requirements from the client side, for example , you want to access data from a certain date or a customer/product in the database starting with the letter 'Z'.
 
 #### Benefits of an ORM
 
- As mentioned above, many of the ORM's features are core benefits of using however there are also some additional benefits to using an ORM.
+ As mentioned above, many of the ORM's features are core benefits of its use, however there are also some additional benefits to using an ORM.
 
- - The use of objects and function in programming language (OOP) allows us to create a general framework for queries, commands and routes, which means that code can be easily integrated to other applications with similiar database structures. Another key benefit of this is utilzing time to focus of the structure and function of the application rather than re-writing specific queries/commands.
+ - The use of objects and function in programming language (OOP) or general python code allows us to create a general framework for queries, commands and routes, which means that code can be easily integrated to other applications with similiar database structures. Another key benefit of this is utilzing time to focus of the structure and function of the application rather than re-writing specific queries/commands.
 
- - Testing can be performed more easily in a programming languge which is essential for building applications for businesses which require a lot of evidence of testing and research to ensure the application is safe for public use and the protection of data.
+ - Testing can be performed more easily in a programming languge which is essential for building applications for businesses which require a lot of evidence of testing and research to ensure the application is safe for public use and the protection of data for the business.
 
  - Communication and readability are keys benfits of ORM. This means we can actively control messages from the database and client/server to be readable for the ley-person. These messages can also greatly assist the developer in interpreting Database languages to something they can understand easier.
 
@@ -195,14 +195,14 @@ As discussed previously , part of my project will involve using a database to in
 
 
 #### PostgreSQL
-PostgreSQL is a relational database management system that is scalable, flexible and efficient. We will use its features to create relationships between our entitites. , facilitate data transactions and maintain data integrity throughout the project. As mentioned in R3 , Postgresql contains many features which have been utilised and due to its performance and scalability capabilities, my completed API project has room for growth.
+PostgreSQL is a relational database management system that is scalable, flexible and efficient. We will use its features to create relationships between our entitites , facilitate data transactions and maintain data integrity throughout the project. As mentioned in R3 , Postgresql contains many features which have been utilised and due to its performance and scalability capabilities, my completed API project has room for growth.
 
 #### Marshmallow
-Marshmallow is a tool from both the Flask library and also the used from SQLAlchemy. It allows developers to validate complex data types into formats to use as required. In our case marshmallow is serializing data from our database along with SQLalchemy serialized and strucrtured in Python language through a marshmallow feature called a schema. From this schema , we can receive the data as JSON and output when requested for API endpoints.
+Marshmallow is a tool from both the Flask library and also the used from SQLAlchemy. It allows developers to validate complex data types into formats to use as required. In our case marshmallow is serializing data from our database along with SQLalchemy serialized and structured in Python language through a marshmallow feature called a schema. From this schema , we can receive the data as JSON and output when requested for API endpoints.
 
 
 #### Psycopg2
-In API's there needs to be a connection point from the Postgresql database. This function is performed by an adapter. Pyscopg2 is a popular Postgresql adapter for python that establishes the connection to the Postgresql database and facilitates data tranasactions performed by the ORM SQlAlchemy and Python.
+In API's there needs to be a connection point from the Postgresql database. This function is performed by an adapter. Pyscopg2 is a popular Postgresql adapter for python that establishes the connection to the Postgresql database and facilitates data transactions performed by the ORM-SQlAlchemy and Python.
 
 
 #### Bcrypt
@@ -211,10 +211,8 @@ A popular and widely used password hashing algoritihim , that will allow us to h
 #### JWT Manager
 Authentication is required in the project to ensure users can keep their credentials/data safe from other users. JWT Manager is a python library that will utilizes JSON Web Tokens to ensure this happens. With this library we are able to create tokens and assign them to a variable that can is used as a represenatative of the token and authorizes or denies the user in the client/server communication process.
 
-
 #### Trello
 Trello is a project management web application that allows the user to create and customize tasks and assign them to certain stages. They provide a great visual representation of the project and help developers track progress of a project.
-
 
 #### Insomnia
 Insomnia is an API client and testing application that is used to test HTTP requests and recieve and debug the messages, for web API's in a controlled and safe environment.
@@ -223,11 +221,11 @@ Insomnia is an API client and testing application that is used to test HTTP requ
 
 ### R8 Describe your projects models in terms of the relationships they have with each other
 
-Below are the model classes representing the entities from the database and like all models in the project is written using SQLAlchemy and in a Python. By this it means that the columns represent the attributes in the database and vice versa. Genrally to define an entity relationship or just create in an attribute in the model, SQLAlchemy is used (db).
+Below are the model classes representing the entities from the database and like all models in the project is written using SQLAlchemy and in a Python. By this it means that the columns represent the attributes in the database and vice versa. Generally to define an entity relationship or just create an attribute in the model, SQLAlchemy is used(db).
 
-The db.Column object allows as to create the feilds in the entity and relevant relation information i.e  assing the attribute as a Primary key or as a foreign key. In the case of the forein key, its necessary to assign the original table and the column the key is from.
+The db.Column object allows as to create the feilds in the entity and relevant relation information i.e assigning the attribute as a Primary key or as a foreign key. In the case of the forein key, its necessary to assign the original table and the column the key is from.
 
-To establish the relationship the object db.relationship is assigned to a variable with the name of the relating entity, if the relationship is one to many , a plural is used to represent the many and singular for the one. We also add arguments like back-populate which allows acess to related columns from the related models. Two variables are created , one on each entity which shows the connection between the two and cascade represents the flow of the relationship if information is deleted it will also need to be deleted from the related model.
+To establish the relationship the object db.relationship is assigned to a variable with the name of the relating entity, if the relationship is one to many , a plural is used to represent the many and singular for the one. We also add arguments to the object like back-populate which allows access to related columns from the related models. Two variables are created , one on each entity which shows the connection between the two and cascade represents the flow of the relationship if information is deleted it will also need to be deleted from the related model.
 
 
 #### User Model
@@ -272,7 +270,7 @@ This relationship is one to many. A user can have multiple Trip models associate
 
 **Comment Model**
 
-The relationship is one to many similarly to the relationship with the Trip model but in this case the User model's username is used as a ForeignKey in the Comment model rather than the User Id.. This is done because as comments are public, some users do not want there name shown on the web, so an alias (username) is used instead. So a user can have multiple comments associated with them but a comment can only have one user associated.
+The relationship is one to many, similarly to the relationship with the Trip model but in this case the User model's username is used as a ForeignKey in the Comment model rather than the User Id. This is done because as comments are public, some users do not want there name shown on the web, so an alias (username) is used instead. So a user can have multiple comments associated with them but a comment can only have one user associated.
 
 
 #### Trip Model
@@ -407,10 +405,10 @@ class ActivitySchema(ma.Schema):
 The Activity model contains all activity information. It represents the things the user wants to do at the destination. The table fields are very open so, could be anything from a music festival, meeting a friend and trying a restaurant.In the Activity model the Schema displays some comment information from the Comment model as there is a relationship connection set-up. As you can see from previous models that the models are connected in sequence by one to many relationships. The activity model contains two relationships and a Foreign key relationship.
 
 **Destination**
-The destination id fom he Desination model is the foreign key associated withe Activity model. It acts as ownership of the activity , much like the User > Trip, Trip > Destination etc. The db.realtionship between these two are very useful for this API as it facilitates the public search GET requests. The user can search by Destination dest_country or continent to pull a list of all matching activities.
+The destination id fom he Desination model is the foreign key associated withe Activity model. It acts as ownership of the activity , much like the User > Trip, Trip > Destination etc. The db.realtionship between these two are very useful for this API as it facilitates the public search GET requests. The user can search by Destination model dest_country or continent to pull a list of all matching activities.
 
 **Comment**
-The Comment model acts as the "child" in the one to many relationship meaning that the activity id is the foreign key assocated with the comment content. So the activity can have multiple comments but only one activity can be associated with one comment. Similar to previous models , comments also contain cascade. , Which means that the Activity/Comment models are associated with other other models through the relationships that have with other models.
+The Comment model acts as the "child" in the one to many relationship meaning that the activity id is the foreign key assocated with the comment content. So the activity can have multiple comments but only one activity can be associated with one comment. Similar to previous models , comments also contain cascade. , Which means that the Activity/Comment models are associated with other models through the relationships that have with other models.
 
 #### Comment Model
 
@@ -443,7 +441,7 @@ The Comment model simply represents the text, writing , questions etc that a use
 The activity is similar to previous relationships. The foreign key on this model represents the activity where the comment is placed. The actvity can host many comments , so this is the many side of the one to many relationship. The single/one side is represented by the comment, the single comment can only be hosted on one activity. Please note Activity also cascades , so if the User creates a Trip, some destinations, some activities and some people comment on these activities. If the user were to be deleted all this trip,destination, activity and comment data would follow with it, This ensures integrity in the database. 
 
 **User**
-The user foreign key on this model represents the user wiritng the comment. It is back populated to gather the information but cannot be cascaded to the User model. If this were to happen all models would be linked and deleting something , would result in all data in the database getting deleted. So the Comment model acts as an end to the cascading connection for deletion. This relation is also one to many as well, the Username (user) can write many comments but a comment can only have one writer (user).
+The user foreign key on this model represents the user writing the comment. It is back populated to gather the information but cannot be cascaded to the User model. If this were to happen all models would be linked and deleting something , would result in all data in the database getting deleted. So the Comment model acts as an end to the cascading connection for deletion. This relation is also one to many as well, the Username (user) can write many comments but a comment can only have one writer (user).
 
 
 In conclusion, below is a small visual depiction of the relationship cycle between the models.
@@ -454,7 +452,7 @@ User.id > Trip.id > Destination.id > Activity.id > Comment.id < User.username
 
 ### R9 Discuss the database relations to be implemented in your application
 
-The relationships depicted in the User models are the same in nature but are displayed different in the database. As the ERD in R6 shows the lines linking the Primary keys and the foreign keys. The symbols of the end of these lines represent the nature of the the relationships. For my application the same type of relation ship is used throughout the entities and this is the one to many relationship. This is depicted using the below. the left side represents one entity and the right side represents 0 or many that can be related with.
+The relationships depicted in the User models are the same in nature but are displayed different in the database. As the ERD in R6 shows the lines linking the Primary keys and the foreign keys. The symbols of the end of these lines represent the nature of the the relationships. For my application the same type of relationship is used throughout the entities and this is the one to many relationship. This is depicted using the below. the left side represents one entity and the right side represents 0 or many that can be related with.
 
 ![crowsfoot](./docs/one%20to%20many.png)
 
@@ -481,9 +479,9 @@ So the attribute username from the users entity is a foreign key on the comments
 
 To track progress and monitor tasks throughtout my project, I used Trello , a project tracking web application. Trello allows customization and easy creation of tasks and subtasks which provide a clear picture of what needs to be done. Trello also allows deadlines and dates functions to track when certain tasks need to be completed by. I did not use this feature on this project as I wanted to explore options and different relationship/ entity set-ups and couldnt reallistically give a timeframe for this.
 
-I found it extremely helpful to add tasks throughtout my project, at the beginning its hard to understand the scope of what needs to be and as you face this problems , I could easily create a task to remind myself to follow-up on or check.
+I found it extremely helpful to add tasks throughtout my project, at the beginning its hard to understand the scope of what needs to be and as you face this problems , I could easily create a task to remind myself to follow-up on or check. It can be very easy to get overwhelmed by visually seeing what needs to be completed and what needs to be tracked is a a really helpful tool.
 
-The cards are placed into 4 categories, which represent what stage of the task you are currently at.  The stages I used were "backlog" (need to begin), "working", "Testing" and "Completed". When working on the project , I would consult the working section and move to the testing section for further checks. After there was nothing in the working section, I would begin a task from the backlog category.
+The cards are placed into 4 categories, which represent what stage of the task you are currently at.  The stages I used were "backlog" (need to begin), "working", "Testing" and "Completed". When working on the project , I would consult the working section and move to the testing section for further checks. After there was nothing in the working section, I would begin a task from the backlog category. And of course after testing , I would move to the "Completed" category.
 
 Below are some photos of the daily changes in the trello and the completed sub tasks list.
 
@@ -511,5 +509,7 @@ Below are some photos of the daily changes in the trello and the completed sub t
 ![st3](./docs/Trello/day6%20-3.png)
 ![st3](./docs/Trello/day13%20-2.png)
 
+
+### References
 
 

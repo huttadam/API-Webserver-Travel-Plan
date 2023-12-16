@@ -6,20 +6,23 @@ from models.destination import Destination
 from models.activity import Activity
 from models.comment import Comment
 
+#Defines prefix for all the CLI commands in the CLI commands blueprint
 bp_DBCli = Blueprint('db',__name__ )
 
+# Used if issue during creation and table is half created.
 @bp_DBCli.cli.command('drop')
 def drop():
     db.drop_all()
     print('All Tables dropped')
 
-
+# Drops all table information and creates new tables
 @bp_DBCli.cli.command('create')
 def db_drop_and_create():
     db.drop_all()
     db.create_all()
     print('Tables dropped + created successfully')
 
+# Fills the tables with the information/data in its fields.
 @bp_DBCli.cli.command('seed')
 def seed_db():
     users = [
@@ -64,7 +67,7 @@ def seed_db():
         )
 
     ]
-    db.session.query(User).delete()
+    db.session.query(User).delete() # Deleting any un-dropped information to maintain  database integrity
     db.session.add_all(users)
     db.session.commit()
 
@@ -116,7 +119,7 @@ def seed_db():
             )
 
     ]
-    db.session.query(Trip).delete()
+    db.session.query(Trip).delete() #Deleting any un-dropped information to maintain  database integrity
     db.session.add_all(trips)
     db.session.commit()
 
@@ -233,7 +236,7 @@ def seed_db():
         )
     ]
 
-    db.session.query(Destination).delete()
+    db.session.query(Destination).delete() #Deleting any un-dropped information to maintain database integrity
     db.session.add_all(destinations)
     db.session.commit()
     
@@ -417,7 +420,7 @@ def seed_db():
         )
     ]
 
-    db.session.query(Activity).delete()
+    db.session.query(Activity).delete() #Deleting any un-dropped information to maintain  database integrity
     db.session.add_all(activities)
     db.session.commit()
 
@@ -574,7 +577,7 @@ def seed_db():
         )
     ]
 
-    db.session.query(Comment).delete()
+    db.session.query(Comment).delete() #Deleting any un-dropped information to maintain  database integrity
     db.session.add_all(comments)
     db.session.commit()
     print("Tables successfully seeded.")

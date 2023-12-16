@@ -6,7 +6,7 @@ from flask import request, Blueprint
 from init import db
 from blueprints.auth_bp import owner_admin_authorize, admin_only
 
-
+#Defines prefix for all URLs in the activities blueprint
 bp_activities = Blueprint("bp_activities",__name__, url_prefix='/activities')
 
 #All  Users activities - Admin only
@@ -18,6 +18,7 @@ def read_all_activities():
     activities = db.session.scalars(stmt).all()
     return ActivitySchema(many=True, exclude= ['comments']).dump(activities)
 
+#User-owner can look at there activities in full detail
 @bp_activities.route('/<int:activity_id>')
 @jwt_required()
 def read_single_activity(activity_id):
@@ -38,10 +39,11 @@ def create_activity():
 
     user_id = get_jwt_identity()
     
-    # Check that the user is the owner of the Destination is associated with the Activity
+    # Check that the user is the owner of the Destination that associated with the Activity Id
     dest_id = activity_info.get('destination_id')
     dest = Destination.query.get(dest_id)
-    
+
+    # If the dest exists and the dest owner matches JWT (meaning is the user who created the destination and trip)
     if not dest or dest.trip.user_id != user_id:
         return {'Error': 'Invalid destination ID or unauthorized access'}, 401
     else:
@@ -59,7 +61,7 @@ def create_activity():
 
         return ActivitySchema(exclude = ["comments"]).dump(activity), 201
 
-# Update a activity
+#User-owner can Update a activity
 @bp_activities.route('/<int:activity_id>', methods=['PUT','PATCH'])
 @jwt_required()
 def edit_activity(activity_id):
@@ -82,7 +84,7 @@ def edit_activity(activity_id):
     else:
         return {'Error': f'Activity ID : {activity_id} not found'}, 404
 
-#Delete a activity
+#user-owner can Delete a activity
 @bp_activities.route('/<int:activity_id>', methods=['DELETE'])
 @jwt_required()
 def delete_activity(activity_id):
@@ -97,7 +99,9 @@ def delete_activity(activity_id):
     else:
         return {'Error': f'Activity ID: {activity_id} not found'}, 404
 
+#Public accessed information (no account necessary)
 
+#List of all user created activities with personal information missing (DestinationPublicSchema)
 @bp_activities.route('/public')
 def public_activities_all():
     stmt = db.select(Destination)
@@ -107,6 +111,7 @@ def public_activities_all():
     else:
         return {'Error': 'Files not found'}, 404
 
+# PublicUser can take a closer look at a specific Activity for for detail
 @bp_activities.route('/public/<int:activity_id>')
 def public_activities_single_id(activity_id):
     activity = db.session.query(Activity).filter(Activity.id == activity_id).one()
@@ -116,6 +121,7 @@ def public_activities_single_id(activity_id):
         return {'Error': 'Actvity_ID not found'}, 404
 
 
+#PublicUser can search for activities by counry name
 @bp_activities.route('/public/country/<string:dest_country>')
 def public_activities_destination(dest_country):
     stmt = db.session.query(Destination).filter(Destination.dest_country == dest_country)
@@ -126,6 +132,7 @@ def public_activities_destination(dest_country):
         return {'Error': ' No activities in this country as yet'}, 404
 
 
+#PublicUser can search for activities by continent
 @bp_activities.route('/public/continent/<string:continent>')
 def public_activities_continent(continent):
     stmt = db.session.query(Destination).filter(Destination.continent == continent)

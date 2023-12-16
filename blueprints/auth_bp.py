@@ -6,7 +6,7 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 from datetime import timedelta
 
 
-
+#Defines prefix for all URLs in the auth blueprint
 bp_users = Blueprint("bp_users",__name__, url_prefix='/users')
 
 # Search all users (Admin Only access)
@@ -26,7 +26,7 @@ def read_single_user(user_id):
     user = db.session.scalar(stmt)
     if user:
         owner_admin_authorize(user.id)
-        return UserSchema(exclude = ['password', 'admin_acc']).dump(user)
+        return UserSchema(exclude = ['password', 'admin_acc']).dump(user) #excludes password and admin details
     else:
         return {'Error': f'User ID {user_id} not found'}
 
@@ -38,13 +38,14 @@ def update_user(user_id):
     user = db.session.query(User).filter_by(id=user_id).first()
 
     if user:
-        if user.admin_acc == False:
+        if user.admin_acc == False: # There is only one admin to control accounts and information.
             owner_admin_authorize(user.id)
             user.f_name = user_info.get('f_name', user.f_name)
             user.l_name = user_info.get('l_name', user.l_name)
             user.username = user.username
             user.email = user_info.get('email', user.email)
             
+            #User can also update password , but needs to be rehased/encrypted
             if 'password' in user_info:
                 new_password = user_info['password']
                 hashed_password = bcrypt.generate_password_hash(new_password).decode('utf-8')
@@ -62,6 +63,7 @@ def update_user(user_id):
         return {'Error': 'User not found, please check ID'}
 
 
+# An admin can delete an account and the admin cannot delete itself.
 @bp_users.route('/<int:user_id>', methods = ['DELETE'])
 @jwt_required()
 def delete_user(user_id):
@@ -85,6 +87,7 @@ def delete_user(user_id):
 def register_user():
     user_info = UserSchema().load(request.json)
 
+    # Further validation for no doubles as these feilds are unique
     double_email = db.session.query(User.email).filter_by(email=user_info["email"]).scalar()
     double_username = db.session.query(User.username).filter_by(username=user_info["username"]).scalar()
     
@@ -112,7 +115,7 @@ def register_user():
         return UserSchema(exclude=['password']).dump(new_user),201
 
 
-# User Log in
+# User Log in and receives a JWT token assigned to the user_id
 @bp_users.route('/login', methods=['POST'])
 def login():
     try:
@@ -134,7 +137,7 @@ def login():
 
 
 
-
+# Ensures only an admin can perform certain operations
 def admin_only():
     current_user_id = get_jwt_identity()
     stmt = db.select(User).filter_by(id=current_user_id)
@@ -143,6 +146,7 @@ def admin_only():
         abort(401, description="You must be an admin to access")
 
 
+# Checks that the user is the owner or admin before handling 
 def owner_admin_authorize(owner_id):
     current_user_id = get_jwt_identity()
     stmt = db.select(User).filter_by(id=current_user_id)
